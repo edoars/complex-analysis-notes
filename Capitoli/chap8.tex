@@ -1,0 +1,309 @@
+%!TEX root = ../main.tex
+\chapter{Teorema della mappa di Riemann}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 16/12/2016 - DECIMA SETTIMANA (2)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%COMPATTEZZA NELLO SPAZIO DELLE FUNZIONI OLOMORFE%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Compattezza nello spazio delle funzioni olomorfe}
+
+\begin{defn}{Famiglia di funzioni normale}{famigliaNormale}\index{Famiglia normale}
+	Siano \(\Omega\subseteq\C\) aperto e \(F\subseteq H(\Omega)\).
+	Diciamo che \(F\) è una \emph{famiglia normale} se per ogni successione di funzioni \(\{f_n\}_{n\ge 1}\subseteq F\), trovo una sottosuccessione \(\{f_{n_h}\}_{h\ge 1}\) e \(f\in H(\Omega)\) tali che
+	\[
+		f_{n_h} \longrightarrow f \qquad\text{quasi uniformemente}.
+	\]
+\end{defn}
+
+\begin{oss}
+	Non chiedendo che \(f\in F\), non abbiamo trovato una reale definizione di compattezza, ma, piuttosto, una di relativa compattezza.
+	Ricordiamo infatti che un insieme si dice relativamente compatto se la sua chiusura è compatta.
+\end{oss}
+
+\begin{teor}{di Ascoli-Arzelà}{teoremaAscoliArzelà}
+	Sia \(K\subseteq\R^2\) un compatto e sia \(\{f_n\}_{n\ge 1}\subseteq C(K,\R)\) una successione di funzioni tale che
+	\begin{enumerate}
+		\item \(\displaystyle \sup_{\substack{z\in K\\n\in\N}} \abs{f_n(z)} < +\infty\).
+		\item Esiste \(L>0\) tale che
+		      \[
+			      \abs{f_n(z_1)-f_n(z_2)} \le L\,\abs{z_1-z_2},\,\fa z_1,z_2\in K\,\fa n\in\N.
+		      \]
+	\end{enumerate}
+	Allora esiste una sottosuccessione \(\{f_{n_h}\}_{h\ge 1}\) che converge a una funzione \(f\) uniformemente su \(K\).
+\end{teor}
+
+\begin{proof}
+	Risultato di Analisi II.
+\end{proof}
+
+\begin{oss}
+	L'ipotesi \((1)\) da sola non è sufficiente. \(\sin \frac{1}{x^n}\) è un esempio di funzione limitata che non converge a una funzione continua
+\end{oss}
+
+\begin{teor}{Caratterizzazione delle famiglie normali}{caratterizzazioneFamiglieNormali}
+	Sia \(\Omega\subseteq\C\) un aperto e sia \(F\subseteq H(\Omega)\).
+	\(F\) è normale se e soltanto se per ogni \(K\subseteq\Omega\) compatto, esiste \(M>0\) tale che
+	\[
+		\abs{f_n(z)} \le M,\,\fa n\ge 1\,\fa z\in K.
+	\]
+\end{teor}
+
+\begin{proof}
+	\graffito{\(\Rightarrow)\)}Supponiamo per assurdo che \(F\) non sia equilimitata sui compatti di \(\Omega\). Possiamo quindi trovare \(K\subseteq\Omega\) tale che
+	\[
+		\sup_{z\in K}\abs{f_n(z)} \ge n.
+	\]
+	Per ipotesi \(F\) è normale, quindi posso estrarre una sottosuccessione \(\{f_{n_h}\}\) di \(\{f_n\}\) che converge a \(f\) uniformemente sui compatti di \(\Omega\). In particolare
+	\[
+		\sup_{z\in K} \abs{f_{n_h}(z)-f(z)} \longrightarrow 0 \qquad\text{per }h \to +\infty.
+	\]
+	Ora, per Weierstrass, \(f\) è limitato su \(K\), quindi esiste \(M>0\) tale che
+	\[
+		\sup_{z\in K} \abs{f(z)} \le M.
+	\]
+	Da cui
+	\[
+		n_h \le \sup_{z\in K}\abs{f_{n_h}(z)} \le \sup_{z\in K} \abs{f_{n_h}(z)-f(z)} + M.
+	\]
+	che implica
+	\[
+		\lim_{h \to +\infty} n_h \le M
+	\]
+	che è assurdo.
+	
+	\graffito{\(\Leftarrow)\)}Sia \(K\subseteq \Omega\) compatto. Per compattezza posso ricoprire \(K\) con un numero finito di palle
+	\[
+		\big\{B(z_i;r_i)\big\}_{i=1}^l \qquad\text{con }\chius{B(z_i;r_i)} \subseteq \Omega.
+	\]
+	Per dimostrare che \(F\) è normale è quindi sufficiente dimostrare che \(\{f_n\}\) è compatto in ogni palla \(B(z_0;r)\) con \(\chius{B(z_0;r)}\subseteq\Omega\).
+	Seguirebbe infatti che è possibile estrarre \(\{f_{n_h}\}\) che converge su \(\chius{B(z_1;r_1)}\). Inoltre, dal momento che le \(B(z_i;r_i)\) sono finite, posso iterare:
+	da \(\{f_{n_h}\}\) estraggo quindi \(\{f_{n_{h_j}}\}\) che converge anche su \(\chius{B(z_2;r_2)}\) e così fino ad estrarre una sottosuccessione \(\{f_{n_s}\}\) che converge su tutte le palle. In particolare essa convergerebbe su \(K\) in quanto
+	\[
+		\bigcup_{i=1}^l B(z_i;r_i) \supseteq K.
+	\]
+	Sia \(B(z_0;r)\) tale che \(\chius{B(z_0;r)}\subseteq \Omega\) e sia \(\{f_n\}\subseteq F\).
+	Sfruttiamo Ascoli-Arzelà per dimostrare che \(\{f_n\}\) è compatto su \(B(z_0;r)\).
+	Per ipotesi
+	\[
+		\abs{f_n(z)} \le M,\,\fa n \ge 1\,\fa z\in \chius{B(z_0;r)}
+	\]
+	che è la prima ipotesi di Ascoli-Arzelà. Grazie al teorema di Lagrange, per mostrare la seconda, è sufficiente verificare che
+	\[
+		\abs{f_n'(z)} \le M',\,\fa n\ge 1\,\fa z\in \chius{B(z_0;r)}.
+	\]
+	Sfruttiamo la formula integrale di Cauchy:
+	prendiamo \(\e>0\) tale che \(\chius{B(z_0;r+\e)}\subseteq \Omega\). In particolare avremo ancora
+	\[
+		\abs{f_n(z)} \le M'',\,\fa n\ge 1\,\fa z\in \chius{B(z_0;r+\e)}\subseteq \Omega.
+	\]
+	Da cui \graffito{abbiamo sfruttato la parametrizzazione \(w=z_0+(r+\e)e^{i\,t}\) e abbiamo osservato che \(\e\) è la minima distanza possibile tra \(w\) e \(z\)}
+	\[
+		\begin{split}
+			\abs{f_n'(z)} & = \bigg\lvert \frac{1}{2\p\,i} \int\limits_{\mathclap{\pd B(z_0;r+\e)}} \frac{f_n(w)}{(w-z)^2}\,\dd w \bigg\rvert = \bigg\lvert \frac{1}{2\p\,i} \int_0^{2\p} \frac{f_n\big(z_0+(r+\e)e^{i\,t}\big)}{\big[\big(z_0+(r+\e)e^{i\,t}\big)-z\big]^2}\,(r+\e)i\,e^{i\,t}\,\dd t\bigg\rvert\\
+			& \le \frac{1}{2\p} \int_0^{2\p} \frac{M''}{\e^2}\,(r+\e)\,\dd t = \frac{M''}{\e^2}\,(r+\e)\,\fa z\in \chius{B(z_0;r)}.\qedhere
+		\end{split}
+	\]
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 20/12/2016 - UNDICESIMA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+%MAPPA DI RIEMANN%
+%%%%%%%%%%%%%%%%%%
+\section{Mappa di Riemann}
+
+\begin{teor}{della mappa di Riemann}{teoremaMappaRiemann}\index{Teorema!della mappa di Riemann}
+	Sia \(\Omega\subset\C\) un aperto semplicemente connesso che non coincida con \(\C\).
+	Allora esiste \(f\colon \Omega \to B(0;1)\) biiettiva e biolomorfa.
+	Inoltre, preso \(z_0\in\Omega\), si può imporre
+	\begin{align*}
+		f(z_0) & = 0, & f'(z_0) & \in \R, & f'(z_0) & > 0.
+	\end{align*}
+	\(f\), con questa condizione, è unica.
+\end{teor}
+
+\begin{proof}
+	Mostriamo l'esistenza di \(f\). Consideriamo
+	\[
+		F = \Set{f\colon \Omega \to B(0;1) | f\text{ olomorfa, iniettiva e }f(z_0)=0}.
+	\]
+	Vogliamo dimostrare che
+	\begin{enumerate}
+		\item \(F\) non è vuoto.
+		\item \(\sup\Set{\abs{f'(z_0)}:f\in F}\) è un massimo.
+		\item Se \(f_0\in F\) è massimale rispetto a \((2)\), allora \(f_0\) è la funzione cercata.
+	\end{enumerate}
+	\graffito{\(1)\)}Per ipotesi \(\Omega\) è semplicemente connesso e \(\Omega\neq \C\), quindi esiste \(w_0\not\in\Omega\).
+	Per cui la mappa \(w\mapsto w-w_0\) a valori in \(\Omega\) non si annulla mai.
+	Per il \hyperref[pr:determinazioneRadice]{teorema di monodromia} possiamo definire
+	\[
+		\j\colon \Omega \longrightarrow \C, z \longmapsto \sqrt{z-w_0}.
+	\]
+	\(\j\) è iniettiva, infatti
+	\[
+		\j(z_1) = \j(z_2) \implies z_1-w_0=z_2-w_0 \implies z_1 = z_2.
+	\]
+	Inoltre  \(\j(z_1)\neq -\j(z_2)\) se \(z_1\neq z_2\), infatti
+	\[
+		\j(z_1) = -\j(z_2) \implies \j(z_1)^2=\j(z_2)^2 \implies z_1-w_0 = z_2-w_0 \implies z_1 = z_2.
+	\]
+	Ciò significa che se \(\j\) assume il valore \(c\), allora non assume il valore \(-c\).
+	Sappiamo che le \hyperref[th:funzioniOlomorfeAperte]{mappe olomorfe sono aperte}, quindi \(\j(\Omega)\) è aperto.
+	Ora se \(B(a;r)\subseteq \j(\Omega)\), per quanto appena detto, avremo
+	\[
+		-B(a;r) = B(-a;r) \subseteq \setc{\j(\Omega)}.
+	\]
+	Definiamo
+	\[
+		\y\colon \Omega \longrightarrow B(0;1), z \longmapsto \frac{r}{\j(z)+a}.
+	\]
+	Osserviamo che \(\y\) è iniettiva in quanto \(\j\) lo è.
+	Inoltre \(\y\) è olomorfa poiché è l'inverso di una funzione olomorfa che non si annulla mai, infatti abbiamo dimostrato che \(\j(z)\not\in B(-a;r)\) per ogni \(z\in\Omega\).
+	Infine
+	\[
+		\j(z) \not\in B(-a;r) \implies \abs{\j(z)+a} > r \implies \y(\Omega) \subseteq B(0;1).
+	\]
+	Quindi, componendo \(\y\) con un automorfismo del disco che manda \(\j(z_0)\) in \(0\), ho trovato un elemento di \(F\).
+	
+	\graffito{\(2)\)}Sia \(\a = \sup\Set{\abs{f'(z_0)}:f\in F}\). Se \(f\in F\) per definizione \(\abs{f(z)}\le 1\) per ogni \(z\in \Omega\), quindi \(F\) è una famiglia normale per la \hyperref[th:caratterizzazioneFamiglieNormali]{caratterizzazione di queste ultime}.
+	Dalla definizione di estremo superiore, trovo una successione massimizzante, ovvero
+	\[
+		\{f_n\}\subseteq F \qquad\text{tale che }\abs{f_n'(z_0)} \ge \a - \frac{1}{n}.
+	\]
+	D'altronde \(F\) è normale, quindi esiste una sottosuccessione \(\{f_{n_h}\}\) che converge quasi uniformemente a \(f_0\) su \(\Omega\). Vogliamo mostrare che
+	\[
+		f_0 \in F \qquad\text{e}\qquad \abs{f_0'(z_0)} = \a.
+	\]
+	\'E chiaro che \(f_0(\Omega)\subseteq B(0;1)\), inoltre \(f_0(z_0)=0\) perché
+	\[
+		0 = f_n(z_0) \longrightarrow f(z_0).
+	\]
+	Infine \(f_0\) è iniettivo perché, \hyperref[pr:successioneFunzioniIniettive]{da un risultato precedente}, il limite quasi uniforme di una successione di funzioni iniettive è iniettivo o costante; d'altronde \(f_0\) non è costante perché, come dimostreremo tra poco, \(\abs{f_0'(z_0)} = \a\) e quindi
+	\[
+		\abs{f_0'(z_0)} > \abs{\tilde{f}'(z_0)} \implies f_0 \not\equiv 0
+	\]
+	\(\abs{f_0'(z_0)}=\a\) perché se \(f_n\) converge quasi uniformemente a \(f_0\),  come conseguenza della formula di Cauchy, anche \(f_n'\) converge quasi uniformemente a \(f_0'\).
+	
+	\graffito{\(3)\)}\'E sufficiente mostrare che \(f_0\) è suriettiva, così da ottenere la funzione biiettiva e olomorfa, e di conseguenza biolomorfa, cercata.
+	Supponiamo per assurdo che \(f_0\) non sia suriettiva, mostriamo che questo ci permette di costruire una mappa \(h\in F\) tale che \(\abs{h'(z_0)}>\a\) contro la massimalità di \(\a\).
+	Indichiamo con \(\j_\b\) la generica mappa di M\"oebius
+	\[
+		\j_\b\colon B(0;1) \longrightarrow B(0;1), z \longmapsto \frac{z-\b}{1-\conj{\b}z}.
+	\]
+	Sia \(\g\in B(0;1)\) tale che \(\g\not\in f_0(\Omega)\), componiamo \(f_0\) con \(\j_\g\) così da avere
+	\[
+		0\not\in \j_\g\circ f_0(\Omega).
+	\]
+	Dal \hyperref[pr:determinazioneRadice]{teorema di monodromia} sugli aperti semplicemente connessi che escludono l'origine, si riesce a definire un ramo della radice. Sia quindi \(s(z)=z^2\) e componiamo \(\j_\g\circ f_0\) con \(s^{-1}\) chiamando la funzione ottenuta \(g\).
+	Componiamo infine con \(\j_{g(z_0)}\), abbiamo quindi
+	\[
+		h = \j_{g(z_0)} \circ s^{-1} \circ \j_\g \circ f_0.
+	\]
+	Ora \(h\in F\) come immediata conseguenza della sua definizione. Mostriamo che \(\abs{h'(z_0)}>\a\).
+	Per costruzione
+	\[
+		h(z) = \j_{g(z_0)} \circ s^{-1} \circ \j_\g \circ f_0(z) \implies f_0(z) = \underbracket{\j_{\g}^{-1}\circ s\circ \j_{g(z_0)}^{-1}}_{G} \circ h(z),
+	\]
+	da cui, dal momento che \(h(z_0)= 0\),
+	\[
+		0 = f_0(z_0) = G\circ h(z_0) \implies F(0) = 0.
+	\]
+	Inoltre \(G\) porta \(B(0;1)\) in sé, quindi, per il \hyperref[th:lemmaSchwarz]{lemma di Schwarz}, \(\abs{G'(0)}\le 1\). D'altronde \(G\) non è una rotazione, quindi \(\abs{G'(0)}\neq 1\). Infine, per la regola della catena,
+	\[
+		\abs{f_0'(z_0)} = \abs{G'(0)}\abs{h'(z_0)} \implies \abs{h'(z_0)} > \abs{f_0'(z_0)},
+	\]
+	che è assurdo.
+	
+	Mostriamo l'unicità. Siano \(f,g\colon \Omega \to B(0;1)\) due mappe biiettive e biolomorfe che soddisfano la condizione di \(z_0\). Dimostriamo che \(f\equiv g\).
+	Sappiamo che tali mappe sono invertibili. Consideriamo \(g^{-1}\) e definiamo
+	\[
+		h(z)\colon B(0;1) \longrightarrow B(0;1), z \longmapsto f\circ g^{-1}(z).
+	\]
+	\(h\) è ancora biiettiva e biolomorfa, quindi \(h\in \Aut\big(B(0;1)\big)\).
+	Inoltre \(h(0)=0\), quindi dalla caratterizzazione degli automorfismi del disco e dal lemma di Schwarz, segue
+	\[
+		h(z) = e^{i\,\q}z.
+	\]
+	Ora \(g',f'\in \R^+\), da cui
+	\[
+		e^{i\,\q} = h'(0) = f'|_{g^{-1}(0)}(g^{-1})'(0) = \frac{f'(z_0)}{g'(z_0)} \in \R^+ \implies \q = 0 \implies h(z) = z.
+	\]
+	Quindi
+	\[
+		f\circ g^{-1}(z) = z \iff f(z) = g(z),\,\fa z\in \Omega.
+	\]
+\end{proof}
+
+\begin{oss}
+	\'E sempre possibile imporre la condizione di unicità. Infatti trovata \(f\) è sufficiente comporla prima con l'automorfismo del disco che manda \(f(z_0)\) in \(0\):
+	\[
+		z \longmapsto \frac{z-f(z_0)}{1-\conj{f(z_0)}z};
+	\]
+	e infine comporre con la rotazione
+	\[
+		z \longmapsto z\,\frac{\conj{g'(z_0)}}{\abs{g'(z_0)}},
+	\]
+	dove \(g\) è \(f\) composto con l'automorfismo.
+\end{oss}
+
+\begin{oss}
+	L'ipotesi di \(\Omega \neq \C\) è necessaria in quanto, per il \hyperref[th:teoremaLiouville]{teorema di Liouville}, una mappa olomorfa \(f\colon \C \to B(0;1)\) è costante.
+\end{oss}
+
+\begin{teor}{di Picard}{teoremaPicard}\index{Teorema!di Picard}
+	Sia \(f\colon \C \to \C\) una funzione intera.
+	Se \(f\) evita almeno due valori, cioè
+	\[
+		f(\C) \subseteq \C\setminus\{z_1,z_2\},
+	\]
+	allora \(f\) è costante.
+\end{teor}
+
+\begin{proof}
+	Sia \(f\) una funzione intera che evita \(z_1,z_2\). Non è restrittivo pensare \(z_1=0\) e \(z_2=1\), è infatti sufficiente applicare una rotodilatazione adeguata.
+	
+	Se dimostriamo che \(B(0;1)\) è il ricoprimento universale di \(\C\setminus\{0,1\}\), per un teorema di Topologia sui sollevamenti, troviamo una mappa olomorfa \(g\) che fa commutare il seguente diagramma
+	\[
+		\begin{tikzcd}
+			& B(0;1) \arrow{d}{\p}\\
+			\C \arrow{ru}{g} \arrow[swap]{r}{f} & \C\setminus\{0,1\}
+		\end{tikzcd}
+	\]
+	Per \hyperref[th:teoremaLiouville]{Liouville} \(g\) risulterà costante e pertanto lo sarebbe anche \(f=\p\circ g\).
+	
+	Mostriamo che \(B(0;1)\) copre \(\C\setminus\{0,1\}\). Chiamo \(S^{\pm}\) i semipiani inferiore e superiore.
+	Prendiamo un triangolo equilatero su \(B(0;1)\) e denotiamo l'insieme dei punti che contiene con \(D_0\).
+	Per la mappa di Riemann, trovo
+	\[
+		\j\colon D_0 \longrightarrow S^+
+	\]
+	continua fino al bordo e tale che
+	\begin{align*}
+		\j(1) & = 0, & \j(e^{i\,\frac{2\p}{3}}) & = 1, & \j(e^{i\,\frac{4\p}{3}}) & = \infty.
+	\end{align*}
+	Siano \(a,b,c\) i tre archi che delimitano \(D_0\).
+	Sia \(R\) l'inversione circolare rispetto ad \(a\) in \(B(0;1)\). Tramite \(R\) la circonferenza unitaria è portata in una circonferenza ortogonale ad \(a\) che passa per \(1\) e \(e^{i\,\frac{2\p}{3}}\), che è pertanto ancora \(B(0;1)\).
+	Su \(R(D_0)\) definiamo
+	\[
+		\tilde{\j}\colon R(D_0) \longrightarrow S^-, z \longmapsto \conj{\j}(Rz).
+	\]
+	Per il \hyperref[th:principioRiflessioneSchwarz]{principio di riflessione di Schwarz} la mappa
+	\[
+		\tilde{\j}\colon D_0\cup R(D_0) \longrightarrow \C
+	\]
+	è olomorfa.
+	Iterando per tutti i lati infinite volte si ottiene il ricoprimento.
+\end{proof}
+
+\begin{notz}
+	Spesso si fa riferimento a questo teorema come al \emph{piccolo teorema di Picard}.
+\end{notz}
+
+\begin{oss}
+	Il teorema non può essere rifinito ulteriormente, vi sono infatti funzioni intere che evitano un solo valore ma non sono costanti. Ad esempio \(e^z\) ha immagine \(\C\setminus\{0\}\).
+\end{oss}

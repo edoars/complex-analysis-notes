@@ -1,0 +1,31 @@
+\tikz[baseline=-0.5ex]{
+	\draw [-latex, thick] (-2,0) -- (2.3,0);
+	\draw [-latex, thick] (0,-1) -- (0,2.3);
+	\draw [
+		decoration={markings, mark=at position 0.25 with {\arrow{>}}},
+		postaction={decorate}
+		] (1.7,0) arc (0:180:1.7);
+	\draw [
+		decoration={markings, mark=at position 0.75 with {\arrowreversed{>}}},
+		postaction={decorate}
+		] (0.4,0) arc (0:180:0.4);
+	\draw [
+		decoration={markings, mark=at position 0.5 with {\arrow{>}}},
+		postaction={decorate}
+		] (-1.7,0) -- (-0.4,0);
+	\draw [
+		decoration={markings, mark=at position 0.5 with {\arrow{>}}},
+		postaction={decorate}
+		] (0.4,0) -- (1.7,0);
+
+	\node [above left, font=\large] at (2.3,0) {\(x\)};
+	\node [below right, font=\large] at (0,2.3) {\(i\,y\)};
+	\node [below, font=\footnotesize] at (1.7,0) {\(R\)};
+	\node [below, font=\footnotesize] at (-1.7,0) {\(-R\)};
+	\node [below, font=\footnotesize] at (0.4,0) {\(r\)};
+	\node [below, font=\footnotesize] at (-0.4,0) {\(-r\)};
+	\node [above, font=\footnotesize] at (1.05,0.05) {\(\g_+\)};
+	\node [above right, font=\footnotesize] at (45:1.7) {\(\g_R\)};
+	\node [above, font=\footnotesize] at (-1.05,0.05) {\(\g_-\)};
+	\node [above left, font=\footnotesize] at (135:0.4) {\(\g_r\)};
+}

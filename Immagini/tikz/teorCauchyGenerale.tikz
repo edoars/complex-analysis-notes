@@ -1,0 +1,18 @@
+\tikz[baseline=-0.5ex]{
+	\draw [-latex, thick] (-1.6,0) -- (2,0);
+	\draw [-latex, thick] (0,-1.6) -- (0,2);
+	\draw [
+		decoration={markings, mark=at position 0.125 with {\arrow{>}}},
+		postaction={decorate}
+		] (0,0) circle (1.5);
+	\draw [
+		decoration={markings, mark=at position 0.125 with {\arrow{<}}},
+		postaction={decorate}
+		] (0,0) circle (0.75);
+	\draw [fill=white] (0,0) circle (0.1);
+
+	\node [above left] at (2,0) {\(x\)};
+	\node [below right] at (0,2) {\(y\)};
+	\node [above right, font=\footnotesize] at (45:0.75) {\(\g_2\)};
+	\node [above right, font=\footnotesize] at (45:1.5) {\(\g_1\)};
+}

@@ -1,0 +1,23 @@
+\begin{tikzpicture}[>=To]
+	\coordinate [label={[font=\large]below left:\(z_0\)}] (A) at (0,0);
+	\coordinate (B) at (3,0);
+	\coordinate (C) at (5,0);
+	\coordinate (D) at (5,3);
+	\coordinate [label={[font=\large]left:\(z\)}] (E) at (3,3);
+	\coordinate [label={[font=\large]right:\(z+h\)}] (F) at (5,5);
+
+	\draw [->-] (A) -- (B);
+	\draw [->-] (B) -- (C);
+	\draw [->-] (C) -- (D);
+	\draw [->-, very thick] (D) -- (F);
+	\draw [->-] (B) -- (E);
+	\draw [->-, very thick] (E) -- (D);
+	\draw (E) -- (F);
+
+	\node [above=0.1cm] at ($(A)!0.5!(B)$) {\(\g_1\)};
+	\node [left=0.1cm] at ($(B)!0.5!(E)$) {\(\g_2\)};
+	\node [above=0.1cm] at ($(B)!0.5!(C)$) {\(\g_3\)};
+	\node [right=0.1cm] at ($(C)!0.5!(D)$) {\(\g_4\)};
+	\node [right=0.1cm] at ($(D)!0.5!(F)$) {\(\g_5\)};
+	\node [below=0.1cm] at ($(D)!0.5!(E)$) {\(\g_6\)};
+\end{tikzpicture}

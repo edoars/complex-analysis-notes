@@ -1,0 +1,313 @@
+%!TEX root = ../main.tex
+\chapter{Calcolo di integrali definiti}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 28/10/2016 - QUINTA SETTIMANA (2)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%ESEMPI SUL TEOREMA DEI RESIDUI%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Esempi sul teorema dei residui}
+%\setcounter{exeN}{0}
+
+In questi esempi calcoleremo alcuni integrali di Riemann, che normalmente risulterebbero complicati, tramite l'applicazione del \hyperref[th:teoremaResiduiGeneralizzato]{teorema dei residui generalizzato}.
+
+Per prima cosa analizziamo un caso standard, in cui l'integrando consiste in un polinomio razionale.
+
+\begin{prop}{Integrale su \(\R\) di un polinomio razionale}{integraleRPolinomioRazionale}
+	Siano \(P(x),Q(x)\) polinomi a coefficienti reali.
+	Supponiamo che \(Q(x)\) non abbia zeri reali e che \(\deg Q \ge \deg P+2\), allora
+	\[
+		\int_{-\infty}^{+\infty} \frac{P(x)}{Q(x)}\,\dd x = 2\p\,i \sum_{i} \Set{\Res \left( \frac{P(z)}{Q(z)},z_i \right) | z_i \text{ polo del semipiano superiore}}.
+	\]
+\end{prop}
+
+\begin{proof}
+	Le ipotesi su \(Q(x)\) e \(P(x)\) sono necessarie affinché l'integrale converga secondo Riemann.
+	\[
+		\input{Immagini/tikz/integraleRPolinomioRazionale.tikz}
+	\]
+	I poli della funzione \(f(z)=P(z)/Q(z)\) sono gli zeri complessi del polinomio \(Q(x)\).
+	Consisderiamo il seguente ciclo, come mostrato in figura:
+	\[
+		\g_1^R\colon [-R,R] \to \C, t \mapsto t \qquad\text{e}\qquad \g_2^R\colon [0,\p] \to \C, t \mapsto R\,e^{i\,t}.
+	\]
+	Osserviamo che per \(R\) sufficientemente grande il ciclo contiente tutti e soli i poli di \(f\) che si trovano nel semipiano superiore.
+	Inoltre se \(z_i\) è un polo di \(f\) nel semipiano superiore avremo, per costruzione
+	\[
+		\ind(\g_1^R+\g_2^R,z_i) = 1.
+	\]
+	Quindi applicando il \hyperref[th:teoremaResiduiGeneralizzato]{teorema dei residui generalizzato} avremo
+	\[
+		\int\limits_{\mathclap{\g_1^R+\g_2^R}} \,\frac{P(z)}{Q(z)}\,\dd z = 2\p\,i \sum_i \Res(f,z_i).
+	\]
+	Andiamo quindi a calcolare l'integrale:
+	\[
+		\int\limits_{\mathclap{\g_1^R+\g_2^R}} \,\frac{P(z)}{Q(z)}\,\dd z = \int\limits_{\g_1^R}\frac{P(z)}{Q(z)}\,\dd z + \int\limits_{\g_2^R} \frac{P(z)}{Q(z)}\,\dd z = \int_{-R}^R \frac{P(t)}{Q(t)}\,\dd t + \int_0^\p \frac{P(R\,e^{i\,t})}{Q(R\,e^{i\,t})}\,i\,R\,e^{i\,t}\,\dd t.
+	\]
+	Dove
+	\[
+		\int_{-R}^R \frac{P(t)}{Q(t)}\,\dd t \xrightarrow{R\to +\infty} \int_{-\infty}^{+\infty} \frac{P(t)}{Q(t)}\,\dd t
+	\]
+	che è proprio l'integrale di partenza. Mentre se per il secondo ne consideriamo il modulo, avremo
+	\[
+		\begin{split}
+			\bigg\lvert\int_0^\p \frac{P(R\,e^{i\,t})}{Q(R\,e^{i\,t})}\,i\,R\,e^{i\,t}\,\dd t\bigg\rvert & \le \int_0^\p \bigg\lvert \frac{P(R\,e^{i\,t})}{Q(R\,e^{i\,t})}\bigg\rvert\,R\,\dd t \le \int_0^\p \frac{C}{R^2}\,R\,\dd t\graffito{ricordiamo che \(\deg Q\ge\deg P+2\) quindi per \(R\) grande posso stimare il modulo come \(C/R^2\)}\\
+			& = \frac{C}{R}\,\p \xrightarrow{R\to +\infty} 0.
+		\end{split}
+	\]
+	Per cui
+	\[
+		\int_{-\infty}^{+\infty} \frac{P(x)}{Q(x)}\,\dd x = 2\p\,i \sum_i \Res(f,z_i).\qedhere
+	\]
+\end{proof}
+
+\begin{exeN}
+	Calcolare il seguente integrale
+	\[
+		\int\limits_\R \frac{x^2}{1+x^4}\,\dd x.
+	\]
+\end{exeN}
+
+\begin{sol}
+	Osserviamo che il denominatore non ha radici reali e che la differenza dei gradi è \(2\).
+	Possiamo quindi applicare la proposizione precedente:
+	\[
+		\int\limits_\R \frac{x^2}{1+x^4}\,\dd x = 2\p\,i \sum_i \Res \left( \frac{z^2}{1+z^4},z_i \right),\text{ dove \(z_i\) è un polo del semipiano superiore}.
+	\]
+	Calcoliamo quindi i poli della funzione. Osserviamo che gli unici poli sono gli zeri complessi del denominatore:
+	\[
+		z_1 = e^{i\,\frac{\p}{4}}, \qquad z_2 = e^{i\,\frac{3}{4}\p}, \qquad z_3 = e^{i\,\frac{5}{4}\p}, \qquad z_4 = e^{i\,\frac{7}{4}\p}.
+	\]
+	Noi siamo interessati solo ai poli del semipiano superiore, quindi nel nostro caso a \(z_1\) e \(z_2\):
+	\[
+		f(z) = \frac{z^2}{\left( z-e^{i\,\frac{\p}{4}} \right)\left( z-e^{i\,\frac{3}{4}\p} \right)\left( z-e^{i\,\frac{5}{4}\p} \right)\left( z-e^{i\,\frac{7}{4}\p} \right)} = \frac{1}{z-e^{i\,\frac{\p}{4}}} g(z),
+	\]
+	dove \(g(z)\) è una funzione olomorfa in \(D(e^{i\,\frac{\p}{4}},\e)\), da cui
+	\[
+		f(z) = \frac{1}{z-e^{i\,\frac{\p}{4}}} \big[g_0+g_1 (z-e^{i\,\frac{\p}{4}})+g_2 (z-e^{i\,\frac{\p}{4}})^2+\ldots\big]
+	\]
+	Quindi
+	\[
+		\begin{split}
+			\Res \left( f(z),e^{i\,\frac{\p}{4}} \right) & = g_0 = g (e^{i\,\frac{\p}{4}}) = \frac{\left(e^{i\,\frac{\p}{4}}\right)^2}{\left( e^{i\,\frac{\p}{4}}-e^{i\,\frac{3}{4}\p} \right)\left( e^{i\,\frac{\p}{4}}-e^{i\,\frac{5}{4}\p} \right)\left( e^{i\,\frac{\p}{4}}-e^{i\,\frac{7}{4}\p} \right)}\\
+			& = \frac{\left( e^{i\,\frac{\p}{4}} \right)^2}{\left( e^{i\,\frac{\p}{4}} \right)^3 (1-i)(1+1)(1+i)} = \frac{1}{4e^{i\,\frac{\p}{4}}}.
+		\end{split}
+	\]
+	Analogamente si trova
+	\[
+		\Res \left( f(z),e^{i\,\frac{3}{4}\p} \right) = \frac{1}{4e^{i\,\frac{3}{4}\p}}.
+	\]
+	Da cui
+	\[
+		\int\limits_\R \frac{x^2}{1+x^4}\,\dd x = 2\p\,i \left( \frac{1}{4e^{i\,\frac{\p}{4}}} + \frac{1}{4e^{i\,\frac{3}{4}\p}} \right) = \frac{\p\,i}{2} \left( e^{-i\,\frac{\p}{4}}-e^{-i\,\frac{3}{4}\p} \right) = \frac{\p}{\sqrt{2}}.
+	\]
+\end{sol}
+
+\begin{exeN}
+	Calcolare il seguente integrale
+	\[
+		\int\limits_\R \frac{\cos(a\,x)}{1+x^2}\,\dd x, a>0.
+	\]
+\end{exeN}
+
+\begin{sol}
+	Osserviamo che anche in questo caso il denominatore non ha zeri reali e la differenza dei gradi dei polinomi è \(2\).
+	Sebbene la proposizione non sia direttamente applicabile, possiamo procedere con una strategia analoga. Osserviamo che
+	\[
+		\int\limits_\R \frac{\cos(a\,x)}{1+x^2}\,\dd x = \Re \int\limits_\R \frac{e^{i\,a\,x}}{1+x^2}\,\dd x,
+	\]
+	mostreremo che
+	\[
+		\int\limits_\R \frac{\cos(a\,x)}{1+x^2}\,\dd x = 2\p\,i \sum_i \Res \left( \frac{e^{i\,a\,z}}{1+z^2},z_i \right), \text{ dove \(z_i\) sono i poli superiori della funzione}.
+	\]
+	Utilizziamo lo stesso cammino \(\g_1^R+\g_2^R\) della proposizione e applichiamo il teorema dei residui:
+	\[
+		\int\limits_{\mathclap{\g_1^R+\g_2^R}}\, \frac{e^{i\,a\,z}}{1+z^2}\,\dd z = 2\p\,i \sum_{i} \Res \left( \frac{e^{i\,a\,z}}{1+z^2},z_i \right),
+	\]
+	dove
+	\[
+		\int\limits_{\mathclap{\g_1^R+\g_2^R}}\, \frac{e^{i\,a\,z}}{1+z^2}\,\dd z = \int\limits_{\g_1^R} \frac{e^{i\,a\,z}}{1+z^2}\,\dd z + \int\limits_{\g_2^R} \frac{e^{i\,a\,z}}{1+z^2}\,\dd z = \int_{-R}^R \frac{e^{i\,a\,t}}{1+t^2}\,\dd t + \int_0^\p \frac{e^{i\,a\,R\,(\cos t+i\,\sin t)}}{1+R^2 e^{2i\,t}}i\,R\,e^{i\,t}\,\dd t
+	\]
+	Passando al limite per \(R\to +\infty\), avremo
+	\[
+		\int_{-R}^R \frac{e^{i\,a\,t}}{1+t^2}\,\dd t \longrightarrow \int_{-\infty}^{+\infty} \frac{e^{i\,a\,t}}{1+t^2}\,\dd t
+	\]
+	che è l'integrale che vogliamo calcolare, mentre
+	\[
+		\int_0^\p \frac{e^{i\,a\,R\,(\cos t+i\,\sin t)}}{1+R^2 e^{2i\,t}}i\,R\,e^{i\,t}\,\dd t \longrightarrow 0,
+	\]
+	poiché
+	\[
+		\begin{split}
+			\bigg\lvert \int_0^\p \frac{e^{i\,a\,R\,(\cos t+i\,\sin t)}}{1+R^2 e^{2i\,t}}\,i\,R\,e^{i\,t}\,\dd t \bigg\rvert & \le \int_0^\p \frac{\big\lvert e^{i\,a\,R\,\cos t}e^{-a\,R\,\sin t}\big\rvert}{R^2-1}\,R\,\dd t = \int_0^\p \frac{e^{-a\,R\,\sin t}}{R^2-1}\,R\,\dd t\\
+			& \le \int_0^\p \frac{1}{R^2-1}\,R\,\dd t = \frac{R}{R^2-1}\,\p \xrightarrow{R\to+\infty} 0.
+		\end{split}
+	\]
+	Restano da calcolare i residui.
+	D'altronde questi sono in corrispondenza delle radici complesse di \(z^2+1\), che sono \(\pm i\). Poiché a noi interessano solo i poli del semipiano superiore andiamo a calcolare il residuo in \(i\):
+	\[
+		\frac{e^{i\,a\,z}}{z^2+1} = \frac{e^{i\,a\,z}}{(z-i)(z+i)} = \frac{1}{z-i} \frac{e^{i\,a\,z}}{z+i} = \frac{1}{z-i}\,g(z),
+	\]
+	dove \(g(z)\) è una funzione olomorfa in \(D(i,\e)\), per cui
+	\[
+		\frac{e^{i\,a\,z}}{z^2+1} = \frac{1}{z-i} \big[g_0+g_1(z-i)+g_2(z-i)^2+\ldots\big].
+	\]
+	Quindi
+	\[
+		\Res \left( \frac{e^{i\,a\,z}}{z^2+1},i \right) = g_0 = g(i) = \frac{e^{-a}}{2i}.
+	\]
+	Infine
+	\[
+		\int\limits_\R \frac{\cos(a\,x)}{1+x^2}\,\dd x = \Re \left( 2\p\,i\,\frac{e^{-a}}{2i} \right) = \p\,e^{-a}.
+	\]
+	Osserviamo che l'uso della parte reale non è stato veramente necessario, questo poiché in
+	\[
+		\int\limits_\R \frac{e^{i\,a\,x}}{1+x^2}\,\dd x,
+	\]
+	l'integrale della parte immaginaria si annullava per via della disparità del seno.
+\end{sol}
+
+\begin{exeN}
+	Calcolare il seguente integrale
+	\[
+		\int_0^{+\infty} \frac{\dd x}{1+x^n},
+	\]
+	al variare di \(n\in\N\).
+\end{exeN}
+
+\begin{sol}
+	Quando \(n\) è pari possiamo scrivere
+	\[
+		\int_0^{+\infty} \frac{\dd x}{1+x^n} = \frac{1}{2} \int_{-\infty}^{+\infty} \frac{\dd x}{1+x^n}
+	\]
+	che possiamo risolvere con i metodi precedenti.
+
+	Analizziamo quindi i casi con \(n\) dispari. I poli della funzione sono gli zeri del denominatore, che corrispondono alle radici \(n\)-esime dell'unità.
+
+	Per applicare il teorema dei residui, scegliamo il seguente cammino, che contiene solo il primo polo:
+	\[
+		\input{Immagini/tikz/esercizio3.tikz}
+	\]
+	dove
+	\[
+		\g_1^R\colon [0,R] \to \C, t\mapsto t; \qquad \g_2^R\colon [0,\frac{2\p}{n}] \to \C, t\mapsto R\,e^{i\,t}; \qquad \g_3^R\colon [0,R] \to \C, t \mapsto t\,e^{i\,\frac{2\p}{n}}.
+	\]
+	Per il teorema dei residui avremo
+	\[
+		2\p\,i\,\Res(f,e^{i\,\frac{\p}{n}}) = \int\limits_{\mathclap{\g_1^R+\g_2^R-\g_3^R}}\, f(z)\,\dd z,
+	\]
+	dove
+	\[
+		\int\limits_{\mathclap{\g_1^R+\g_2^R-\g_3^R}}\, f(z)\,\dd z = \int\limits_{\g_1^R}f(z)\,\dd z + \int\limits_{\g_2^R}f(z)\,\dd z - \int\limits_{\g_3^R}f(z)\,\dd z \xrightarrow{R\to+\infty} \left( 1-e^{i\,\frac{2\p}{n}} \right) \int_0^{+\infty} \frac{\dd t}{1+t^n}.
+	\]
+	Infatti
+	\[
+		\int\limits_{\g_1^R} f(z)\,\dd z = \int_0^R \frac{\dd t}{1+t^n} \longrightarrow \int_0^{+\infty} \frac{\dd t}{1+t^n}
+	\]
+	e
+	\[
+		\int\limits_{\g_3^R} f(z)\,\dd z = \int_0^R \frac{e^{i\,\frac{2\p}{n}}}{1+t^n e^{i\,2\p}}\,\dd t = e^{i\,\frac{2\p}{n}} \int_0^R \frac{1}{1+t^n}\,\dd t.
+	\]
+	Resta da mostrare che l'integrale di \(\g_2^R\) tende a zero, per farlo studiamone il modulo:
+	\[
+		\bigg\lvert \int\limits_{\g_2^R} f(z)\,\dd z \bigg\rvert = \bigg\lvert \int_0^{\frac{2\p}{n}} \frac{i\,R\,e^{i\,t}}{1+R^n e^{ni\,t}}\,\dd t \bigg\rvert \le \int_0^{\frac{2\p}{n}} \frac{R}{R^n-1}\,\dd t = \frac{2\p}{n} \frac{R}{R^n-1} \longrightarrow 0.
+	\]
+	Calcoliamo il residuo. Per farlo utilizzeremo un metodo differente da quello visto in precedente, che sfrutta la regola di de l'H\^opital
+	\[
+		f(z) = \frac{g_0}{z-e^{i\,\frac{\p}{n}}} + g_1 + g_2 \left( z-e^{i\,\frac{\p}{n}} \right) + \ldots
+	\]
+	da cui
+	\[
+		\begin{split}
+			\Res \left( f, e^{i\,\frac{\p}{n}} \right) & = g_0 = \lim_{z \to e^{i\,\frac{\p}{n}}} \left( z-e^{i\,\frac{\p}{n}} \right) f(z) = \lim_{z \to e^{i\,\frac{\p}{n}}} \frac{z-e^{i\,\frac{\p}{n}}}{1+z^n}\\
+			& \overset{H}{=} \lim_{z \to e^{i\,\frac{\p}{n}}} \frac{1}{n\,z^{n-1}} = \frac{1}{n\,e^{i\,\p\,\frac{n-1}{n}}}.
+		\end{split}
+	\]
+\end{sol}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%ESEMPI CON DETERMINAZIONE%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Esempi con determinazione}
+
+Quando si considerano funzioni del tipo \(z^\a\) con \(\a\in \R\) si ha
+\[
+	z^\a = e^{\a\,\ln z}.
+\]
+Quindi, per definizione, \(z^\a\) non è univocamente determinato, ma dipende dalla scelta della \emph{determinazione} di \(\ln z\).
+
+Nei prossimi esempi vedremo come ovviare a questo problema, quando questo genere di funzioni si presenta negli integrali.
+
+\begin{exeN}
+	Calcolare il seguente integrale
+	\[
+		\int_0^{+\infty} x^\a \frac{P(x)}{Q(x)}\,\dd x,
+	\]
+	supponendo che \(\a\in (0,1)\), \(Q\) non abbia zeri reali e \(\deg Q \ge \deg P+2\).
+\end{exeN}
+
+\begin{sol}
+	Osserviamo che
+	\[
+		z^\a \frac{P(z)}{Q(z)} = e^{\a\,\ln z} \frac{P(z)}{Q(z)} = e^{\a\,\ln z} R(z).
+	\]
+	Definiamo \(\ln z\) in \(\C\) meno l'asse reale positivo. Scegliamo inoltre la determinazione in cui \(\ln z \in \R\) se tende all'asse reale positivo da valori nel semipiano superiore e \(\ln z\in \R + 2\p\,i\) se vi tende dal semipiano inferiore.
+
+	Per applicare il teorema dei residui scegliamo il cammino rappresentato in figura, detto anche buco della serratura
+	\[
+		\input{Immagini/tikz/esercizio4.tikz}
+	\]
+	dove
+	\[
+		\g_1\colon [\q, 2\p-\q] \to \C, t \mapsto R\,e^{i\,t}; \qquad \g_2\colon [\e,R] \to \C, t \mapsto t-i\,\d;
+	\]
+	e
+	\[
+		\g_3\colon [\l, 2\p-\l] \to \C, t \mapsto r\,e^{i\,t}; \qquad \g_4\colon [\e,R] \to \C, t \mapsto t+i\,\d.
+	\]
+	Per il teorema dei residui avremo
+	\[
+		2\p\,i \sum_i \Res(f,z_i) = \int\limits_{\mathclap{\g_1-\g_2-\g_3+\g_4}}\, f(z)\,\dd z.
+	\]
+	In particolare
+	\[
+		\begin{split}
+			\int\limits_{\mathclap{\g_1-\g_2-\g_3+\g_4}}\, f(z)\,\dd z & = \int_\q^{2\p-\q} \frac{{(R\,e^{i\,t})}^\a P(R\,e^{i\,t})}{Q(R\,e^{i\,t})}\,i\,R\,e^{i\,t}\,\dd t - \int_\e^R \frac{{(t-i\,\d)}^\a P(t-i\,\d)}{Q(t-i\,\d)}\,\dd t\\
+			& - \int_\l^{2\p-\l} \frac{{(r\,e^{i\,t})}^\a P(r\,e^{i\,t})}{Q(r\,e^{i\,t})}\,i\,r\,e^{i\,t}\,\dd t + \int_\e^R \frac{{(t+i\,\d)}^\a P(t+i\,\d)}{Q(t+i\,\d)}\,\dd t.
+		\end{split}
+	\]
+	Osserviamo che
+	\[
+		\bigg\lvert \frac{P(z)}{Q(z)} \bigg\rvert \le \frac{C}{\abs{z}^2} \text{ se }\abs{z}\ge R_0 \qquad\text{e}\qquad \bigg\lvert \frac{P(z)}{Q(z)} \bigg\rvert \le C' \text{ se }\abs{z}< R_0,
+	\]
+	da cui
+	\[
+		\bigg\lvert \int_\q^{2\p-\q} \frac{{(R\,e^{i\,t})}^\a P(R\,e^{i\,t})}{Q(R\,e^{i\,t})}\,i\,R\,e^{i\,t}\,\dd t \bigg\rvert \le \int_\q^{2\p-\q} R^\a \frac{C}{R^2}\,R\,\dd t = R^{\a-1} C\,(2\p-2\q) \xrightarrow{R\to +\infty} 0,\graffito{\(\a<1\)}
+	\]
+	e
+	\[
+		\bigg\lvert \int_\l^{2\p-\l} \frac{{(r\,e^{i\,t})}^\a P(r\,e^{i\,t})}{Q(r\,e^{i\,t})}\,i\,r\,e^{i\,t}\,\dd t \bigg\rvert \le \int_\l^{2\p-\l} r^\a C' r\,\dd t = r^{\a+1} C' (2\p-2\l) \xrightarrow{r \to 0} 0\graffito{\(\a>0\)}.
+	\]
+	Inoltre
+	\[
+		\int_\e^R \frac{{(t+i\,\d)}^\a P(t+i\,\d)}{Q(t+i\,\d)}\,\dd t \xrightarrow{\d \to 0} \int_\e^R \frac{r^\a P(t)}{Q(t)}\,\dd t \xrightarrow[\e \to 0]{R\to +\infty} \int_0^{+\infty} t^\a \frac{P(t)}{Q(t)}\,\dd t,
+	\]
+	dove in questo caso tendevamo all'asse reale da sopra, quindi la nostra determinazione del logaritmo ci dice
+	\[
+		z^\a = e^{\a\,\ln z} \to x^\a.
+	\]
+	Nell'ultimo caso, quando ciò avviene da sotto l'asse reale, avremo
+	\[
+		z^\a = e^{\a\,\ln z} = e^{\a\,\ln x}e^{\a\,2\p\,i},
+	\]
+	da cui
+	\[
+		\int_\e^R \frac{{(t-i\,\d)}^\a P(t-i\,\d)}{Q(t-i\,\d)}\,\dd t \xrightarrow{\d \to 0} e^{2\p\,i\,\a} \int_\e^R \frac{t^\a P(t)}{Q(t)}\,\dd t \xrightarrow[\e \to 0]{R \to +\infty} e^{2\p\,i\,\a} \int_0^{+\infty} t^\a \frac{P(t)}{Q(t)}\,\dd t.
+	\]
+	Quindi
+	\[
+		2\p\,i \sum_i \Res(f,z_i) = \left(1-e^{2\p\,i\,\a}\right) \int_0^{+\infty} t^\a \frac{P(t)}{Q(t)}\,\dd t.
+	\]
+	A questo punto è sufficiente calcolare i residui di \(f\), i quali corrispondo agli zeri complessi di \(Q\), per completare il calcolo dell'integrale.
+\end{sol}

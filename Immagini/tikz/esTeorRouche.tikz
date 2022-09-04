@@ -1,0 +1,36 @@
+\tikz[baseline=-0.5ex]{
+	\draw [-latex, thick] (-1,0) -- (2.4,0);
+	\draw [-latex, thick] (0,-1.2) -- (0,1.4);
+	\draw [
+		decoration={markings, mark=at position 0.75 with {\arrow{>}}},
+		postaction={decorate}
+		] (0,-1) -- (0,1);
+	\draw [
+		decoration={markings, mark=at position 0.75 with {\arrow{>}}},
+		postaction={decorate}
+		] (0,1) -- (2,1);
+	\draw [
+		decoration={markings, mark=at position 0.75 with {\arrow{>}}},
+		postaction={decorate}
+		] (2,1) -- (2,-1);
+	\draw [
+		decoration={markings, mark=at position 0.75 with {\arrow{>}}},
+		postaction={decorate}
+		] (2,-1) -- (0,-1);
+
+	\node [below right] at (2.4,0) {\(x\)};
+	\node [above left] at (0,1.4) {\(y\)};
+
+	\node [left, font=\footnotesize] at (0,-0.5) {\(R\)};
+	\node [above, font=\footnotesize] at (1,1) {\(2R\)};
+
+	\node [right, font=\footnotesize] at (0,0.5) {\(\g_1\)};
+	\node [below, font=\footnotesize] at (1.5,1) {\(\g_2\)};
+	\node [left, font=\footnotesize] at (2,-0.5) {\(\g_3\)};
+	\node [above, font=\footnotesize] at (0.5,-1) {\(\g_4\)};
+
+	\draw [thin] (0.2,-0.05) -- (0.2,0.05);
+	\draw [thin] (0.5,-0.05) -- (0.5,0.05);
+	\node [below, font=\scriptsize] at (0.2,0) {\(1\)};
+	\node [below, font=\scriptsize] at (0.5,0) {\(\l\)};
+}

@@ -1,0 +1,605 @@
+%!TEX root = ../main.tex
+\chapter{Calcolo dei residui}
+%%%%%%%%%%%%%%%%%%%%%%%%
+%IL TEOREMA DEI RESIDUI%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Il teorema dei residui}
+
+\begin{defn}{Residuo}{residuo}\index{Residuo}
+	Sia \(\Omega\subseteq \C\) aperto e sia \(z_0\in \Omega\).
+	Sia \(f\colon \Omega\setminus\{z_0\} \to \C\) una funzione olomorfa che in \(z_0\) ha una singolarità isolata e quindi un unico sviluppo in serie di Laurent
+	\[
+		f(z) = \sum_{n\in\Z}a_n (z-z_0)^n.
+	\]
+	Si definisce \emph{residuo} di \(f\) in \(z_0\) è il coefficiente \(a_{-1}\) della sua serie di Laurent.
+\end{defn}
+
+\begin{notz}
+	Il residuo di \(f\) in \(z_0\) si indica con \(\Res(f,z_0)\).
+\end{notz}
+
+\begin{teor}{dei Residui}{teoremaResidui}\index{Teorema dei residui}
+	Sia \(f\colon D(z_0;r)\setminus\{z_0\} \to \C\) una funzione olomorfa la cui serie di Laurent attorno a \(z_0\) è
+	\[
+		f(z) = \sum_{n\in \Z}a_n (z-z_0)^n.
+	\]
+	Sia \(\g\) una curva chiusa in \(D(z_0;r)\setminus\{z_0\}\). Allora
+	\[
+		\frac{1}{2\p\,i}\int\limits_\g f(z)\,\dd z = \ind(\g,z_0) \Res(f,z_0).
+	\]
+\end{teor}
+
+\begin{proof}
+	Tramite la serie di Laurent di \(f\) in \(z_0\) scriviamo
+	\[
+		\frac{1}{2\p\,i} \int\limits_\g f(z)\,\dd z = \frac{1}{2\p\,i} \int\limits_\g \sum_{n\in \Z}a_n (z-z_0)^n\,\dd z.
+	\]
+	\(\g\) è un compatto nella corona di convergenza della serie, per cui su \(\im(\g)\) la serie converge uniformemente e pertanto posso scambiare serie e integrale:
+	\[
+		\frac{1}{2\p\,i} \int\limits_\g \sum_{n\in \Z}a_n(z-z_0)^n \,\dd z = \sum_{n\in \Z}a_n \frac{1}{2\p\,i} \int\limits_\g (z-z_0)^n\,\dd z.
+	\]
+	Analizziamo l'integrale al variare di \(n\):
+	\begin{itemize}
+		\item Se \(n\ge 0\), per Cauchy avremo
+		      \[
+			      \int\limits_\g (z-z_0)^n\,\dd z = 0.
+		      \]
+		\item Se \(n\le -2\), \((z-z_0)^n\) ammette una primitiva, quindi
+		      \[
+			      \int\limits_\g (z-z_0)^n\,\dd z = 0.
+		      \]
+		\item Se \(n=-1\) avremo
+		      \[
+			      \frac{1}{2\p\,i}\int\limits_\g \frac{1}{z-z_0}\,\dd z = \ind(\g,z_0).
+		      \]
+	\end{itemize}
+	In conclusione
+	\[
+		\sum_{n\in \Z}a_n \frac{1}{2\p\,i} \int\limits_\g (z-z_0)^n\,\dd z = \ind(\g,z_0) a_{-1} = \ind(\g,z_0) \Res(f,z_0).\qedhere
+	\]
+\end{proof}
+
+\begin{ese}
+	L'indice di avvolgimento di una curva è il primo esempio di residuo che abbiamo incontrato, infatti per il teorema
+	\[
+		\ind(\g,z_0) = \frac{1}{2\p\,i} \int\limits_\g \frac{1}{z-z_0}\,\dd z \implies \Res \left( \frac{1}{z-z_0},z_0 \right)=1.
+	\]
+\end{ese}
+
+\begin{teor}{dei Residui generalizzato}{teoremaResiduiGeneralizzato}\index{Teorema dei residui!generalizzato}
+	Sia \(\Omega \subseteq \C\) aperto e sia \(f\colon \Omega\setminus\{a_1,\ldots,a_n\} \to \C\) una funzione olomorfa.
+	Sia \(\g\) un ciclo in \(\Omega\setminus\{a_1,\ldots,a_n\}\) tale che \(\ind(\g,\a)=0\) se \(\a\not\in \Omega\).
+	Allora
+	\[
+		\frac{1}{2\p\,i} \int\limits_\g f(z)\,\dd z = \sum_{i=1}^n \Res(f,a_i)\ind(\g,a_i).
+	\]
+\end{teor}
+
+\begin{figure}[tp]
+	\centering
+	\input{Immagini/tikz/teorResiduiGenerale.tikz}
+	\caption{Rappresentazione di \(\Omega\) e delle curve usate nel teorema.}
+	\label{fig:teorResiduiGenerale}
+\end{figure}
+
+\begin{proof}
+	Pongo \(\ind(\g,a_i)=l_i\). Trovo \(\g_1,\ldots,\g_n\) cicli tali che
+	\[
+		\ind(\g_i,a_i)=l_i \qquad\text{e}\qquad \ind(\g_i,\a) = 0, \text{ se }\a\not\in\Omega.
+	\]
+	Infatti mi basta porre \(\g_i=\pd B(a_i,\e)\) percorso \(l_i\) volte, con \(B(a_i,\e)\subseteq \Omega\), da cui
+	\[
+		\ind(\g_i,\b) = 0 \text{ se }\b\not\in B(a_i,\e) \implies \ind(\g_i,\a) = 0 \text{ se }\a\not\in \Omega.
+	\]
+	Adesso pongo \(\Gamma = \g-\g_1- \ldots-\g_n\), così che \(\Gamma\) soddisfa le ipotesi del \hyperref[th:teorCauchyGenerale]{teorema di Cauchy generalizzato} su \(\Omega\setminus\{a_1,\ldots,a_n\}\). Infatti
+	\[
+		\ind(\Gamma,\a) = \ind(\g,\a) - \ind(\g_1,\a) - \ldots - \ind(\g_n,\a) = 	\begin{cases}
+			0 & \text{se }\a \not\in \Omega \\
+			0 & \text{se }\a = a_i
+		\end{cases}
+	\]
+	Applicando il teorema otteniamo
+	\[
+		\frac{1}{2\p\,i} \int\limits_\Gamma f(z)\,\dd z = 0,
+	\]
+	da cui, applicando il teorema dei residui
+	\[
+		0 = \frac{1}{2\p\,i} \int\limits_\g f(z)\,\dd z - \sum_{i=1}^n \frac{1}{2\p\,i} \int\limits_{\g_i}f(z)\,\dd z = \frac{1}{2\p\,i}\int\limits_\g f(z)\,\dd z  - \sum_{i=1}^n \Res(f,a_i)\ind(\g_i,a_i).
+	\]
+	Quindi, ricordando che \(\ind(\g_1,a_i)=\ind(\g,a_i)\), otteniamo
+	\[
+		\frac{1}{2\p\,i} \int\limits_\g f(z)\,\dd z = \sum_{i=1}^n \Res(f,a_i)\ind(\g,a_i).\qedhere
+	\]
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 15/11/2016 - SESTA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+%INDICATORE LOGARITMICO%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Indicatore logaritmico}
+
+Dalla \hyperref[df:indiceAvvolgimento]{definizione di indice di una curva} sappiamo che
+\[
+	\ind(\g,a) = \frac{1}{2\p\,i} \int\limits_\g \frac{\dd z}{z-a}.
+\]
+Intuitivamente la ragione risiede nel fatto che la primitiva di \(1/(z-a)\) è \(\ln(z-a)\), il quale "scarta" di \(2\p\,i\) per ogni giro attorno ad \(a\).
+
+Osserviamo che
+\[
+	\frac{f'(z)}{f(z)} = \frac{\dd}{\dd z}\ln f(z),
+\]
+per cui saremmo tentati di affermare che
+\[
+	\frac{1}{2\p\,i}\int\limits_\g \frac{f'(z)}{f(z)}\,\dd z
+\]
+conti i giri di \(f\circ \g\) attorno all'origine.
+
+Studiamo un caso particolare. Supponiamo che
+\[
+	f(z) = a_n z^n + a_{n+1}z^{n+1} + \ldots \qquad\text{e}\qquad \g(t)=r\,e^{i\,t}.
+\]
+Avremo che
+\[
+	\begin{split}
+		\frac{1}{2\p\,i} \int\limits_\g \frac{f'(z)}{f(z)}\,\dd z & = \frac{1}{2\p\,i} \int\limits_\g \frac{n\,a_n z^{n-1}+\ldots}{a_n z^n + \ldots}\,\dd z = \frac{1}{2\p\,i} \int\limits_\g \frac{n\,a_n z^{n-1}}{a_n z^n}\,\dd z\\
+		& = \frac{1}{2\p\,i} \int\limits_\g \frac{n}{z}\,\dd z = n.
+	\end{split}
+\]
+Dove abbiamo escluso i termini di ordine superiore in quanto costituivano una funzione olomorfa, il cui contributo all'integrale sarebbe stato nullo per il Teorema di Cauchy.
+
+Sembrerebbe quindi che
+\[
+	\frac{1}{2\p\,i}\int_\g \frac{f'(z)}{f(z)}\,\dd z
+\]
+conti gli zeri di \(f\) con la loro molteplicità.
+
+\begin{teor}{dell'indicatore logaritmico}{teoremaIndicatoreLogaritmico}\index{Teorema!dell'indicatore logaritmico}
+	Sia \(\Omega\subseteq\C\) un aperto connesso e sia \(f\) una funzione meromorfa in \(\Omega\) avente finiti zeri \(\{a_j\}_{j=1}^m\) di molteplicità \(r_j\) e poli \(\{b_k\}_{k=1}^l\) di ordine \(s_k\).
+	Sia \(\g\) un ciclo in \(\Omega\) tale che \(\ind(\g,\a)=0\) se \(\a\not\in \Omega\).
+	Supponiamo che \(\im(\g)\) non contenga zeri e poli di \(f\). Allora
+	\[
+		\frac{1}{2\p\,i} \int\limits_\g \frac{f'(z)}{f(z)}\,\dd z = \sum_{j=1}^m r_j \ind(\g,a_j) - \sum_{k=1}^l s_k \ind(\g,b_k).
+	\]
+\end{teor}
+
+\begin{proof}
+	Siano \(\{c_t\}\) i poli di \(\frac{f'}{f}\), i quali corrispondono chiaramente a \(\{a_j\}\cup \{b_k\}\).
+	Per il \hyperref[th:teoremaResiduiGeneralizzato]{teorema dei residui generalizzato}, avremo
+	\[
+		\frac{1}{2\p\,i} \int\limits_\g \frac{f'(z)}{f(z)}\,\dd z = \sum_t \Res \left(\frac{f'}{f},c_t\right)\ind(\g,c_t).
+	\]
+	Andiamo quindi a calcolare i residui.
+	Sia \(a_j\) uno zero di \(f\) di molteplicità \(r_j\). In un intorno di \(a_j\) avremo
+	\[
+		f(z) = m_{r_j} (z-a_j)^{r_j} + m_{r_j+1} (z-a_j)^{r_j+1} + \ldots,
+	\]
+	dove \(r_j > 0\) in quanto \(a_j\) è uno zero di \(f\). Quindi
+	\[
+		\frac{f'(z)}{f(z)} = \frac{m_{r_j}(z-a_j)^{r_j-1}r_j+\ldots}{m_{r_j}(z-a_j)^{r_j}+\ldots} = \frac{r_j}{z-a_j} + \big[g_0 + g_1(z-a_j)+g_2(z-a_j)^2+\ldots\big],
+	\]
+	da cui
+	\[
+		\Res \left(\frac{f'}{f},a_j\right) = r_j.
+	\]
+	Sia \(b_k\) un polo di \(f\) di ordine \(s_k\). In un intorno di \(b_k\) avremo
+	\[
+		f(z) = \frac{m_{s_k}}{(z-b_k)^{s_k}} + \frac{m_{s_k-1}}{(z-b_k)^{s_k-1}} +\ldots.
+	\]
+	Quindi
+	\[
+		\frac{f'(z)}{f(z)} = \frac{\frac{-s_k m_{s_k}}{(z-b_k)^{s_k+1}}+\ldots}{\frac{m_{s_k}}{(z-b_k)^{s_k}}+\ldots} \graffito{moltiplicando per \((z-b_k)^{s_k}\)} = \frac{\frac{-s_k m_{s_k}}{z-b_k}+\ldots}{m_{s_k}+\ldots} = \frac{-s_k}{z-b_k} + \big[h_0 + h_1(z-b_k) + h_2(z-b_k)^2+\ldots\big],
+	\]
+	da cui
+	\[
+		\Res \left( \frac{f'}{f},b_k\right) = -s_k.
+	\]
+	Sostituendo nell'espressione con i residui si giunge alla tesi.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 18/11/2016 - SESTA SETTIMANA (2)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{oss}
+	Supponiamo che \(f\) non abbia poli e abbia uno zero di ordine \(n\) in \(a\):
+	\[
+		f(z) = a_n(z-a)^n + a_{n+1}(z-a)^{n+1}+\ldots
+	\]
+	Se \(\g\) è una curva che fa un giro attorno ad \(a\), per il teorema \(f(\g)\) compie \(n\) giri attorno a \(0\).
+	Questo è un fatto topologico. Ciò significa che se prendo \(g\) sufficientemente vicina ad \(f\), tale proprietà si conserva.
+	Vedremo che tale funzione deve essere vicina nella misura in cui \(0\not\in g(\g)\).
+\end{oss}
+
+\begin{teor}{di Rouchè}{teoremaRouchè}\index{Teorema!di Rouchè}
+	Siano \(f,g\) olomorfe in \(B(z_0;r)\) e continue fino al bordo. Supponiamo che \(f,g\) non abbiano zeri sul cerchio \(\pd B(z_0;r)\) e che
+	\[
+		\abs{f(z)-g(z)} < \abs{f(z)} \qquad\text{se }z\in \pd B(z_0;r).
+	\]
+	Allora \(f,g\) hanno lo stesso numero di zeri in \(B(z_0;r)\).
+\end{teor}
+
+\begin{proof}
+	Consideriamo l'omotopia \(h_\l(z)\) fra \(f\) e \(g\) definita da
+	\[
+		h_\l(z) = \l\,f(z)+(1-\l)g(z), \qquad\text{con }\l\in [0,1].
+	\]
+	Definiamo
+	\[
+		a(\l) = \frac{1}{2\p\,i}\int\limits_{\mathclap{\pd B(z_0;r)}}\,\frac{h_\l'(z)}{h_\l(z)}\,\dd z
+	\]
+	l'indicatore logaritmico di \(h_\l\). In particolare, dal momento che \(h_0\equiv g, h_1 \equiv f\) e \(f,g\) sono funzioni olomorfe, avremo
+	\[
+		a(0) = \#\{\text{zeri di }g\} \qquad\text{e}\qquad a(1) = \#\{\text{zeri di }f\}.
+	\]
+	Osserviamo che \(a(\l)\) dipende con continuità da \(\l\), questo poiché vale la continuità sotto segno di integrale. Infatti, per \(z\) fissato,
+	\[
+		\l \longmapsto \frac{h_\l'(z)}{h_\l(z)},
+	\]
+	è continua su \(\pd B(z_0;r)\) in quanto
+	\[
+		\abs{h_\l(z)} = \big\lvert f(z)+(1-\l)\big[g(z)-f(z)\big]\big\rvert \ge \abs{f(z)}-(1-\l)\abs{g(z)-f(z)} > 0 \graffito{\((1-\l)\in[0,1]\)}
+	\]
+	dove \(\abs{f(z)-g(z)}<\abs{f(z)}\) per ipotesi.
+	Inoltre \(a(\l)\in \N\), quindi \(a(\l)\) è necessariamente costante per via della continuità. Da cui
+	\[
+		\#\{\text{zeri di }f\} = a(0) = a(1) = \#\{\text{zeri di }g\}.\qedhere
+	\]
+\end{proof}
+
+\begin{cor}
+	Teorema fondamentale dell'algebra.
+\end{cor}
+
+\begin{proof}
+	Sia \(f(z)=z^n+a_{n-1}z^{n-1}+\ldots+a_1 z+a_0\) un generico polinomio a coefficienti in \(\C\).
+	Consideriamo \(g(z)=z^n\). Chiaramente \(g\) ha \(n\) zeri in ogni palla \(B(0;R)\). A questo punto è sufficiente mostrare che vale Rouchè. In particolare ci basta mostrare che se \(R\) è sufficientemente grande
+	\[
+		\abs{f(z)-g(z)} < \abs{f(z)} \qquad\text{per }z\in \pd B(0;R).
+	\]
+	D'altronde se \(\abs{z}=R\) con \(R\) sufficientemente grande,
+	\[
+		\abs{f(z)-g(z)} = \abs{a_{n-1}z^{n-1}+\ldots+a_1 z+a_0} < \abs{z^n}.\qedhere
+	\]
+\end{proof}
+
+\begin{ese}
+	Sia \(\l>1\) reale. Dimostriamo che l'equazione \(\l-z-e^{-z}=0\) ha esattamente una soluzione nel semipiano \(\Set{z|\Re z>0}\).
+
+	Prendiamo \(f(z)=\l-z-e^{-z}\) e \(g(z)=\l-z\). Chiaramente \(g\) ha un solo zero su qualsiasi palla \(B(\l;R)\). Vorremmo poter applicare Rouchè sul seguente cammino:
+	\[
+		\input{Immagini/tikz/esTeorRouche.tikz}
+	\]
+	Per farlo dobbiamo mostrare che, per \(R\) sufficientemente grande, vale
+	\[
+		\abs{f(z)-g(z)} \le \abs{f(z)} \qquad\text{per }z\in \pd Q_R,
+	\]
+	dove \(\pd Q_R = \im(\g_1)\cup\im(\g_2)\cup\im(\g_3)\cup\im(\g_4)\).
+	Dalla figura si deduce che se \(z\in \pd Q_R\) e \(R>1+\l\), allora \(\abs{g(z)}>1\). Inoltre
+	\[
+		\abs{f(z)-g(z)} = \abs{e^{-z}} = \abs{e^{-x}e^{-i\,y}} = e^{-x} \le 1,
+	\]
+	poiché \(x\ge 0\). Per cui vale Rouchè, che implica immediatamente la tesi.
+\end{ese}
+
+\begin{exeN}[Esercitazione 22/11]
+	Si contino gli zeri di \(f(z)=z^4-8z^3+z^2+z\) in \(B(0;1)\).
+\end{exeN}
+
+\begin{sol}
+	Definiamo \(g(z)=-8z^3\) che in \(B(0;1)\) ha precisamente \(3\) zeri. Verifichiamo le ipotesi di Rouché:
+	\[
+		\abs{f(z)-g(z)} = \abs{z^4+z^2+z} \le \abs{z}^4+\abs{z}^2+\abs{z} \le 3 < \abs{g(z)}=8.
+	\]
+	Quindi \(f\) e \(g\) hanno lo stesso numero di zeri in \(B(0;1)\), cioè \(3\).
+\end{sol}
+
+\begin{exeN}[Esercitazione 22/11]
+	Sia \(f(z)=4z^4-29z^2+24\). Determinare \(r\in\N\) tale che \(f\) ammette tutti i suoi zeri in \(B(0;r)\).
+\end{exeN}
+
+\begin{sol}
+	Per il teorema fondamentale dell'algebra \(f\) ha \(4\) zeri in \(\C\). Pertanto se vogliamo applicare il teorema di Rouché, dobbiamo trovare \(r\) per cui \(f\) soddisfi le ipotesi con \(g(z)=4z^4\). Poniamo \(r=3\), avremo
+	\[
+		\abs{f(z)-g(z)} = \abs{-29z^2+24} \le 29\abs{z}^2+24 \le 285 < \abs{g(z)} = 324.
+	\]
+	Quindi \(f\) ha tutti e \(4\) gli zeri in \(B(0;3)\).
+\end{sol}
+
+\begin{prop}{Successione di funzioni iniettive è iniettiva o costante}{successioneFunzioniIniettive}
+	Sia \(\Omega\subseteq \C\) un aperto connesso. Siano \(f_n\) funzioni olomorfe e iniettive su \(\Omega\) tali che \(f_n \to f\) quasi uniformemente. Allora \(f\) è olomorfa ed è iniettiva oppure costante.
+\end{prop}
+
+\begin{proof}
+	L'olomorfia viene da \hyperref[th:rigiditàOlomorfaConvergenza]{un vecchio teorema}.
+	Se \(f\) è costante non c'è altro da dimostrare. Supponiamo quindi che \(f\) non sia costante.
+	Supponiamo per assurdo che \(f\) non sia iniettiva, quindi esiste \(w_0\in \C\) che ha più di una retroimmagine tramite \(f\).
+	Tali retroimmagini sono necessariamente isolate, poiché altrimenti \(f(z)\equiv w_0\) per il \hyperref[th:principioIdentità]{principio di identità}.
+
+	Prendiamo \(z_0,z_1\in\Omega\) tali che \(f(z_0)=f(z_1)=w_0\). Siccome le retroimmagini sono isolate, posso trovare \(r\) sufficientemente piccolo tale che
+	\[
+		B(z_0;r) \cap f^{-1}(w_0) = z_0 \qquad\text{e}\qquad B(z_1;r) \cap f^{-1}(w_0) = z_1.
+	\]
+	Notiamo che, se \(z\in \pd B(z_0;r)\cup \pd B(z_1;r)\), si ha
+	\[
+		\big\lvert \big(f_n(z)-w_0\big) - \big(f(z)-w_0\big) \big\rvert < \abs{f(z)-w_0}.
+	\]
+	Infatti
+	\[
+		\big\lvert \big(f_n(z)-w_0\big) - \big(f(z)-w_0\big) \big\rvert \to 0
+	\]
+	per la convergenza quasi uniforme degli \(f_n\). D'altronde
+	\[
+		\abs{f(z)-w_0} \ge \e >0,\,\fa z\in \pd B(z_0;r)\cup \pd B(z_1;r).
+	\]
+	Posso quindi applicare Rouchè per ottenere che \(f(z)-w_0\) ha tanti zeri quanti \(f_n(z)-w_0\).
+	D'altronde \(f_n(z)-w_0\) ne ha al più uno per l'iniettività di \(f_n\), mentre \(f(z)-w_0\) ne ha due per ipotesi. Ciò è assurdo, per cui \(f\) è iniettiva.
+\end{proof}
+
+\begin{notz}
+	Nell'ambito dell'analisi complessa, le funzioni iniettive vengono anche dette \emph{univalenti}.
+\end{notz}
+
+\begin{teor}{Funzioni olomorfe sono aperte}{funzioniOlomorfeAperte}
+	Sia \(f\) una funzione olomorfa. Allora \(f\) è aperta.
+\end{teor}
+
+\begin{proof}
+	Affinché \(f\) sia aperta, dobbiamo dimostrare che l'immagine di aperti è ancora un aperto.
+	Sia quindi \(\Omega\subseteq \C\) aperto. Per dimostrare che \(f(\Omega)\) è aperto mostriamo che ogni suo punto è interno, cioè che se \(w_0\in f(\Omega)\) e \(\abs{w-w_0}\) è sufficientemente piccolo, allora anche \(w\in f(\Omega)\).
+
+	Dal momento che \(w_0\in f(\Omega)\), ho che \(f^{-1}(w_0)\neq \emptyset\). Possiamo supporre che \(f\) non sia costante, \graffito{se \(f\) è costante la tesi è banale}quindi i punti di \(f^{-1}(w_0)\) sono isolati, poiché altrimenti \(f(z)\equiv w_0\) per il \hyperref[th:principioIdentità]{principio di identità}.
+	Quindi, se \(z_0\in f^{-1}(w_0)\) e prendo \(r\) sufficientemente piccolo, avremo
+	\[
+		f(z) \neq w_0,\,\fa z \in \chius{B(z_0;r)}\setminus\{z_0\}.
+	\]
+	Voglio verificare se vale Rouchè fra \(f(z)-w\) e \(f(z)-w_0\), ovvero se
+	\[
+		\big\lvert \big(f(z)-w\big)-\big(f(z)-w_0\big) \big\rvert < \abs{f(z)-w_0} \qquad\text{per }z\in \pd B(z_0;r).
+	\]
+	D'altronde
+	\[
+		\abs{f(z)-w_0} \ge \e >0 \qquad\text{se }z\in \pd B(z_0;r),
+	\]
+	inoltre
+	\[
+		\big\lvert \big(f(z)-w\big)-\big(f(z)-w_0\big) \big\rvert = \abs{w-w_0}.
+	\]
+	quindi è sufficiente prendere \(w\) tale che \(\abs{w-w_0}<\e\) affinché \(f(z)-w\) abbia uno zero come \(f(z)-w_0\). Da ciò segue che \(w\) ha una retroimmagine in \(\Omega\).
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%APPENDICE (LEZIONE DEL 15/11)%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Appendice}
+
+In questo paragrafo studieremo qualche applicazione di quanto studiato fino ad ora.
+
+\begin{prop}{Integrale di Fresnel}{integraleFresnel}
+	Il seguente integrale, detto di Fresnel, vale
+	\[
+		\int_0^\infty \frac{\sin x}{x}\,\dd x = \frac{\p}{2}.
+	\]
+\end{prop}
+\begin{proof}
+	Consideriamo il cammino rappresentato in figura.
+	\[
+		\input{Immagini/tikz/integraleFresnel.tikz}
+	\]
+	Osserviamo che se considerassimo il seno come funzione da integrare lungo la curva, esso non tenderebbe a zero lungo \(\g_R\). Infatti
+	\[
+		\sin z = \frac{e^{i\,z}-e^{-i\,z}}{2i},
+	\]
+	da cui, se \(z=x+i\,y\),
+	\[
+		e^{i\,z} = e^{i\,x}e^{-y} \simeq e^{-y} \to 0 \qquad\text{ma}\qquad e^{-i\,z}=e^{-i\,x}e^y \not\to 0.
+	\]
+	Quindi non integreremo il seno, bensì la funzione
+	\[
+		f(z) = \frac{e^{i\,z}}{z},
+	\]
+	la quale è olomorfa nella curva \(\Gamma=\g_-+\g_r+\g_++\g_R\), da cui
+	\[
+		\int\limits_\Gamma \frac{e^{i\,z}}{z}\,\dd z = 0.
+	\]
+	Integrando \(f\) lungo \(\g_-+\g_+\) avremo
+	\[
+		\int\limits_{\mathclap{\g_-+\g_+}}\,\frac{e^{i\,x}}{x}\,\dd x \xrightarrow[R\to\infty]{r\to 0} 2i \int_0^\infty \frac{\sin x}{x}\,\dd x,
+	\]
+	in quanto la parte reale si annulla, poiché \(\cos x/x\) è dispari.
+
+	Integriamo \(f\) sulle curve restanti. Definiamo
+	\[
+		\g_R\colon [0,\p] \to \C, t \mapsto R\,e^{i\,t} \qquad\text{e}\qquad -\g_r\colon [0,\p] \to \C, t \mapsto r\,e^{i\,t}.
+	\]
+	Da cui
+	\[
+		\int\limits_{\g_R} \frac{e^{i\,z}}{z}\,\dd z = \int_0^\p \frac{e^{i\,R\,(\cos t+i\,\sin t)}}{R\,e^{i\,t}}i\,R\,e^{i\,t}\,\dd t = \int_0^\p i\,e^{i\,R\,\cos t}e^{-R\,\sin t}\,\dd t
+	\]
+	che stimato in modulo
+	\[
+		\bigg\lvert \int_0^\p i\,e^{i\,R\,\cos t}e^{-R\,\sin t}\,\dd t \bigg\rvert \le \int_0^\p e^{-R\,\sin t}\,\dd t \xrightarrow{R\to \infty} 0.
+	\]
+	Infine
+	\[
+		\int\limits_{\g_r} \frac{e^{i\,z}}{z}\,\dd z \graffito{applicando Taylor} = \int\limits_{\g_r} \frac{\dd z}{z} + \int\limits_{\g_r} g(z)\,\dd z = -\p\,i + \int\limits_{\g_r} g(z)\,\dd z.
+	\]
+	Mostriamo che il secondo integrale tende a zero:
+	\[
+		-\int\limits_{-\g_r} g(z)\,\dd z = -\int_0^\p g(r\,e^{i\,t})i\,r\,e^{i\,t}\,\dd t,
+	\]
+	che, stimato in modulo, vale
+	\[
+		\bigg\lvert \int_0^\p g(r\,e^{i\,t})i\,r\,e^{i\,t}\,\dd t \bigg\rvert \le \int_0^\p \abs{g(r\,e^{i\,t})}r\,\dd t \xrightarrow{r\to 0} 0.
+	\]
+	Quindi
+	\[
+		2i \int_0^\infty \frac{\sin x}{x}\,\dd x = \p\,i \implies \int_0^\infty \frac{\sin x}{x}\,\dd x = \frac{\p}{2}.
+	\]
+\end{proof}
+
+\begin{prop}{Prodotto di Eulero per il seno}{prodottoEuleroSeno}
+	Vale la seguente identità
+	\[
+		\sin z = z\,\prod_{n\ge 1} \left( 1- \frac{z^2}{\p^2 n^2} \right).
+	\]
+\end{prop}
+
+\begin{proof}
+	Definiamo
+	\[
+		f(z) = \frac{\p^2}{\sin^2(\p\,z)} \qquad\text{e}\qquad g(z) = \sum_{n\in \Z} \frac{1}{(z-n)^2}.\graffito{\(g(z)\) è ben definita in quanto converge uniformemente sui compatti di \(\C\setminus \Z\)}
+	\]
+	Per prima cosa dimostriamo che \(f(z)=g(z)\).
+	Osserviamo che entrambe sono funzioni periodiche di periodo \(1\), ovvero
+	\[
+		f(z+1)=f(z) \qquad\text{e}\qquad g(z+1)=g(z).
+	\]
+	Per cui possiamo restringerci a studiarle all'interno della striscia \(S=\Set{z\in \C | 0\le \Re z \le 1}\).
+	Mostriamo che in tale striscia, e quindi su tutto \(\C\), \(f-g\) è limitata. Sui compatti si ha la limitatezza per Weierstrass, dobbiamo quindi studiare il comportamento all'infinito e nei poli \(0\) e \(1\). Per \(f(z)\):
+	\[
+		\lim_{\substack{z \in S\\\Im z \to +\infty}} f(z) \overset{z=x+i\,y}{=} \lim_{y\to +\infty} \frac{\p^2}{\abs*{\frac{e^{i\,x\,\p}e^{-y\,\p}-e^{-i\,x\,\p}e^{y\,\p}}{2i}}^2} = 0
+	\]
+	e il limite è uniforme in \(x\in [0,1]\). Per \(g(z)\):
+	\[
+		\lim_{\substack{z\in S\\\Im z \to +\infty}} \abs*{\sum \frac{1}{(z-n)^2}} \le \lim_{\substack{z\in S\\\Im z \to +\infty}} \sum \frac{1}{\abs{z-n}^2} \le \lim_{y \to +\infty} \frac{1}{y^2+n^2} = 0.
+	\]
+	Ora
+	\[
+		f(z)-g(z) = \frac{1}{z^2} + \tilde{f}(z) - \left[ \frac{1}{z^2}+\tilde{g}(z) \right] = \tilde{f}(z)-\tilde{g}(z),\graffito{\(\tilde{f}\) e \(\tilde{g}\) sono olomorfe in \(0\)}
+	\]
+	che è limitata. Quindi la singolarità in \(0\) è eliminabile. Analogamente vale per la singolarità in \(1\) per via della periodicità.
+
+	Applicando il teorema di Liouville a \(f-g\) otteniamo \(f(z)=g(z)+c\). D'altronde abbiamo già osservato
+	\[
+		\lim_{\substack{z\in S\\\Im z \to +\infty}} f(z)-g(z) = 0 \implies c=0,
+	\]
+	per cui \(f(z)=g(z)\). Integrando termine a termine otteniamo
+	\[
+		\p \cot(\p\,z) = \sum_{n\in \Z} \int \frac{1}{(z-n)^2}\,\dd z + C = \sum_{\substack{n\in \Z\\n\neq 0}} \left( \frac{1}{z-n}+\frac{1}{n} \right)+\frac{1}{z}+C,
+	\]
+	dove abbiamo scelto \(1/n\) come costante additiva per integrazione di \(g\). Raccogliendo i termini con \(\pm n\) si ottiene
+	\[
+		\p \cot(\p\,z) = \sum_{n\ge 1} \left( \frac{1}{z-n}+ \frac{1}{z+n} \right)+\frac{1}{z}+C = \sum_{n\ge 1} \frac{2z}{z^2-n^2} + \frac{1}{z}+C,
+	\]
+	dove \(C=0\) in quanto entrambi i termini sono dispari. Integriamo nuovamente:
+	\[
+		\ln\big(\sin(\p\,z)\big) = \ln z + \sum_{n \ge 1} \big[\ln(z-n)+\ln(z+n)-\ln(-n)-\ln(n)\big] + C,
+	\]
+	dove, di nuovo, i termini \(-ln(-n)-\ln(n)\) sono la costante additiva. Quindi
+	\[
+		\ln\big(\sin(\p\,z)\big) = \ln z + \sum_{n\ge 1} \left[ \ln \left( 1- \frac{z}{n} \right)+\ln \left( 1+ \frac{z}{n} \right) \right] +C = \ln z + \sum_{n\ge 1} \ln \left( 1- \frac{z^2}{n^2} \right)+C.
+	\]
+	Esponenziando
+	\[
+		\sin(\p\,z) = e^C z\,\prod_{n\ge 1} \left( 1- \frac{z^2}{n^2} \right).
+	\]
+	Nell'origine
+	\[
+		\sin(\p\,z) \simeq \p\,z \qquad\text{e}\qquad \prod_{n\ge 1} \left( 1- \frac{z^2}{n^2} \right) \simeq 1,
+	\]
+	per cui \(\p\,z = e^C z \implies e^C = \p\). Quindi
+	\[
+		\sin(\p\,z) = \p\,z\,\prod_{n\ge 1} \left( 1- \frac{z^2}{n^2} \right).
+	\]
+	Sostituendo \(w=\p\,z\) si giunge alla tesi.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%FORMULA DI INVERSIONE DI LAGRANGE%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Formula di inversione di Lagrange}
+
+Supponiamo di avere una mappa \(f\) olomorfa e iniettiva. In questo paragrafo cercheremo di trovare la rappresentazione in serie di Taylor di \(f^{-1}\).
+
+Se \(f'(z_0)\neq 0\), come mappa da \(\R^2\) a \(\R^2\), la derivata è una rotodilatazione.
+Per il teorema della funzione inversa, \(f^{-1}\) è definita in un intorno di \(f(z_0)=w_0\) ed è olomorfa.
+Infatti la sua derivata è l'inversa di una rotodilatazione ed è, pertanto, anch'essa una rotodilatazione.
+
+D'altronde se \(f\) è iniettiva si ha sempre \(f'(z_0)\neq 0\).
+Altrimenti, posto \(f(z_0)=w_0\), si avrebbe che \(f(z)-w_0\) ha almeno due zeri, infatti
+\[
+	f(z)-w_0 = f(z)-f(z_0) = a_1(z-z_0)+a_2(z-z_0)^2+\ldots
+\]
+ma \(a_1 = f'(z_0)=0\), da cui
+\[
+	f(z)-w_0 = a_2(z-z_0)^2 + \ldots
+\]
+Quindi, per Rouchè, ogni \(w\) vicino a \(z_0\) ha più di una retroimmagine, ma ciò sarebbe assurdo poiché \(f\) è iniettiva.
+
+In conclusione, se \(f\colon \Omega \to \C\) è iniettiva, \(f(\Omega)\) è aperto e la mappa
+\[
+	f^{-1}\colon f(\Omega) \longrightarrow \Omega
+\]
+è olomorfa.
+
+\begin{pr}
+	Supponiamo che \(z_0\) sia uno zero semplice di \(f\), allora
+	\[
+		\Res \left( z\,\frac{f'(z)}{f(z)},z_0 \right) = z_0\Res \left( \frac{f'(z)}{f(z)},z_0 \right)
+	\]
+\end{pr}
+
+\begin{proof}
+	Conto diretto.
+\end{proof}
+
+\begin{oss}
+	La proprietà vale anche se \(z_0\) è un polo di primo ordine.
+\end{oss}
+
+\begin{oss}
+	\'E possibile dimostrare che la tesi resta valida se viene tolta l'ipotesi di zeri e poli semplici.
+\end{oss}
+
+\begin{pr}
+	Sia \(f\) una funzione meromorfa che soddisfa le ipotesi dell'\hyperref[th:teoremaIndicatoreLogaritmico]{indicatore logaritmico}.
+	Supponiamo inoltre che i poli e gli zeri di \(f\) siano semplici, allora
+	\[
+		\frac{1}{2\p\,i} \int\limits_\g z\,\frac{f'(z)}{f(z)}\,\dd z = \sum_j a_j \ind(\g,a_j) - \sum_k b_k \ind(\g,b_k).
+	\]
+\end{pr}
+
+\begin{proof}
+	Segue dalla dimostrazione dell'indicatore logaritmico e dalla proprietà precedente.
+\end{proof}
+
+\begin{oss}
+	Il risultato, una volta estesa la proprietà precedente a zeri e poli qualsiasi, diventa
+	\[
+		\frac{1}{2\p\,i} \int\limits_\g z\,\frac{f'(z)}{f(z)}\,\dd z = \sum_j a_j r_j \ind(\g,a_j) - \sum_k b_k s_k \ind(\g,b_k),
+	\]
+	dove \(r_j,s_k\) sono le molteplicità degli zeri  \(a_j\) e dei poli \(b_k\).
+\end{oss}
+
+\begin{cor}
+	Se \(f\) ha un solo zero \(a\) all'interno di \(\g\) e se \(\ind(\g,a)=1\), allora
+	\[
+		a = \frac{1}{2\p\,i} \int\limits_\g z\,\frac{f'(z)}{f(z)}\,\dd z.
+	\]
+\end{cor}
+
+\begin{teor}{Formula di inversione di Lagrange}{formulaInversioneLagrange}\index{Formula!inversione di Lagrange}
+	Sia \(f\colon \Omega \to \C\) una mappa olomorfa e iniettiva e sia \(w_0=f(z_0)\).
+	Se \(\g\) è un ciclo in \(\Omega\) tale che \(\ind(\g,z_0)=1\) e \(\ind(\g,\a)=0\) se \(\a\not\in \Omega\), allora
+	\[
+		f^{-1}(w_0) = \frac{1}{2\p\,i} \int\limits_\g z\,\frac{f'(z)}{f(z)-w_0}\,\dd z.
+	\]
+\end{teor}
+
+\begin{proof}
+	Definiamo \(g(z)=f(z)-w_0\).
+	Dal momento che \(f\) è iniettiva, \(g\) ha un solo zero all'interno di \(\g\), che corrisponde proprio a \(z_0\).
+	Applicando la formula precedente a \(g\) otteniamo
+	\[
+		z_0 = \frac{1}{2\p\,i} \int\limits_\g z\,\frac{g'(z)}{g(z)}\,\dd z = \frac{1}{2\p\,i} \int\limits_\g z\,\frac{f'(z)}{f(z)-w_0}\,\dd z.
+	\]
+	Ovvero
+	\[
+		f^{-1}(w_0) = \frac{1}{2\p\,i} \int\limits_\g z\,\frac{f'(z)}{f(z)-w_0}\,\dd z.\qedhere
+	\]
+\end{proof}
+
+\begin{oss}
+	Come conseguenza immediata si ha \(f^{-1}\) olomorfa per la differenziazione sotto segno di integrale.
+\end{oss}

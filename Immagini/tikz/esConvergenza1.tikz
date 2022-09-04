@@ -1,0 +1,11 @@
+\tikz[baseline=-0.5ex] {
+	\draw [fill=contrast!10] (0,0) circle (1);
+	\node [above left] at (2.1,0) {\(\R\)};
+	\node [below right] at (0,2.1) {\(i\,\R\)};
+	\draw [-latex, thick] (-1.2,0) -- (2.2,0);
+	\draw [-latex, thick] (0,-1.2) -- (0,2.2);
+
+	%\draw [pattern=north east lines wide] (0,0) circle (1);
+	\node [below left, font=\footnotesize] at (-1,0) {\(-1\)};
+	\node [below right, font=\footnotesize] at (1,0) {\(1\)};
+}

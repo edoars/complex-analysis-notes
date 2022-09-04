@@ -1,0 +1,563 @@
+%!TEX root = ../main.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 11/10/2016 - TERZA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%FORMULA INTEGRALE DI CAUCHY%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Formula integrale di Cauchy}
+
+Una semplice applicazione del teorema di Cauchy ci permette di rappresentare una funzione olomorfa come un integrale di linea. In questo capitolo studieremo le numerose conseguenze di tale formula.
+%%%%%%%%%%%%%%
+%INTRODUZIONE%
+%%%%%%%%%%%%%%
+\section{Introduzione}
+\begin{teor}{Formula integrale di Cauchy}{formulaIntegraleCauchy}\index{Formula!integrale di Cauchy}
+	Sia \(f\colon D(z_0;r) \to \C\) una funzione olomorfa e sia \(\g\) una curva chiusa in \(D(z_0;r)\setminus\{z_0\}\) tale che \(\ind(\g,z_0)=1\). Allora
+	\[
+		f(z_0) = \frac{1}{2\p\,i} \int\limits_\g \frac{f(z)}{z-z_0}\,\dd z.
+	\]
+\end{teor}
+
+% \begin{figure}[tp]
+% \centering
+% 	\input{/Immagini/tikz/formulaIntegraleCauchy.tikz}
+% 	\caption{}
+% \end{figure}
+
+\begin{proof}
+	Definiamo la seguente funzione
+	\[
+		g(z) = 	\begin{cases}
+			\frac{f(z)-f(z_0)}{z-z_0} & z\neq z_0 \\
+			f'(z_0)                   & z=z_0
+		\end{cases}
+	\]
+	tale funzione è continua in \(D(z_0;r)\) e inoltre è olomorfa in \(D(z_0;r)\) poiché quoziente di funzioni olomorfe e, \hyperref[th:teoremaSingolaritàEliminabile]{come vedremo in seguito}, \(z_0\) è una singolrità eliminabile.
+	Applicando il \hyperref[th:teorCauchyDischi]{teorema di Cauchy} otteniamo
+	\[
+		\begin{split}
+			0 & = \int\limits_\g \frac{f(z)-f(z_0)}{z-z_0}\,\dd z = \int\limits_\g \frac{f(z)}{z-z_0}\,\dd z - f(z_0)\,\int\limits_\g \frac{\dd z}{z-z_0}\\
+			& = \int\limits_\g \frac{f(z)}{z-z_0}\,\dd z - f(z_0)\,2\p\,i\,\underbrace{\ind(\g,z_0)}_{=1},
+		\end{split}
+	\]
+	da cui
+	\[
+		f(z_0) = \frac{1}{2\p\,i}\int\limits_\g \frac{f(z)}{z-z_0}\,\dd z. \qedhere
+	\]
+\end{proof}
+
+\begin{oss}
+	In generale quindi il valore di \(f\) in un aperto è determinato dal valore di \(f\) sul bordo dell'aperto. Da ciò segue che preso \(r'<r\), ho che, se \(z\in D(z_0;r')\), allora
+	\[
+		f(z) = \frac{1}{2\p\,i} \int\limits_{\mathclap{\pd B(z_0;r')}} \frac{f(w)}{w-z}\,\dd w \qquad\qquad \input{Immagini/tikz/formulaIntegraleCauchy.tikz}
+	\]
+\end{oss}
+
+\begin{oss}
+	Esistono funzioni \(C^{\infty}(\R,\R)\), dette modificatori, che sono nulle fuori da un compatto, ad esempio
+	\[
+		f(x) = 	\begin{cases}
+			e^{-\frac{1}{{(\abs{x}^2-1)}^2}} & x\in(-1,1)        \\
+			0                                & \text{altrimenti}
+		\end{cases}
+	\]
+	Se fosse possibile replicare questo comportamento in \(\R^2 \to \R^2\) avremmo trovato un controesempio al teorema. Da ciò deduciamo che non esistono modificatori olomorfi, ovvero non esistono funzioni olomorfe nulle fuori da un compatto.
+\end{oss}
+
+\begin{ese}
+	Calcoliamo il seguente integrale
+	\[
+		\int\limits_{\abs{z}=1} \frac{e^z}{z}\,\dd z.
+	\]
+	Se prendo \(f(z)=e^z\), applicando la formula di Cauchy nell'origine ottengo
+	\[
+		1=f(0) = \frac{1}{2\p\,i} \int\limits_{\abs{z}=1} \frac{e^z}{z}\,\dd z.
+	\]
+	Per cui il nostro integrale vale \(2\p\,i\).
+\end{ese}
+
+\begin{ese}
+	Calcoliamo il seguente integrale
+	\[
+		\int\limits_{\abs{z}=2} \frac{\dd z}{z^2+1}.
+	\]
+	Applichiamo qualche manipolazione
+	\[
+		\int\limits_{\abs{z}=2} \frac{\dd z}{z^2+1} = \int\limits_{\abs{z}=2} \frac{1}{2i} \left( \frac{1}{z-i}-\frac{1}{z+i} \right)\,\dd z = \frac{1}{2i} \bigg[ \int\limits_{\abs{z}=2} \frac{1}{z-i}\,\dd z - \int\limits_{\abs{z}=2} \frac{1}{z+i}\,\dd z\bigg],
+	\]
+	che è la formula di Cauchy applicata a \(f(z)=1\), da cui
+	\[
+		\int\limits_{\abs{z}=2} \frac{\dd z}{z^2+1} = \p\,(1-1) = 0.
+	\]
+\end{ese}
+%%%%%%%%%%%%%%%%%%%%
+%DERIVATE SUPERIORI%
+%%%%%%%%%%%%%%%%%%%%
+\section{Derivate superiori}
+
+\begin{pr}
+	Le serie di potenze sono olomorfe all'interno del disco di convergenza.
+\end{pr}
+
+\begin{proof}
+	Supponiamo che \(f\) sia una serie di potenze del tipo
+	\[
+		f(z) = \sum_{n\ge 0}a_n (z-z_0)^n.
+	\]
+	\(f\) converge uniformemente sui compatti di \(D(z_0;r)\) dove \(r\) è il suo raggio di convergenza. Ora la serie delle derivate
+	\[
+		\sum_{n\ge 1}n\,a_n (z-z_0)^{n-1},
+	\]
+	converge ancora uniformemente sui compatti di \(D(z_0;r)\).
+	D'altronde se la serie delle derivate converge uniformemente e la serie delle funzioni converge in un punto, allora la serie delle funzioni converge in un punto e la derivata della serie è la serie delle derivate.
+\end{proof}
+
+\begin{oss}
+	In generale ciò significa che le serie di potenze possono essere derivate termine a termine.
+\end{oss}
+
+\begin{ese}
+	Consideriamo la funzione esponenziale
+	\[
+		f(z) = e^z = \sum_{n\ge 0} \frac{z^n}{n!},
+	\]
+	che ha raggio di convergenza \(+\infty\). \(f\) è quindi una funzione intera.
+	Scriviamo ora la sua derivata
+	\[
+		\frac{\dd}{\dd z}e^z = \sum_{n\ge 1}\frac{n}{n!}z^{n-1} = \sum_{n\ge 1}\frac{z^{n-1}}{(n-1)!} = \sum_{k\ge 0}\frac{z^k}{k!} =e^z.
+	\]
+\end{ese}
+
+\begin{teor}{Funzioni olomorfe sono analitiche}{funzioniOlomorfeAnalitiche}\index{Teorema!delle funzioni analitiche}
+	Sia \(\Omega \subseteq \C\) aperto e sia \(f\colon \Omega \to \C\) una funzione olomorfa. Preso \(z_0\in\Omega\) sia \(D(z_0;r)\) il più grande disco centrato in \(z_0\) e contenuto in \(\Omega\).
+	Allora per ogni \(z\in D(z_0;r)\) si ha
+	\[
+		f(z) = \sum_{n\ge 0}a_n (z-z_0)^n, \qquad\text{con }a_n = \frac{1}{2\p\,i}\int\limits_\g \frac{f(z)}{(z-z_0)^{n+1}}\,\dd z,
+	\]
+	dove \(\g=\pd D(z_0;r')\) con \(r'<r\).
+\end{teor}
+
+\begin{proof}
+	Applicando il \hyperref[th:teorCauchyRettangoli]{teorema di Cauchy} ad \(f\) otteniamo
+	\[
+		\begin{split}
+			f(z) & = \frac{1}{2\p\,i} \int\limits_\g \frac{f(w)}{w-z}\,\dd w = \frac{1}{2\p\,i} \int\limits_\g \frac{f(w)}{(w-z_0)-(z-z_0)}\,\dd w\\
+			& = \frac{1}{2\p\,i} \int\limits_\g \frac{1}{w-z_0}f(w) \frac{\dd w}{1- \frac{z-z_0}{w-z_0}} = \frac{1}{2\p\,i} \int\limits_\g \frac{f(w)}{w-z_0} \sum_{n\ge 0} \frac{(z-z_0)^n}{(w-z_0)^n}\,\dd w\graffito{utilizzo la serie geometrica}\\
+			& = \frac{1}{2\p\,i} \int\limits_\g f(w) \sum_{n\ge 0}\frac{(z-z_0)^n}{(w-z_0)^{n+1}}\,\dd w,
+		\end{split}
+	\]
+	dove la serie converge uniformemente in \(w\) in quanto
+	\[
+		\frac{\abs{z-z_0}}{\abs{w-z_0}} = \frac{\abs{z-z_0}}{r'} < \frac{r'}{r'} = 1.
+	\]
+	Posso quindi portare la serie fuori dall'integrale ottenendo
+	\[
+		f(z) = \frac{1}{2\p\,i} \sum_{n\ge 0} \int\limits_\g \frac{f(w)}{(w-z_0)^{n+1}}\,\dd w (z-z_0)^n = \sum_{n\ge 0}a_n (z-z_0)^n.\qedhere
+	\]
+\end{proof}
+
+\begin{oss}
+	Avremmo anche potuto dimostrare che
+	\[
+		f^{(n)}(z_0) = \frac{n!}{2\p\,i} \int\limits_\g \frac{f(w)}{(w-z_0)^{n+1}}\,\dd w,
+	\]
+	per ottenere la tesi tramite l'espansione di Taylor.
+\end{oss}
+
+\begin{ese}
+	Calcoliamo
+	\[
+		\int\limits_\g \frac{\dd z}{z^3(z^{10}-2)}, \qquad\text{dove }\g(t)=e^{i\,t}, t\in[0,2\p].
+	\]
+	Poniamo \(g(z)=\frac{1}{z^{10}-2}\) che risulta olomorfa in \(B(0;1+\e)\). Applicando la formula di Cauchy per le derivate avremo
+	\[
+		\frac{1}{2\p\,i} \int\limits_\g \frac{g(z)}{z^3}\,\dd z = \frac{g''(0)}{2!}.
+	\]
+	Poiché ci troviamo in \(B(0,1+\e)\) riusciamo facilmente a scrivere l'espansione di Taylor di \(g\) nell'origine, così da non dover calcolare esplicitamente la derivata seconda di \(g\).
+	\[
+		\frac{1}{z^{10}-2} = -\frac{1}{2-z^{10}} = -\frac{1}{2} \frac{1}{1- \left( \frac{z}{2^{1/10}} \right)^{10}} = -\frac{1}{2}\sum_{n\ge 0} \left( \frac{z}{\sqrt[10]{2}} \right)^{10 n}.
+	\]
+	Da cui segue \(g''(0)=0\).
+\end{ese}
+
+\begin{oss}
+	Dal teorema segue che la serie di Taylor converge nel più grande disco \(D(z_0;r)\) contenuto in \(\Omega\).
+\end{oss}
+
+\begin{ese}
+	Consideriamo, su \(\Omega=\C\setminus\{1\}\), la funzione
+	\[
+		f(z)= \frac{1}{1-z}.
+	\]
+	Sappiamo che la sua serie di Taylor è la segunte
+	\[
+		f(z) = \sum_{n\ge 0} z^n,\qquad \input{Immagini/tikz/esConvergenza1.tikz}
+	\]
+	per cui otteniamo proprio che il suo raggio di convergenza è \(1\), come ci aspettavamo.
+\end{ese}
+
+\begin{teor}{di Liouville}{teoremaLiouville}\index{Teorema!di Liouville}
+	Se \(f\colon \C \to \C\) è una funzione limitata e olomorfa, allora \(f\) è costante.
+\end{teor}
+
+\begin{proof}
+	Basta dimostrare che \(f'(z)=0,\,\fa z\in \C\). Usiamo Cauchy per scrivere la derivata prima: posto \(\g=\pd D(z;r)\) avremo
+	\[
+		f'(z) = \frac{1}{2\p\,i} \int\limits_\g \frac{f(w)}{(w-z)^2}\,\dd w.
+	\]
+	Per ipotesi sappiamo \(\abs{f(w)}\le M\) per qualche \(M\in \R\). Da cui
+	\[
+		\begin{split}
+			\abs{f'(z)} & \le \frac{1}{2\p} \int\limits_\g \frac{\abs{f(w)}}{\abs{w-z}^2}\,\abs{\dd w} = \frac{1}{2\p}\int\limits_\g \frac{\abs{f(w)}}{r^2}\,\abs{\dd w}\graffito{\(\abs{w-z}=r\) in quanto \(w\in \pd D(z;r)\)} \le \frac{1}{2\p}\int\limits_\g \frac{M}{r^2}\,\abs{\dd w}\\
+			& = \frac{1}{2\p}\frac{M}{r^2}2\p\,r = \frac{M}{r} \xrightarrow{r\to \infty} 0,
+		\end{split}
+	\]
+	da cui
+	\[
+		\abs{f'(z)}= 0,\,\fa z\in \C.\qedhere
+	\]
+\end{proof}
+
+\begin{oss}
+	In \(\R\) questo teorema è falso, si veda il seno come esempio di una funzione limitata che non è costante.
+	D'altronde in \(\C\) il seno non è limitato, infatti
+	\[
+		\sin z = \frac{e^{i\,z}-e^{-i\,z}}{2\,i} \implies \sin(i\,t) = \frac{\sinh t}{i} \simeq e^{\abs{t}} \qquad\text{se \(t\) è grande}.
+	\]
+\end{oss}
+
+\begin{ese}
+	Supponiamo che \(f\colon \C \to \C\) sia olomorfa e tale che \(\abs{f(z)}\le \abs{e^z}\), dimostriamo che \(f(z)=a\,e^z\) per qualche \(a\) con \(\abs{a}<1\). Consideriamo
+	\[
+		g(z) = \frac{f(z)}{e^z}.
+	\]
+	Per ipotesi avremo
+	\[
+		\abs{g(z)} = \frac{\abs{f(z)}}{\abs{e^z}} \le 1.
+	\]
+	Quindi per il teorema di Liouville avremo \(g(z)\equiv a\), da cui \(f(z)=a\,e^z\).
+\end{ese}
+
+\begin{cor}
+	Teorema Fondamentale dell'Algebra.
+\end{cor}
+
+\begin{proof}
+	Il teorema di Liouville porta ad una semplice dimostrazione del Teorema Fondamentale dell'Algebra.
+	Infatti se, preso \(P\colon \C \to \C\) con \(\deg P>0\), supponiamo per assurdo che \(P\) non abbia zeri, posso considerare la funzione
+	\[
+		g(z) = \frac{1}{P(z)},
+	\]
+	che è intera. Inoltre è limitata per Weierstrass generalizzato, infatti
+	\[
+		\lim_{\abs{z}\to +\infty} \abs{g(z)} = \lim_{\abs{z}\to+\infty} \frac{1}{\abs{a_n z^n+\ldots+a_0}} = 0.
+	\]
+	Quindi per il teorema di Liouville \(P\) risulta costante, ovvero un polinomio di grado \(0\), che è assurdo per ipotesi.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 14/10/2016 - TERZA SETTIMANA (2)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{cor}
+	Se \(f\colon \C \to \C\) è una funzione olomorfa tale che \(\Re(f)\) oppure \(\Im(f)\) è limitata, allora \(f\) è costante.
+\end{cor}
+
+\begin{proof}
+	Supponiamo che \(\Re(f)\) sia limitata, ovvero esiste \(M>0\) tale che \(\abs{\Re f(z)}\le M,\,\fa z\in \C\).
+	Consideriamo la funzione \(g(z)=e^{f(z)}\) che è intera. Inoltre avremo
+	\[
+		\abs{g(z)} = \abs{e^{\Re f(z)}e^{i\,\Im f(z)}} = e^{\Re f(z)} \le e^M.
+	\]
+	Quindi per il teorema di Liouville avremo \(g\) costante, da cui
+	\[
+		0 = g'(z) = \underbrace{e^{f(z)}}_{\neq 0}f'(z) \implies f'(z)= 0,\,\fa z\in\C,
+	\]
+	ovvero \(f\) costante.
+\end{proof}
+
+\begin{teor}{di Liouville generalizzato}{teoremaLiouvilleGeneralizzato}
+	Sia \(f\colon \C \to \C\) una funzione olomorfa tale che
+	\[
+		\abs{f(z)} \le A + B\abs{z}^n,\,\fa z\in\C,
+	\]
+	allora \(f\) è un polinomio di grado al più \(n\).
+\end{teor}
+
+\begin{proof}
+	Dimostriamo che \(f^{(n+1)}\equiv 0\) utilizzando la formula di Cauchy:
+	\[
+		f^{(n+1)}(z) = \frac{1}{2\p\,i}\int\limits_{\g_R} \frac{f(w)}{(w-z)^{n+2}}\,\dd w, \qquad\text{con } \g_R\colon [0,2\p] \to \C, t\mapsto z+R\,e^{i\,t}.
+	\]
+	Passando al modulo avremo
+	\[
+		\begin{split}
+			\abs{f^{(n+1)}(z)} & = \frac{1}{2\p} \bigg\lvert \int_0^{2\p} \frac{f\big(z+R\,e^{i\,t}\big)}{(R\,e^{i\,t})^{n+2}}\,R\,i\,e^{i\,t}\,\dd t\bigg\rvert\\
+			& \le \frac{1}{2\p} \int_0^{2\p} \frac{A+B\,\abs{z+R\,e^{i\,t}}^n}{R^{n+2}}\,R\,\dd t.
+		\end{split}
+	\]
+	Osserviamo che l'argomento dell'integrale tende uniformemente a zero quando \(R\to+\infty\).
+	Per la convergenza uniforme posso portare fuori il limite dall'integrale per ottenere che \(\abs{f^{(n+1)}(z)}\le 0\) quando \(R\to+\infty\), ovvero
+	\[
+		f^{(n+1)}(z) = 0,\,\fa z\in \C.\qedhere
+	\]
+\end{proof}
+
+\begin{ese}
+	Su \(\R\) questo teorema è falso, ad esempio la funzione \(f(x)=x^2+e^{-x^2}\) cresce in modo polinomiale ma non è un polinomio.
+\end{ese}
+
+\begin{teor}{di Morera}{teoremaMorera}\index{Teorema!di Morera}
+	Sia \(\Omega\subseteq \C\) aperto e sia \(f\colon \Omega \to \C\) una funzione continua tale che, per ogni curva chiusa \(\g\) in \(\Omega\), si abbia
+	\[
+		\int\limits_\g f(z)\,\dd z = 0.
+	\]
+	Allora \(f\) è olomorfa in \(\Omega\).
+\end{teor}
+
+\begin{proof}
+	Fissato \(z_0\in\Omega\) definiamo
+	\[
+		F(z) = \int\limits_{\g_z}f(w)\,\dd w,
+	\]
+	dove \(\g_z\) soddisfa \(\g_z(0)=z_0,\g_z(1)=z\).
+	Osserviamo che \(F\) così definito non dipende dalla curva, infatti se \(\tilde{\g}\) è un'altra curva che soddisfa \(0\mapsto z_0,1\mapsto z\), definisco
+	\[
+		\hat{\g}(t) = 	\begin{cases}
+			\g_z(t)         & t\in[0,1] \\
+			\tilde{\g}(2-t) & t\in[1,2]
+		\end{cases}
+	\]
+	che è una curva chiusa su \(\Omega\), quindi per ipotesi
+	\[
+		0 = \int\limits_{\hat{\g}} f(w)\,\dd w = \int\limits_{\g_z}f(w)\,\dd w - \int\limits_{\tilde{\g}}f(w)\,\dd w.
+	\]
+	A questo punto è sufficiente mostrare che \(F'(z)=f(z)\), infatti è facile dimostrare che
+	\[
+		F(z+h)-F(z) = \int\limits_{\g_h}f(w)\,\dd w \simeq f(z)\,h.
+	\]
+	Quindi \(f\) è la derivata di una funzione olomorfa, pertanto \(f\) è anch'essa olomorfa.
+\end{proof}
+%%%%%%%%%%%
+%APPENDICE%
+%%%%%%%%%%%
+\section{Appendice}
+
+\begin{teor}{Proprietà del valor medio}{valorMedio}\index{Proprietà del valor medio}
+	Sia \(\Omega \subseteq \C\) aperto e sia \(f\colon \Omega \to \C\) una funzione olomorfa.
+	Prendiamo \(z_0\in\Omega\) e \(r>0\) tale che \(D(z_0;r)\subseteq\Omega\), allora
+	\[
+		f(z_0) = \frac{1}{2\p} \int_0^{2\p} f(z_0+r\,e^{i\,\q})\,\dd \q.
+	\]
+\end{teor}
+
+\begin{proof}
+	Per la \hyperref[th:formulaIntegraleCauchy]{formula di Cauchy} sappiamo
+	\[
+		f(z_0) = \frac{1}{2\p\,i} \int\limits_{\pd D(z_0;r)} \frac{f(w)}{w-z_0}\,\dd w.
+	\]
+	Parametrizziamo \(\pd D(z_0;r)\) tramite \(\g_r\colon [0,2\p] \to \Omega, \q \mapsto z_0+r\,e^{i\,\q}\), da cui
+	\[
+		\begin{split}
+			f(z_0) & =  \frac{1}{2\p\,i} \int\limits_{\g_r} \frac{f(w)}{w-z_0}\,\dd w = \frac{1}{2\p\,i} \int_0^{2\p} \frac{f(z_0+r\,e^{i\,\q})}{r\,e^{i\,\q}}\,r\,i\,e^{i\,\q}\,\dd \q\\
+			& = \frac{1}{2\p} \int_0^{2\p} f(z_0+r\,e^{i\,\q})\,\dd \q.\qedhere
+		\end{split}
+	\]
+\end{proof}
+
+\begin{teor}{Principio del massimo modulo}{teoremaMassimoModulo}\index{Principio del massimo}
+	Sia \(\Omega\subseteq \C\) aperto e connesso e sia \(f\colon \Omega \to \C\) una funzione olomorfa.
+	Allora \(\abs{f}\) non può assumere massimo in \(z_0\in\Omega\) a meno che \(f\) non sia costante.
+\end{teor}
+
+\begin{proof}
+	Supponiamo che \(\abs{f(z_0)}=\sup\Set{\abs{f(z)}:z\in\Omega}\), mostriamo che \(f\) è costante.
+	Per prima cosa mostriamo che \(\abs{f(z)}=\abs{f(z_0)},\,\fa z\in\Omega\) tramite un argomento topologico:
+	Definiamo
+	\[
+		\Omega_1 = \Set{z\in\Omega : \abs{f(z)} < \abs{f(z_0)}} \qquad\text{e}\qquad \Omega_2 = \Set{z\in\Omega : \abs{f(z)}=\abs{f(z_0)}}.
+	\]
+	Chiaramente \(\Omega_1\cup\Omega_2 = \Omega\) e \(\Omega_1\cap\Omega_2 = \emptyset\), mostriamo che tali insiemi sono anche aperti:
+	\begin{itemize}
+		\item \(\Omega_1 = \abs{f}^{-1}\big(-\infty,\abs{f(z_0)}\big)\), dove \(\abs{f}\) è una funzione continua e \(\big(-\infty,\abs{f(z_0)}\big)\) è un intervallo aperto. Per cui \(\Omega_1\) è aperto in quanto controimmagine di un aperto tramite funzione continua.
+		\item Preso \(z_1\in\Omega_2\) applico il teorema del valor medio:
+		      \[
+			      \abs{f(z_1)} = \bigg\lvert \frac{1}{2\p} \int_0^{2\p}f(z_1+r\,e^{i\,t})\,\dd t\bigg\rvert \le \frac{1}{2\p} \int_0^{2\p}\big\lvert f(z_1+r\,e^{i\,t})\big\rvert\,\dd t.
+		      \]
+		      Osserviamo che \(z_1\in\Omega_2 \implies \abs{f(z_1)}=\abs{f(z_0)}\) che è massimo. Quindi \(\abs{f(z_1+r\,e^{i\,t})}\le \abs{f(z_1)}\), inoltre se la disuguaglianza fosse stretta anche per un solo valore di \(t\) allora lo sarebbe, per continuità, su tutto un intervallo. Ma in tal caso il valore medio di \(\abs{f(z_1+r\,e^{i\,t})}\), a cui si riferisce l'integrale, sarebbe strettamente minore di \(\abs{f(z_1)}\), che contraddirebbe quanto affermato con il teorema del valor medio. Per cui
+		      \[
+			      \abs{f(z_1+r\,e^{i\,t})} = \abs{f(z_1)},\,\fa t \in [0,2\p].
+		      \]
+		      Ovvero \(\Omega_2\) è aperto poiché ogni punto di \(\Omega_2\) ha un intorno aperto contenuto in \(\Omega_2\).
+	\end{itemize}
+	Per connessione di \(\Omega\) avremo quindi \(\Omega_1=\emptyset\) oppure \(\Omega_2=\emptyset\). D'altronde \(z_0\in\Omega_2\) ci dice che \(\Omega_2 \neq \emptyset\). Ne segue \(\Omega_1=\emptyset \implies \Omega_2=\Omega\), ovvero \(\abs{f}\) costante.
+
+	Mostriamo ora che \(\abs{f}\) costante implica \(f\) costante: se
+	\[
+		f(x,y) = u(x,y)+i\,v(x,y),
+	\]
+	definiamo \(F(x,y)=u^2(x,y)+v^2(x,y)=\abs{f}^2\) che è quindi costante. In particolare avremo
+	\[
+		0 = \begin{pmatrix}\pd_x F(x,y) & \pd_y F(x,y)\end{pmatrix} = \begin{pmatrix}2u(x,y) & 2v(x,y)\end{pmatrix}
+		\begin{pmatrix}
+			\pd_x u(x,y) & \pd_y u(x,y) \\
+			\pd_x v(x,y) & \pd_y v(x,y)
+		\end{pmatrix}
+	\]
+	abbiamo quindi
+	\[
+		u(x,y) = v(x,y) = 0 \qquad\text{oppure}\qquad f'(x,y)=0,
+	\]
+	in entrambi i casi \(f\) risulta costante.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 18/10/2016 - QUARTA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{teor}{Principio di identità}{principioIdentità}\index{Principio di identità}
+	Sia \(\Omega\subseteq\C\) un aperto connesso e siano \(f,g\colon \Omega \to \C\) due funzioni olomorfe.
+	Se \(f(z_n)=g(z_n)\) e \(z_n \to z_0\in\Omega\), allora
+	\[
+		f(z)=g(z)\,\fa z \in \Omega.
+	\]
+\end{teor}
+
+\begin{proof}
+	Posto \(h(z)=f(z)-g(z)\), ci basta dimostrare che se \(h(z_n)=0\) e \(z_n\to z_0\in\Omega\) allora \(h(z)=0 \,\fa z\in\Omega\).
+	Definiamo quindi i seguenti insiemi e procediamo con l'usuale argomento di connessione:
+	\[
+		\Omega_1 = \Set{z | z\text{ punto di accumulazione e }h(z)=0}
+	\]
+	e
+	\[
+		\Omega_2 = \Set{z | h(z)\neq 0 \text{ oppure \(z\) zero isolato di \(h\)}}.
+	\]
+	Chiaramente \(\Omega=\Omega_1\cup \Omega_2\) e \(\Omega_1 \cap \Omega_2=\emptyset\).
+	Ci basta quindi dimostrare che \(\Omega_1,\Omega_2\) sono aperti affinché, per connessione, si abbia che uno dei due insiemi è vuoto. D'altronde \(z_0\in \Omega_1\) per ipotesi quindi \(\Omega_1 \neq \emptyset \implies \Omega_1=\Omega\) da cui la tesi.
+	\begin{itemize}
+		\item \(\Omega_2\) aperto: sia \(\bar{z}\in\Omega_2\); se \(h(\bar{z})\neq0\) per la permanenza del segno esiste \(r>0\) tale che
+		      \[
+			      h(z)\neq0 \,\fa z\in B(\bar{z};r),
+		      \]
+		      ovvero \(B(\bar{z};r)\subseteq \Omega_2\).
+		      Se invece \(\bar{z}\) è uno zero isolato di \(h\) è tautologico dire che vi è un intorno di \(\bar{z}\) che non contiene zeri di \(h\), ovvero trovo \(r>0\) tale che
+		      \[
+			      h(z)\neq 0 \,\fa z\in B(z_0;r)\setminus\{z_0\},
+		      \]
+		      da cui \(B(z_0;r)\subseteq \Omega_2\).
+		\item \(\Omega_1\) aperto: preso \(\bar{z}\in\Omega_1\) sviluppiamo \(h\) nella sua serie di Taylor attorno a \(\bar{z}\):
+		      \[
+			      h(z) = \sum_{n=0}^{\infty}a_n(z-\bar{z})^n \qquad\text{per }z\in B(\bar{z};r)
+		      \]
+		      Da \(h(\bar{z})=0\) segue \(a_0=0\), in particolare avremo
+		      \[
+			      h(z) = a_n(z-\bar{z})^n + a_{n+1}(z-\bar{z})^{n+1}+\ldots \qquad\text{per }n\ge 1.
+		      \]
+		      D'altronde se per assurdo esistesse \(n\) tale che \(a_n\neq 0\) si avrebbe, per \(z\neq \bar{z}\) e \(\abs{z-\bar{z}}<\e\),
+		      \[
+			      h(z) = a_n(z-\bar{z})^n + a_{n+1}(z-\bar{z})^{n+1}+\ldots = (z-\bar{z})^n \big[a_n+a_{n+1}(z-\bar{z})+\ldots\big] \neq 0,
+		      \]
+		      in quanto \((z-\bar{z})\neq 0\) e \(l(z):=\big[a_n+a_{n+1}(z-\bar{z})+\ldots\big]\) è olomorfa, in particolare continua, da cui
+		      \[
+			      \abs{l(z)} \ge \frac{1}{2}\abs{l(\bar{z})} = \frac{1}{2}\abs{a_n} \neq 0.
+		      \]
+		      Ma ciò è assurdo in quanto \(\bar{z}\) risulterebbe uno zero isolato di \(h\), contraddicendo l'assunto di \(\bar{z}\in\Omega_1\).
+		      Per cui \(a_n=0,\,\fa n \implies f(z)=0,\,\fa z\in B(\bar(z);r)\), da cui la tesi.\qedhere
+	\end{itemize}
+\end{proof}
+
+\begin{oss}
+	Consideriamo la seguente funzione:
+	\[
+		f(x) = 	\begin{cases}
+			0                  & x\le 0 \\
+			e^{-\frac{1}{x^2}} & x>0
+		\end{cases}
+	\]
+	Tale funzione è \(C^{\infty}(\R)\) ma non coincide con la sua serie di Taylor.
+	Infatti la serie è identicamente nulla mentre la funzione è ben lontana dall'esserlo.
+
+	In \(\C\) quindi \(f\) non è olomorfa per varie ragioni: la prima è che non coincide con la sua serie di Taylor, la seconda come conseguenza del principio di identità.
+\end{oss}
+
+\begin{oss}
+	Il principio di identità è generalmente falso per le funzioni \(C^{\infty}(\R^2,\R^2)\). Consideriamo ad esempio
+	\[
+		f(x,y) \equiv (0,0) \qquad\text{e}\qquad g(x,y) = (y^2,0).
+	\]
+	Tali funzioni coincidono sull'asse \(x\) ma sono chiaramente distinte.
+\end{oss}
+
+\begin{defn}{Convergenza quasi uniforme}{convergenzaQuasiUniforme}\index{Convergenza!quasi uniforme}
+	Sia \(\Omega\subseteq \C\) aperto e sia \(\{f_n\}_{n\ge 1}\subseteq C(\Omega)\).
+	Si dice che \(f_n\) \emph{converge quasi uniformemente} a \(f\) se vi converge uniformemente su tutti i compatti di \(\Omega\).
+\end{defn}
+
+\begin{prop}{Convergenza quasi uniforme delle serie di potenze}{convergenzaQUSeriePotenze}
+	Le serie di potenze convergono quasi uniformemente nel loro disco di convergenza.
+\end{prop}
+
+\begin{proof}
+	Supponiamo che la seguente serie di potenze
+	\[
+		\sum_{n = 0}^\infty a_n z^n,
+	\]
+	converga su \(D(0;R)\) dove \(R\) è il suo raggio di convergenza.
+	Sia \(K\subseteq D(0;R)\) compatto. Per compattezza \(K\subseteq D(0;R-\e)\) per un \(\e>0\).
+	Andiamo a studiare la convergenza totale della serie su tale disco:
+	\[
+		\sum_{n=0}^\infty \sup_{z\in K} \abs{a_n z^n} \le \sum_{n=0}^\infty \abs{a_n}\abs{R-\e}^n
+	\]
+	di cui si può valutare la convergenza tramite il criterio della radice:
+	\[
+		\limsup \sqrt[n]{\abs{a_n}}\abs{R-\e} = \frac{\abs{R-\e}}{R} < 1.
+	\]
+	Quindi la serie converge totalmente e di conseguenza uniformemente su \(K\).
+\end{proof}
+
+\begin{ese}
+	La serie
+	\[
+		\sum_{n=0}^N \frac{z^n}{n!}
+	\]
+	non converge uniformemente a \(e^z\) su \(\C\) dal momento che
+	\[
+		\norma*{\sum_{n=0}^N \frac{z^n}{n!}-e^z}_{\sup} = +\infty.
+	\]
+	D'altronde converge uniformemente sulle palle.
+\end{ese}
+
+\begin{teor}{Rigidità olomorfa sulla convergenza quasi uniforme}{rigiditàOlomorfaConvergenza}
+	Sia \(\Omega\subseteq\C\) aperto e sia \(f_n\colon \Omega \to \C\) una funzione olomorfa per ogni \(n\).
+	Se \(f_n \to f\) quasi uniformemente allora \(f\) è olomorfa.
+\end{teor}
+
+\begin{proof}
+	Fissato \(z\in \Omega\), consideriamo \(\chius{B(z_0;r)}\subseteq \Omega\) e poniamo \(\g=\pd B(z_0;r)\).
+	Per la formula di Cauchy avremo
+	\[
+		f_n(z) = \frac{1}{2\p\,i} \int\limits_\g \frac{f_n(w)}{w-z}\,\dd w.
+	\]
+	Osserviamo che \(\pd B(z_0;r)\) è compatto, quindi
+	\[
+		f_n(z) = \frac{1}{2\p\,i} \int\limits_\g \frac{f_n(w)}{w-z}\,\dd w \to \frac{1}{2\p\,i} \int\limits_\g \frac{f(w)}{w-z}\,\dd w
+	\]
+	poiché la convergenza uniforme mi permette di passare il limite nell'integrale di Riemann.
+	Inoltre, per ipotesi, \(f_n(z) \to f(z)\), da cui, per l'unicità del limite,
+	\[
+		f(z)= \frac{1}{2\p\,i} \int\limits_\g \frac{f(w)}{w-z}\,\dd w \qquad\text{se }z\in B(z_0;r).
+	\]
+	Ciò significa che \(f\) è olomorfa per la differenziabilità sotto segno di integrale.
+\end{proof}
+
+\begin{oss}
+	Inoltre si dimostra tramite la formula di Cauchy per le derivate superiori che
+	\[
+		f^{(k)}_n \to f^{(k)}
+	\]
+	quasi uniformemente in \(\Omega\).
+\end{oss}

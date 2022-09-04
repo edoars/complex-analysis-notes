@@ -1,0 +1,33 @@
+\begin{tikzpicture}
+	\draw [thick] (2,0) .. controls (0.41, 0.33) and (2.29, 1.84) .. (0,2)
+		.. controls (-1.34, 2.08) and (-1.34, 0.76) .. (-2,0)
+		.. controls (-2.83, -0.87) and (-1.47, -2.01) .. (0,-2)
+		.. controls (1.73, -2.01) and (3.16, 0.08) .. (2,0);
+	\draw [
+		decoration={markings, mark=at position 0.375 with {\arrow{>}}},
+		postaction={decorate}
+		] (-0.01, 0.12) circle (1.22);
+	\draw [pattern=north east lines wide, thick] (0.46, 0.65) circle (0.4);
+
+	\fill (-0.76, -0.19) circle (0.02);
+	\draw [
+		decoration={markings, mark=at position 0.29 with {\arrow{>}}},
+		postaction={decorate},
+		] (-0.76, -0.19) circle (0.2);
+	\fill (0.14, -0.63) circle (0.02);
+	\draw [
+		decoration={markings, mark=at position 0.29 with {\arrow{>}}},
+		postaction={decorate}
+		] (0.14, -0.63) circle (0.2);
+	\fill (0.12, -1.61) circle (0.02);
+	\draw [
+		decoration={markings, mark=at position 0.29 with {\arrow{>}}},
+		postaction={decorate}
+		] (0.12, -1.61) circle (0.2);
+
+	\node [font=\large] at (20:2) {\(\Omega\)};
+	\node [above left] at ($(-0.01, 0.12)+(135:1.16)$) {\(\g\)};
+	\node [above right, font=\scriptsize] at ($(-0.76, -0.19)+(45:0.04)$) {\(\g_1\)};
+	\node [above right, font=\scriptsize] at ($(0.14, -0.63)+(45:0.04)$) {\(\g_2\)};
+	\node [above right, font=\scriptsize] at ($(0.12, -1.61)+(45:0.04)$) {\(\g_3\)};
+\end{tikzpicture}

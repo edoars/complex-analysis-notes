@@ -1,0 +1,16 @@
+\tikz[baseline=-0.5ex]{
+	\draw [
+		decoration={markings, mark=at position 0 with {\arrow{>}}},
+		postaction={decorate},
+		thick
+		] (0,0) circle (0.75);
+	\draw (0,0) circle (1.5);
+
+	\draw (0,0) -- (45:0.75);
+	\draw (0,0) -- (135:1.125);
+
+	\node [right] at (0:0.75) {\(\g_{\text{in}}\)};
+	\node [above right, font=\footnotesize] at (45:0.75) {\(w\)};
+	\node [above right, font=\footnotesize] at (135:1.125) {\(z\)};
+	\node [below, font=\footnotesize] at (0,0) {\(a\)};
+}

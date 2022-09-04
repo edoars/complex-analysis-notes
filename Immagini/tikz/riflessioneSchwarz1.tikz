@@ -1,0 +1,12 @@
+\tikz[baseline=-0.5ex]{
+	\draw[-latex, thick] (-0.5,0) -- (4,0);
+	\draw[-latex, thick] (0,-2) -- (0,2);
+
+	\draw (2,1) circle (0.8);
+	\draw (2,-1) circle (0.8);
+
+	\node[above right] at ($(2,1)+(15:0.9)$) {\(\Omega\)};
+	\node[above right] at ($(2,-1)+(15:0.9)$) {\(\conj{\Omega}\)};
+	\node at (2,1) {\(f(z)\)};
+	\node at (2,-1) {\(\conj{f(\conj{z})}\)};
+}

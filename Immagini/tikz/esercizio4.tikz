@@ -1,0 +1,40 @@
+\tikz[baseline=-0.5ex]{
+	\draw [-latex, thick] (-2.2,0) -- (2.5,0);
+	\draw [-latex, thick] (0,-2.2) -- (0,2.5);
+
+	\coordinate (A) at (7.18076:2);
+	\coordinate (B) at (-7.18076:2);
+	\coordinate (C) at (30:0.5);
+	\coordinate (D) at (-30:0.5);
+
+	\draw [
+		decoration={markings, mark=at position 0.15 with {\arrow{>}}},
+		postaction={decorate}
+		] (A) arc (7.18076:360-7.18076:2);
+	\draw [
+		decoration={markings, mark=at position 0.4 with {\arrow{>}}},
+		postaction={decorate}
+		] (C) arc (30:360-30:0.5);
+	\draw [
+		decoration={markings, mark=at position 0.5 with {\arrow{>}}},
+		postaction={decorate}
+		] (C) -- (A);
+	\draw [
+		decoration={markings, mark=at position 0.5 with {\arrow{>}}},
+		postaction={decorate}
+		] (D) -- (B);
+
+	\node [minimum width=2.3cm, minimum height=0.2cm, inner sep=0pt, pattern=north east lines wide] at (1.15,0) {};
+
+	\node [above right, font=\large] at (2.5,0) {\(x\)};
+	\node [above right, font=\large] at (0,2.5) {\(i\,y\)};
+	\node [above right] at (59.026532:2) {\(\g_1\)};
+	\node [below=0.1cm] at (1.21,-0.25) {\(\g_2\)};
+	\node [above left] at (150:0.5) {\(\g_3\)};
+	\node [above=0.1cm] at (1.21,0.25) {\(\g_4\)};
+
+	\node [font=\tiny] (E) at (-60:2.5) {\(\ln z\in\R+2\p\,i\)};
+	\draw [bend left, ->, help lines] (E.north) to (0.81,-0.1);
+	\node [font=\tiny] (F) at (20:2.7) {\(\ln z \in \R\)};
+	\draw [bend right, ->, help lines] (F.west) to (1.61,0.1);
+}

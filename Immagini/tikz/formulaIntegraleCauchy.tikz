@@ -1,0 +1,18 @@
+\tikz[baseline=-0.5ex]{
+	\draw [
+		decoration={markings, mark=at position 0 with {\arrow{>}}},
+		postaction={decorate},
+		thick
+		] (0,0) circle (1);
+	\draw [thick] (0,0) circle (1.5);
+	\fill (0,0) circle (0.02);
+	\draw (0,0) -- (45:1);
+	\node [below, font=\small] at (0,0) {\(z_0\)};
+	\node [below right, font=\footnotesize] at (45:0.5) {\(r'\)};
+	\fill (210:0.7) circle (0.02);
+	\node [below, font=\small] at (210:0.7) {\(z\)};
+
+	\node [above right] at (45:1.5) {\(D(z_0;r)\)};
+	\node [below right] (A) at (-45:1.5) {\(D(z_0;r')\)};
+	\draw [help lines] (-60:1.15) to [bend right] (A.west);
+}

@@ -1,0 +1,18 @@
+\tikz[baseline=-0.5ex]{
+	\draw [-latex, thick] (-2,0) -- (2.3,0);
+	\draw [-latex, thick] (0,-1) -- (0,2.3);
+	\draw [
+		decoration={markings, mark=at position 0.25 with {\arrow{>}}},
+		postaction={decorate}
+		] (1.7,0) arc (0:180:1.7);
+	\draw [
+		decoration={markings, mark=at position 0.75 with {\arrow{>}}},
+		postaction={decorate}
+		] (-1.7,0) -- (1.7,0);
+
+	\node [above left, font=\large] at (2.3,0) {\(x\)};
+	\node [below right, font=\large] at (0,2.3) {\(i\,y\)};
+	\node [below, font=\footnotesize] at (1.7,0) {\(R\)};
+	\node [above, font=\footnotesize] at (0.85,0.05) {\(\g_1^R\)};
+	\node [above right, font=\footnotesize] at (45:1.7) {\(\g_2^R\)};
+}

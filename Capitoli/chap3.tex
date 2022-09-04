@@ -1,0 +1,561 @@
+%!TEX root = ../main.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 18/10/2016 - QUARTA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Forma generale del teorema di Cauchy}
+
+Ricordiamo che il \hyperref[teoremaCauchy]{teorema di Cauchy} affermava che se \(f\colon B(z_0;r)\to \C\) è una funzione olomorfa e \(\g\) è una curva chiusa in \(B(z_0;r)\), allora
+\[
+	\int\limits_\g f(z)\,\dd z = 0.
+\]
+Questo però non vale al di fuori delle palle, ad esempio per una funzione definita in un aperto non semplicemente connesso come
+\[
+	f\colon \Omega\setminus\{0\} \to \C, f(z) = \frac{1}{z},
+\]
+avevamo osservato che
+\[
+	\frac{1}{2\p\,i} \int\limits_{\g_1} \frac{\dd z}{z} = \ind(\g_1,0).
+\]
+D'altra parte se considerassimo una seconda curva \(\g_2\) all'interno di \(\g_1\), percorsa in senso contrario, troveremmo
+\[
+	\int\limits_{\mathclap{\g_1+\g_2}}\,\frac{\dd z}{z} = \int\limits_{\g_1}\frac{\dd z}{z} + \int\limits_{\g_2}\frac{\dd z}{z} = 1-1=0 \qquad\qquad
+	\input{Immagini/tikz/teorCauchyGenerale.tikz}
+\]
+In questo modo possiamo generalizzare il Teorema di Cauchy per domini non semplicemente connessi.
+%%%%%%%%%%%%%%
+%INTRODUZIONE%
+%%%%%%%%%%%%%%
+\section{Introduzione}
+
+\begin{defn}{Catene e cicli}{cateneCiclie}\index{Catene}\index{Cicli}
+	Se \(\g_1,\ldots,\g_n\) sono curve \(C^1\) e \(a_1,\ldots,a_n\in\Z\), definiamo la seguente somma formale
+	\[
+		a_1\g_1 + \ldots+ a_n\g_n
+	\]
+	come \emph{catena}. Se, inoltre, \(\g_1,\ldots,\g_n\) sono curve chiuse, la somma formale si chiama \emph{ciclo}.
+\end{defn}
+
+\begin{oss}
+	Sappiamo già che possiamo considerare una curva come un elemento del duale delle funzioni continue su \(\C\). Per cui dalla definizione di catena segue
+	\[
+		\int\limits_{\mathclap{a_1\g_1+\ldots+a_n\g_n}}\,f(z)\,\dd z = a_1 \int\limits_{\g_1}f(z)\,\dd z + \ldots + a_n \int\limits_{\g_n} f(z)\,\dd z.
+	\]
+	Dove \(f\) è una funzione continua su \(\C\).
+\end{oss}
+
+\begin{teor}{Forma generale del teorema di Cauchy}{teorCauchyGenerale}\index{Teorema di Cauchy!generalizzato}
+	Sia \(\Omega\subseteq\C\) un aperto qualsiasi e sia \(f\colon \Omega \to \C\) una funzione olomorfa.
+	Sia \(\Gamma\) un ciclo tale che
+	\[
+		\ind(\Gamma,\a):= \frac{1}{2\p\,i} \int\limits_\Gamma \frac{\dd z}{z-\a} =0,\,\fa \a\not\in\Omega.
+	\]
+	Allora se \(z\not\in \im(\Gamma)\) si ha che
+	\[
+		f(z) \cdot \ind(\Gamma,z) = \frac{1}{2\p\,i} \int\limits_\Gamma \frac{f(w)}{w-z}\,\dd z \qquad\text{e}\qquad \int\limits_\Gamma f(z)\,\dd z = 0.
+	\]
+\end{teor}
+
+\begin{proof}
+	Non fornita ma analoga ai casi già discussi.
+\end{proof}
+
+\begin{ese}
+	Sia \(\Gamma = \g_1+\g_2-\g_3\) come mostrato in figura. Consideriamo la seguente funzione
+	\[
+		f\colon \C\setminus\{0,1\} \to \C, z \mapsto \frac{1}{z\,(z-1)} \qquad\qquad \input{Immagini/tikz/esCauchyGenerale1.tikz}
+	\]
+	\(\Gamma\) soddisfa le ipotesi di Cauchy generalizzato, infatti
+	\[
+		\ind(\Gamma,0) = \frac{1}{2\p\,i} \int\limits_{\mathclap{\g_1+\g_2-\g_3}}\, \frac{\dd z}{z} = \frac{1}{2\p\,i} \bigg[ \int\limits_{\g_1}\frac{\dd z}{z} + \int\limits_{\g_2} \frac{\dd z}{z} - \int\limits_{\g_3}\frac{\dd z}{z}\bigg] = \frac{1}{2\p\,i}(1+0-1) = 0,
+	\]
+	analogamente si mostra \(\ind(\Gamma,1)=0\), da cui
+	\[
+		\int\limits_{\mathclap{\g_1+\g_2-\g_3}}\, \frac{\dd z}{z\,(z-1)} = 0.
+	\]
+\end{ese}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 21/10/2016 - QUARTA SETTIMANA (2)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+%SERIE DI LAURENT%
+%%%%%%%%%%%%%%%%%%
+\section{Serie di Laurent}
+
+\begin{defn}{Serie di Laurent}{serieLaurent}\index{Serie di Laurent}
+	Una serie del tipo
+	\[
+		\sum_{n\in \Z}a_n(z-z_0)^n,
+	\]
+	si definisce \emph{serie di Laurent} centrata in \(z_0\in\C\).
+\end{defn}
+
+\begin{prop}{Convergenza della serie di Laurent}{convergenzaSerieLaurent}\index{Serie di Laurent!convergenza}
+	Consideriamo una generica serie di Laurent \(\Sigma\) centrata in \(z_0\in\C\).
+	Siano
+	\[
+		R = \frac{1}{\limsup_{n\to +\infty}\sqrt[n]{\abs{a_n}}} \qquad\text{e}\qquad r = \limsup_{n\to +\infty}\sqrt[n]{\abs{a_{-n}}}.
+	\]
+	Se \(r<R\) allora \(\Sigma\) converge in \(D(z_0;R)\setminus\chius{D(z_0;r)}\).
+\end{prop}
+
+\begin{proof}
+	Supponiamo di scrivere
+	\[
+		\Sigma = \sum_{n\in\Z}a_n (z-z_0)^n.
+	\]
+	Se consideriamo solo i termini con indice positivo sappiamo che
+	\[
+		\sum_{n\ge 0} a_n (z-z_0)^n
+	\]
+	converge in \(D(z_0;R)\) dove \(R\) come definito nell'ipotesi è il suo raggio di convergenza.
+	D'altronde se consideriamo i termini negativi
+	\[
+		\sum_{n\le 1} a_n (z-z_0)^n,
+	\]
+	avremo che tale serie converge se
+	\[
+		\frac{1}{\abs{z-z_0}} < \frac{1}{\limsup_{n\to +\infty}\sqrt[n]{\abs{a_n}}} \iff \abs{z-z_0} > r,
+	\]
+	ovvero in \(\C\setminus \chius{D(z_0;r)}\).
+
+	Da ciò segue che \(\Sigma\) converge nell'intersezione dei due insiemi di convergenza, rispettivamente della serie con indici positivi e quella con indici negativi.
+	In particolare se \(r<R\) tale intersezione è non vuota e \(\Sigma\) converge sulla corona \(D(z_0;R)\setminus \chius{D(z_0;r)}\).
+\end{proof}
+
+\begin{oss}\label{oss:coronaMassimale}
+	Si può dimostrare che la corona di convergenza, come nel caso delle serie di potenze, è sempre quella massimale.
+\end{oss}
+
+\begin{ese}
+	Consideriamo la funzione
+	\[
+		f(z) = \frac{1}{z\,(1-z)} = \frac{1}{z} + \frac{1}{1-z},
+	\]
+	che è olomorfa su \(\C\setminus\{0,1\}\).
+
+	Scriviamo la serie di Laurent di \(f\) in \(0\).
+	Per quanto affermato nell'osservazione precedente, tale serie convergerà nelle corone massimali contenute nel dominio, ovvero:
+	\[
+		D(0;1)\setminus\{0\} \qquad\text{e}\qquad \C\setminus \chius{D(0;1)}.
+	\]
+	\begin{itemize}
+		\item In \(D(0;1)\setminus\{0\}\) avremo che \(\abs{z}<1\), possiamo quindi sfruttare la serie geometrica per scrivere
+		      \[
+			      f(z) = \frac{1}{z} + \sum_{n\ge 0} z^n.
+		      \]
+		\item In \(\C\setminus\chius{D(0;1)}\) avremo che \(\abs{\rfrac{1}{z}}<1\), tramite qualche manipolazione algebrica possiamo quindi scrivere
+		      \[
+			      \begin{split}
+				      f(z) & = \frac{1}{z} - \frac{1}{z} \frac{1}{1-\frac{1}{z}} = \cancel{\frac{1}{z}}-\frac{1}{z}\,\left[\cancel{1}+\frac{1}{z}+\frac{1}{z^2}+\ldots\right]\\
+				      & = -\sum_{n\ge 2}\frac{1}{z^n}.
+			      \end{split}
+		      \]
+	\end{itemize}
+\end{ese}
+
+\begin{teor}{Funzioni olomorfe come serie di Laurent}{funzioniOlomorfeSerieLaurent}
+	Sia \(\Omega\subseteq \C\) aperto contenente la corona \(\Set{z:r<\abs{z-a}<R}\) con \(r<R\). Sia \(f\colon \Omega \to \C\) una funzione olomorfa.
+	Allora
+	\[
+		f(z) = \sum_{n\in\Z} a_n (z-a)^n \qquad\text{con }a_n = \frac{1}{2\p\,i} \int\limits_\g \frac{f(w)}{(w-a)^{n+1}}\,\dd w.
+	\]
+	Dove \(\g\) è una curva chiusa tale che \(\ind(\g,a)=1\).
+\end{teor}
+
+\begin{figure}[tp]
+	\centering
+	\input{Immagini/tikz/funzioniOlomorfeSerieLaurent.tikz}
+	\caption{Rappresentazione della corona in \(\Omega\) e delle curve usate nel teorema.}
+	\label{fig:funzioniOlomorfeSerieLaurent}
+\end{figure}
+
+\begin{proof}
+	Definiamo
+	\[
+		\g_{\text{out}} = \pd D(a;R) \qquad\text{e}\qquad \g_{\text{in}} = \pd D(a;r).
+	\]
+	Possiamo pensare che \(\g=\g_{\text{out}}\) oppure \(\g=\g_{\text{in}}\).
+	Infatti poiché la funzione
+	\[
+		w \mapsto \frac{f(w)}{(w-a)^{n+1}},
+	\]
+	è olomorfa nella corona, possiamo applicare \hyperref[th:teorCauchyGenerale]{Cauchy nel caso generale}, da cui
+	\[
+		\int\limits_{\mathclap{\g-\g_{\text{out}}}}\, \frac{f(w)}{(w-a)^{n+1}}\,\dd w = 0 \qquad\text{e}\qquad \int\limits_{\mathclap{\g-\g_{\text{in}}}}\, \frac{f(w)}{(w-a)^{n+1}}\,\dd w = 0
+	\]
+	A questo punto, sempre per Cauchy generale,
+	\[
+		f(z) = \frac{1}{2\p\,i} \int\limits_{\mathclap{\g_{\text{out}}-\g_{\text{in}}}}\,\frac{f(w)}{w-z}\,\dd w = \frac{1}{2\p\,i} \int\limits_{\mathclap{\g_{\text{out}}}}\, \frac{f(w)}{w-z}\,\dd w - \frac{1}{2\p\,i} \int\limits_{\mathclap{\g_{\text{in}}}}\, \frac{f(w)}{w-z}\,\dd w
+	\]
+	Analizziamo separatamente i due integrali:
+	\[
+		\begin{split}
+			\frac{1}{2\p\,i}\int\limits_{\mathclap{\g_{\text{out}}}} \,\frac{f(w)}{w-z} & = \frac{1}{2\p\,i}\int\limits_{\mathclap{\g_{\text{out}}}}\, \frac{f(w)}{(w-a)-(z-a)}\,\dd w \qquad\qquad \input{Immagini/tikz/funzioniOlomorfeSerieLaurentEq1.tikz}\\
+			& = \frac{1}{2\p\,i}\int\limits_{\mathclap{\g_{\text{out}}}} \,\frac{f(w)}{1- \underbrace{\frac{z-a}{w-a}}_{\abs{.}<1}}\frac{1}{w-a}\,\dd w = \frac{1}{2\p\,i} \int\limits_{\mathclap{\g_{\text{out}}}}\,f(w)\sum_{n\ge 0} \frac{(z-a)^n}{(w-a)^{n+1}}\,\dd w\graffito{per convergenza uniforme posso portare la somma fuori dall'integrale}\\
+			& = \sum_{n\ge 0} (z-a)^n \frac{1}{2\p\,i} \int\limits_{\mathclap{\g_{\text{out}}}}\,\frac{f(w)}{(w-a)^{n+1}}\,\dd w = \sum_{n\ge 0} (z-a)^n \frac{1}{2\p\,i} \int\limits_\g \frac{f(w)}{(w-a)^{n+1}}\,\dd w\\
+			& = \sum_{n\ge 0} a_n (z-a)^n.
+		\end{split}
+	\]
+	Procediamo analogamente per le potenze negative:
+	\[
+		\begin{split}
+			\frac{-1}{2\p\,i} \int\limits_{\mathclap{\g_{\text{in}}}}\, \frac{f(w)}{w-z}\,\dd w & = \frac{-1}{2\p\,i}\int\limits_{\mathclap{\g_{\text{in}}}}\, \frac{f(w)}{(w-a)-(z-a)}\,\dd w \qquad\qquad \input{Immagini/tikz/funzioniOlomorfeSerieLaurentEq2.tikz}\\
+			& = \frac{-1}{2\p\,i} \int\limits_{\mathclap{\g_{\text{in}}}}\, \frac{f(w)}{1-\underbrace{\frac{w-a}{z-a}}_{\abs{.}<1}}\frac{-1}{z-a}\,\dd w = \frac{1}{2\p\,i} \int\limits_{\mathclap{\g_{\text{in}}}}\, f(w) \sum_{n\ge 0} \frac{(w-a)^n}{(z-a)^{n+1}}\,\dd w\\
+			& = \sum_{n\ge 0} \frac{1}{(z-a)^{n+1}}\frac{1}{2\p\,i} \int\limits_{\mathclap{\g_{\text{in}}}}\, \frac{f(w)}{(w-a)^{-n}}\,\dd w =\graffito{posto \(m=-(n+1)\)}\\
+			& = \sum_{m\le -1} (z-a)^m\frac{1}{2\p\,i} \int\limits_\g \frac{f(w)}{(w-a)^{m+1}}\,\dd w = \sum_{m\le -1}a_m (z-a)^m.\qedhere
+		\end{split}
+	\]
+\end{proof}
+
+\begin{oss}
+	Da questo teorema segue immediatamente che la serie converge sulla più grande corona centrata in \(a\) e contenuta in \(\Omega\).
+\end{oss}
+
+\begin{ese}
+	Scriviamo i termini negativi nello sviluppo di Laurent di
+	\[
+		f(z) = \frac{e^z - e^{-z}}{z^4}
+	\]
+	Sfruttiamo l'espansione di Taylor dell'esponenziale:
+	\[
+		\begin{split}
+			\frac{e^z-e^{-z}}{z^4} & = \frac{1}{z^4} \left[ \left( 1+z+\frac{z^2}{2!}+\frac{z^3}{3!}+\frac{z^4}{4!}+\ldots \right)-\left( 1-z+\frac{z^2}{2!}-\frac{z^3}{3!}+\frac{z^4}{4!}+\ldots \right) \right]\\
+			& = \frac{1}{z^4} \left[ 2z+\frac{2}{3!}z^3+\ldots \right] = \frac{2}{z^3}+\frac{1}{3}\frac{1}{z}+ \ldots.
+		\end{split}
+	\]
+\end{ese}
+
+\begin{ese}
+	Consideriamo la funzione
+	\[
+		f(z) = \frac{z^2}{1+z^4}.
+	\]
+	Le cui singolarità sono le radici quarte dell'unità. Troviamo il termine \((-1)\)-esimo della serie di Laurent in \(e^{i\,\rfrac{\p}{4}}\):
+	\[
+		f(z) = \frac{z^2}{(z-e^{i\,\rfrac{\p}{4}})(z-e^{i\,\rfrac{3}{4}\p})(z-e^{i\,\rfrac{5}{4}\p})(z-e^{i\,\rfrac{7}{4}\p})} = \frac{1}{z-e^{i\,\rfrac{\p}{4}}} g(z),
+	\]
+	dove \(g(z)\) è olomorfa in un intorno di \(e^{i\,\rfrac{\p}{4}}\) ed è pertanto esprimibile attraverso la sua serie di Taylor. Da cui
+	\[
+		\frac{1}{z-e^{i\,\rfrac{\p}{4}}} g(z) = \frac{1}{z-e^{i\,\rfrac{\p}{4}}} \big[g_0+g_1 (z-e^{i\,\rfrac{\p}{4}})+g_2 (z-e^{i\,\rfrac{\p}{4}})^2+\ldots\big],
+	\]
+	ne segue che il termine \((-1)\)-esimo è
+	\[
+		\frac{g_0}{z-e^{i\,\rfrac{\p}{4}}} \qquad\text{con }g_0 =g^{(0)}(e^{i\,\rfrac{\p}{4}})= \frac{(e^{i\,\rfrac{\p}{4}})^2}{(e^{i\,\rfrac{\p}{4}}-e^{i\,\rfrac{3}{4}\p})(e^{i\,\rfrac{\p}{4}}-e^{i\,\rfrac{5}{4}\p})(e^{i\,\rfrac{\p}{4}}-e^{i\,\rfrac{7}{4}\p})}.
+	\]
+\end{ese}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%SINGOLARITA' ELIMINABILI%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Singolarità isolate}
+
+\begin{defn}{Singolarità isolata}{singolaritàIsolata}\index{Singolarità!isolata}
+	Sia \(f\colon D(z_0;r)\setminus\{z_0\} \to \C\). Si dice che \(f\) ha una \emph{singolarità isolata} in \(z_0\) se esiste un intorno \(U\) di \(z_0\) per cui \(f\) è olomorfa in \(U\setminus\{z_0\}\).
+\end{defn}
+
+\begin{defn}{Singolarità eliminabile}{singolaritàEliminabile}\index{Singolarità!eliminabile}
+	Si definisce \emph{singolarità eliminabile} di una funzione olomorfa \(f\), una singolarità isolata \(z_0\) di \(f\) tale che
+	\[
+		\lim_{z\to z_0} \abs{f(z)} < +\infty.
+	\]
+\end{defn}
+
+\begin{teor}{della singolarità eliminabile}{teoremaSingolaritàEliminabile}\index{Teorema!della singolarità eliminabile}
+	Sia \(f\) una funzione olomorfa e limitata in \(D(z_0;r)\setminus\{z_0\}\).
+	Allora esiste \(\a\in\C\) tale che
+	\[
+		\tilde{f}(z) = 	\begin{cases}
+			f(z) & z\neq z_0 \\
+			\a   & z=z_0
+		\end{cases}
+	\]
+	è olomorfa in \(D(z_0;r)\).
+\end{teor}
+
+\begin{proof}
+	Moralmente si ha \(\a=\lim_{z\to z_0}f(z)\), ma dalle ipotesi non sappiamo se tale limite esiste.
+	Consideriamo
+	\[
+		g(z) = 	\begin{cases}
+			(z-z_0)^2 f(z) & z\neq z_0 \\
+			0              & z=z_0
+		\end{cases}
+	\]
+	\(g\) è chiaramente continua poiché per \(z\to z_0\) si ha \((z-z_0)^2 \to 0\) e \(f(z)\) limitata per ipotesi, da cui
+	\[
+		\lim_{z\to z_0}g(z) = 0.
+	\]
+	Inoltre \(g\) è olomorfa in \(D(z_0;r)\) poiché in \(D(z_0;r)\setminus\{z_0\}\) è prodotto di funzioni olomorfe, mentre in \(z_0\) si ha
+	\[
+		\frac{g(z_0+h)-g(z_0)}{h} = \frac{h^2 f(z_0+h)}{h} \to 0 \text{ per }h\to 0 \implies g'(z_0)=0.
+	\]
+	In quanto funzione olomorfa, \(g\) coincide con la sua serie di Taylor:
+	\[
+		g(z) = g_2 (z-z_0)^2 + g_3 (z-z_0)^3 + g_4 (z-z_0)^4 +\ldots \graffito{ricordiamo che \(g(z_0)=g'(z_0)=0\)}
+	\]
+	Da cui
+	\[
+		f(z) = \frac{g(z)}{(z-z_0)^2} = g_2 + g_3 (z-z_0) + g_4 (z-z_0)^2 + \ldots
+	\]
+	Se pongo \(\a=g_2\) avrò che \(\tilde{f}\) coincide con una serie di potenze, per cui \(\tilde{f}\) è olomorfa.
+\end{proof}
+
+\begin{ese}
+	La funzione
+	\[
+		f(z) = \frac{1}{z} - \frac{1}{\sin z},
+	\]
+	ha una singolarità eliminabile nell'origine. Infatti
+	\[
+		f(z) = \frac{1}{z} - \frac{1}{z- \frac{z^3}{3!}+\frac{z^5}{5!}+\ldots} = \frac{1}{z}-\frac{1}{z} \frac{1}{1- \frac{z^2}{3!}+\frac{z^4}{5!}+\ldots},
+	\]
+	dove \(1- \frac{z^2}{3!}+\frac{z^4}{5!}+\ldots\) è una funzione olomorfa non nulla in \(0\), pertanto il suo reciproco è ancora olomorfo e può essere espresso tramite la sua serie di Taylor:
+	\[
+		f(z) = \frac{1}{z}-\frac{1}{z} \left( 1+\frac{z^2}{3!}+\ldots \right) = \left( \frac{z}{3!}+\ldots \right),
+	\]
+	che è una funzione olomorfa anche nell'origine.
+\end{ese}
+
+\begin{defn}{Polo}{polo}\index{Polo}
+	Si definisce \emph{polo} di una funzione olomorfa \(f\), una singolarità isolata \(z_0\) di \(f\) tale che
+	\[
+		\lim_{z\to z_0} \abs{f(z)} = +\infty.
+	\]
+\end{defn}
+
+\begin{oss}
+	Analogamente \(z_0\) è un polo di \(f\colon D(z_0;r)\setminus\{z_0\} \to \C\) se \(f\) si può estendere con continuità a
+	\[
+		f\colon D(z_0;r) \to \Sigma.
+	\]
+\end{oss}
+
+\begin{prop}{Serie di Laurent calcolata in un polo}{serieLaurentPolo}
+	Sia \(f\colon D(z_0;r)\setminus\{z_0\}\) una funzione olomorfa e supponiamo che \(z_0\) sia un polo di \(f\).
+	Allora
+	\[
+		f(z) = \frac{a_{-n}}{(z-z_0)^n} + \ldots + \frac{a_{-1}}{z-z_0} + a_0 + a_1 (z-z_0) + \ldots
+	\]
+	cioè l'espressione di \(f\) come serie di Laurent in \(z_0\) ha un numero finito di termini negativi.
+\end{prop}
+
+\begin{proof}
+	Consideriamo
+	\[
+		g(z) = \frac{1}{f(z)}
+	\]
+	che è olomorfa in \(D(z_0;r)\setminus\{z_0\}\) perché \(f(z)\neq 0\) in \(D(z_0;\e)\).
+	Inoltre \(g(z) \to 0\) per \(z\to z_0\). Possiamo quindi applicare il teorema della singolarità eliminabile, da cui
+	\[
+		g(z) = a_m (z-z_0)^m + a_{m+1}(z-z_0)^{m+1}+\ldots = (z-z_0)^m \big[a_m+a_{m+1}(z-z_0)+a_{m+2}(z-z_0)^2+\ldots\big],
+	\]
+	segue
+	\[
+		f(z) = \frac{1}{(z-z_0)^m} \frac{1}{a_m + a_{m+1}(z-z_0)+\ldots},
+	\]
+	dove \(a_m + a_{m+1}(z-z_0)+\ldots\) è una funzione olomorfa e non nulla in un intorno di \(z_0\), pertanto il suo reciproco può essere scritto tramite la sua serie di Taylor:
+	\[
+		f(z) = \frac{1}{(z-z_0)^m} \big[b_0+b_1(z-z_0)+b_2(z-z_0)^2+ \ldots\big],
+	\]
+	ovvero
+	\[
+		f(z) = \frac{b_0}{(z-z_0)^m}+ \frac{b_1}{(z-z_0)^{m-1}} + \ldots + b_m + b_{m+1}(z-z_0) + b_{m+2}(z-z_0)^2 + \ldots \qedhere
+	\]
+\end{proof}
+
+\begin{defn}{Singolarità essenziale}{singolaritàEssenziale}\index{Singolarità!essenziale}
+	Si definisce \emph{singolarità essenziale} di una funzione olomorfa \(f\), una singolarità isolata \(z_0\) di \(f\) tale che
+	\[
+		\lim_{z\to z_0} \abs{f(z)} \text{ non esiste}.
+	\]
+\end{defn}
+
+\begin{oss}
+	Se tale limite non esiste, \(\abs{f(z)}\) deve essere necessariamente illimitato in un intorno di \(z_0\), poiché altrimenti il teorema della singolarità eliminabile ci dice che tale limite esiste e che è uguale al modulo.
+\end{oss}
+
+\begin{ese}[Singolarità essenziale]
+	La funzione
+	\[
+		f(z) = e^{\frac{1}{z}} = 1+\frac{1}{z}+ \frac{1}{2!}\frac{1}{z^2}+ \frac{1}{3!}\frac{1}{z^3}+\ldots
+	\]
+	presenta una singolarità essenziale in \(z=0\). Infatti lo sviluppo di Laurent ha infiniti termini negativi non nulli.
+\end{ese}
+
+\begin{ese}[Singolarità essenziale all'infinito]
+	La funzione
+	\[
+		f(z) = \sin z,
+	\]
+	presenta una singolarità essenziale all'infinito, infatti sappiamo che per valori reali la funzione è limitata, mentre per valori complessi sappiamo (lo abbiamo visto in un esempio precedente) che
+	\[
+		\sin(i\,t) = \frac{\sinh t}{i} \simeq e^{\abs{t}}, \qquad\text{per \(t\) grande}.
+	\]
+\end{ese}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 25/10/2016 - QUINTA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{teor}{di Casorati-Weierstrass}{teoremaCasoratiWeierstrass}\index{Teorema!di Casorati-Weierstrass}
+	Sia \(f\) una funzione olomorfa e sia \(z_0\in \C\) una singolarità essenziale di \(f\).
+	Allora
+	\[
+		f\big(D(z_0;r)\setminus\{z_0\}\big)
+	\]
+	è densa in \(\C\).
+\end{teor}
+
+\begin{proof}
+	Supponiamo per assurdo che \(f\big(D(z_0;r)\setminus\{z_0\}\big)\) non sia densa in \(\C\). Quindi esiste \(D(a;\e)\subset\C\) tale che
+	\[
+		D(a;\e) \cap f\big(D(z_0;r)\setminus\{z_0\}\big) = \emptyset.
+	\]
+	Definiamo
+	\[
+		g(z) = \frac{1}{f(z)-a},
+	\]
+	che è una funzione olomorfa in \(D(z_0;r)\setminus\{z_0\}\) in quanto il denominatore è sempre non nullo.
+	Inoltre \(g\) è limitata poiché
+	\[
+		\abs{g(z)} = \frac{1}{\abs{f(z)-a}} \le \frac{1}{\e}.
+	\]
+	Posso quindi applicare il \hyperref[th:teoremaSingolaritàEliminabile]{teorema della singolarità eliminabile}, per estendere \(g\) ad una funzione olomorfa su \(D(z_0;r)\).
+
+	Osserviamo che \(f\) non è limitata in \(D(z_0;r)\), poiché altrimenti vi sarebbe una singolarità eliminabile dove, per ipotesi, ve ne è una essenziale.
+	Per cui
+	\[
+		\lim_{z\to z_0}g(z) = \lim_{z \to z_0} \frac{1}{f(z)-a} = 0 \implies g(z_0) = 0. \graffito{il limite esiste perché \(g\) è olomorfa}
+	\]
+	Scriviamo lo sviluppo di Taylor di \(g\) in \(z_0\), con \(a_n\) il primo coefficiente non nullo,
+	\[
+		g(z) = a_n (z-z_0)^n + a_{n+1}(z-z_0)^{n+1}+\ldots,
+	\]
+	quindi
+	\[
+		f(z) = \frac{1}{g(z)}+a
+	\]
+	ha un polo di ordine \(n\) in \(z_0\), infatti:
+	\[
+		g(z) = (z-z_0)^n \big[a_n+a_{n+1}(z-z_0)+\ldots\big] \implies \frac{1}{g(z)} = \frac{1}{(z-z_0)^n}\big[b_0+b_1(z-z_0)+\ldots\big]
+	\]
+	D'altronde ciò è assurdo dal momento che, per ipotesi, \(z_0\) è una singolarità essenziale per \(f\).
+\end{proof}
+
+\begin{defn}{Polo all'infinito}{poloInfinito}\index{Polo!all'infinito}
+	Diciamo che una funzione olomorfa \(f\colon \setc{\chius{B(0;R)}} \to \C\) ha un \emph{polo all'infinito} se \(f(1/z)\) ha un polo nell'origine.
+\end{defn}
+
+\begin{oss}
+	La mappa \(z\mapsto 1/z\) è la lineare fratta che scambia \(0\) e \(\infty\).
+	Nella sfera di Riemann corrisponde ad una rotazione di \(\p\) rispetto all'asse reale.
+\end{oss}
+
+\begin{defn}{Singolarità essenziale all'infinito}{singolaritàEssenzialeInfinito}\index{Singolarità!essenziale all'infinito}
+	Diciamo che una funzione olomorfa \(f\colon \setc{\chius{B(0;R)}} \to \C\) ha una \emph{singolarità essenziale all'infinito} se \(f(1/z)\) ha una singolarità essenziale nell'origine.
+\end{defn}
+
+\begin{ese}
+	\(f(z)=e^z\) ha una singolarità essenziale all'infinito, in quanto \(e^{1/z}\) ha una singolarità essenziale nell'origine.
+\end{ese}
+
+\begin{prop}{Serie di Laurent calcolata in un polo all'infinito}{serieLaurentPoloInfinito}
+	Sia \(f\colon \setc{\chius{B(0;R)}} \to \C\) una funzione olomorfa e supponiamo che \(f\) abbia un polo all'infinito.
+	Allora \(f(z)\) ha finite potenze positive nello sviluppo di Laurent in \(\setc{\chius{B(0;R)}}\)
+\end{prop}
+
+\begin{proof}
+	\(f(1/z)\) è definita su \(B(0;1/R)\setminus\{0\}\). Inoltre per ipotesi ha un polo in \(0\), quindi per la \autoref{pr:serieLaurentPolo} ha finite potenza negative nella sua espansione di Laurent:
+	\[
+		f \left( \frac{1}{z} \right) = \frac{a_{-n}}{z^n}+\ldots+\frac{a_{-1}}{z}+a_0+a_1 z+ a_2 z^2 + \ldots
+	\]
+	Posto \(w=\frac{1}{z}\) otteniamo
+	\[
+		f(w) = a_{-n}w^n + \ldots a_1 w + a_0 + \frac{a_1}{w}+ \frac{a_2}{w^2}+\ldots
+	\]
+	che è la tesi.
+\end{proof}
+
+\begin{defn}{Funzione meromorfa}{funzioneMeromorfa}\index{Funzione!meromorfa}
+	Sia \(\Omega\subseteq \C\) aperto e sia \(f\colon \Omega \to \C\).
+	Diciamo che \(f\) è una funzione \emph{meromorfa} se è olomorfa su \(\Omega\) ad esclusione di un insieme di punti costituito da soli poli.
+\end{defn}
+
+\begin{oss}
+	Se \(f\) è una funzione meromorfa e \(\infty\) è un suo polo, allora \(f\) può essere estesa ad una funzione
+	\[
+		f\colon \Sigma \to \Sigma,
+	\]
+	dove \(\Sigma\) è la sfera di Riemann.
+\end{oss}
+
+\begin{ese}
+	La funzione
+	\[
+		f(z) = \frac{1}{z^4+1}
+	\]
+	è meromorfa.
+	Infatti le sue uniche singolarità sono le radici quarte di \(-1\), che costituiscono poli per \(f\).
+\end{ese}
+
+\begin{prop}{Poli di una funzione meromorfa sono isolati}{poliFunzioneMeromorfa}
+	Sia \(f\colon \Omega \to \C\) una funzione meromorfa.
+	Allora i poli di \(f\) sono isolati.
+\end{prop}
+
+\begin{proof}
+	Supponiamo che \(z_0\) sia un polo di \(f\). Scrivendo la serie di Laurent di \(f\) in \(z_0\) otteniamo
+	\[
+		f(z) = \frac{a_{-n}}{(z-z_0)^n}+\ldots+\frac{a_{-1}}{(z-z_0)} + a_0+a_1 (z-z_0)+a_2(z-z_0)^2+\ldots
+	\]
+	che \hyperref[oss:coronaMassimale]{sappiamo convergere} in \(D(z_0;r)\setminus\{z_0\}\).
+	Da ciò segue che in \(D(z_0;r)\) non vi possono essere ulteriori poli.
+\end{proof}
+
+\begin{oss}
+	Se estendiamo \(f\) a \(\Sigma\), dal momento che quest'ultima è un compatto, i poli risultano necessariamente in numero finito. Infatti un insieme di punti isolati in un compatto è sempre finito.
+\end{oss}
+
+\begin{prop}{Caratterizzazione delle funzioni meromorfe su \(\Sigma\)}{funzioniMeromorfeSferaRiemann}
+	Sia \(f\colon \Sigma \to \Sigma\) una funzione meromorfa.
+	Allora \(f\) è una funzione razionale.
+\end{prop}
+
+\begin{proof}
+	In quanto meromorfa, \(f\) ha un numero finito di poli \(\{z_1,\ldots, z_n\}\).
+	Scriviamo lo sviluppo di Laurent di \(f\) in \(z_1\):
+	\[
+		f(z) = \underbrace{\frac{a_{-n}}{(z-z_1)^n}+\ldots+ \frac{a_{-1}}{(z-z_1)}}_{R_1(z)} + \underbrace{a_0 + a_1 (z-z_0) + a_2(z-z_0)^2 + \ldots}_{f_1(z)}
+	\]
+	dove \(f_1(z)\) è una funzione olomorfa in \(z_1\) e \(R_1(z)\) è una funzione razionale.
+	Da cui
+	\[
+		f_1(z) = f(z) -R_1(z)
+	\]
+	è una funzione meromorfa avente come poli \(\{z_2,\ldots,z_n\}\).
+	Ripetendo lo stesso procedimento per il polo \(z_2\) di \(f_1\) otteniamo
+	\[
+		f_2(z) = f_1(z) - R_2(z)
+	\]
+	che sarà una funzione meromorfa con i poli \(\{z_3,\ldots,z_n\}\).
+	Iterando troviamo
+	\[
+		f_n(z) = f(z) - R_1(z) - \ldots - R_n(z)
+	\]
+	che è una funzione meromorfa che non ha poli al finito.
+	D'altronde \(\infty\) è un polo per \(f\) e di conseguenza lo è anche per \(f_n\).
+	In particolare, per la \autoref{pr:serieLaurentPoloInfinito}, \(f\) ha un numero finito di potenze positive nella sua espansione di Laurent fuori da \(B(0;R)\).
+	Da cui
+	\[
+		\abs{f(z)} \approx \abs{z}^l \implies \abs{f_n(z)} \approx \abs{z}^l
+	\]
+	poiché \(R_j(z) \to 0\) per \(z \to +\infty\).
+	Quindi \(f_n(z)\) è intera e ha crescita polinomiale, per il \hyperref[th:teoremaLiouvilleGeneralizzato]{teorema di Liouville} \(f_n\) è un polinomio, ovvero
+	\[
+		f_n(z) = P(z) \iff f(z) = P(z)+R_1(z) + \ldots +R_n(z),
+	\]
+	cioè \(f\) è razionale.
+\end{proof}

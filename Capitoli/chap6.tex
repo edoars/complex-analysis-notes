@@ -1,0 +1,668 @@
+%!TEX root = ../main.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 29/11/2016 - OTTAVA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Funzioni armoniche}
+%%%%%%%%%%%%%%
+%INTRODUZIONE%
+%%%%%%%%%%%%%%
+\section{Introduzione}
+
+Le funzioni armoniche sono uno strumento utile in fisica per il calcolo del potenziali (elettrico, gravitazionale, ecc.).
+In questo paragrafo daremo la definizione di funzione armonica e studieremo alcune applicazioni in fisica.
+
+\begin{defn}{Funzione armonica}{funzioneArmonica}\index{Funzione!armonica}
+	Siano \(\Omega\subseteq \R^2\) aperto e \(f\in C^2(\Omega,\R)\).
+	\(f\) si dice \emph{armonica} in \(\Omega\) se
+	\[
+		\Delta f(x,y) := \pd_{xx}^2 f(x,y) + \pd_{yy}^2 f(x,y) = 0,\,\fa (x,y)\in \Omega.
+	\]
+\end{defn}
+
+\begin{notz}
+	L'operatore \(\Delta\) si chiama \emph{laplaciano}.
+\end{notz}
+
+\begin{oss}
+	Il laplaciano \(\Delta f\) può essere anche espresso in coordinate polari:
+	\[
+		\Delta f(x,y) = r\,\frac{\pd}{\pd r} \left( r\,\frac{\pd f(r,\q)}{\pd r} \right) + \frac{\pd^2 f(r,\q)}{\pd \q^2}.
+	\]
+	Per dimostrare l'uguaglianza e sufficiente scrivere \(f(x,y) = f(r\,\cos \q,r\,\sin \q)\) e applicare la regola della catena nel calcolo delle derivate parziali.
+\end{oss}
+
+\begin{ese}
+	Il potenziale elettrico di una carica posta in \((x_0,y_0)\) 
+	\[
+		f(x,y) = \ln \abs{(x,y)-(x_0,y_0)},
+	\]
+	è una funzione armonica.
+	Infatti, per prima possiamo supporre che, a meno di traslazioni, \((x_0,y_0)=(0,0)\). A questo punto passiamo in coordinate polari per ottenere
+	\[
+		f(r,\q) = \ln r \implies \Delta f(r,\q) = r\,\frac{\pd}{\pd r} \left[ r\,\frac{1}{r} \right] = 0.
+	\]
+\end{ese}
+
+\begin{prop}{Componenti armoniche di funzioni olomorfe}{componentiArmonicheFunzioniOlomorfe}
+	Sia \(\Omega \subseteq \R^2\) aperto e sia \(f\colon \Omega \to \C\) una funzione olomorfa. Se
+	\[
+		f(x+i\,y) = u(x,y) + i\,v(x,y),
+	\]
+	allora \(u,v\) sono funzioni armoniche.
+\end{prop}
+
+\begin{proof}
+	Se mostriamo che \(u\) è armonica, \(v\) lo sarebbe di conseguenza, basta infatti moltiplicare \(f\) per \(-i\).
+	Da \hyperref[pr:equazioniCauchyRiemann]{Cauchy-Riemann}
+	\[
+		\begin{cases}
+			\pd_x u(x,y) = \pd_y v(x,y) \\
+			\pd_y u(x,y) = -\pd_x v(x,y)
+		\end{cases}
+		\,\fa (x,y)\in\Omega.
+	\]
+	Da cui
+	\[
+		\Delta u(x,y) = \pd_{xx}^2 u(x,y) +\pd_{yy}^2 u(x,y) = \pd_x\big[\pd_y v(x,y)\big] - \pd_y\big[\pd_x v(x,y)\big] = 0
+	\]
+	in quanto \(v\in C^{\infty}\) poiché \(f\) è olomorfa, in particolare \(v\in C^2\); quindi, dal lemma di Schwarz dell'analisi reale, le derivate incrociate sono uguali.
+\end{proof}
+
+\begin{ese}
+	Riprendiamo l'esempio precedente del potenziale elettrico e mostriamo che è armonico sfruttando la proposizione.
+	Infatti in campo complesso avremo
+	\[
+		f(x,y) = \ln\abs{(x,y)} = \ln \abs{z} = \Re(\ln z).
+	\]
+	D'altronde \(\ln z\) è olomorfa, quindi la sua parte reale \(\ln \abs{z}\) è armonica.
+\end{ese}
+
+\begin{ese}
+	Sia \(K\subseteq \R^2\) un compatto e sia \(\r\colon K \to \R\) una funzione positiva Riemann integrabile. Mostriamo che la funzione potenziale generata da \(\r\)
+	\[
+		V(x,y) = \int\limits_K \ln\abs{(x,y)-(x_0,y_0)}\r(x_0,y_0)\,\dd x_0\,\dd y_0
+	\]
+	è armonica su \(\R^2\setminus K\).
+	Sfruttiamo la differenziazione sotto segno di integrale:
+	\[
+		\Delta V(x,y) = \int\limits_K \Delta\ln\abs{(x,y)-(x_0,y_0)}\r(x_0,y_0)\,\dd x_0\,\dd y_0.
+	\]
+	Abbiamo già visto nell'esempio precedente che \(\ln\abs{(x,y)-(x_0,y_0)}\) è armonica se \((x,y)\not\in K\). Quindi
+	\[
+		\Delta\ln\abs{(x,y)-(x_0,y_0)} = 0 \implies \Delta f(x,y) = \int\limits_K 0\,\dd x_0\,\dd y_0 = 0.
+	\]
+\end{ese}
+
+\begin{teor}{Coniugato armonico e funzione olomorfa}{coniugatoArmonicoFunzioneOlomorfa}
+	Sia \(\Omega\subseteq\R^2\) aperto e sia \(u\colon \Omega \to \R\) una funzione armonica. Sia \(B(z_0;r)\subseteq \Omega\).
+	Allora esiste \(v\in\C^2\big(B(z_0;r)\big)\) tale che \(u+i\,v\) è olomorfa in \(B(z_0;r)\).
+\end{teor}
+
+\begin{proof}
+	Consideriamo la forma differenziale
+	\[
+		\star\dd u = -\pd_y u\,\dd x + \pd_x u \,\dd y.
+	\]
+	La scelta segue dal fatto che se \(v\) esistesse tale da soddisfare la tesi, il suo differenziale sarebbe proprio \(\star\dd u\) per via di \hyperref[pr:equazioniCauchyRiemann]{Cauchy-Riemann}.
+	Ora \(\star\dd u\in C^1\) poiché \(u\in C^2(\Omega)\). Inoltre \(\star\dd u\) è chiusa, infatti
+	\[
+		\pd_y (-\pd_y u) = \pd_x (\pd_x u) \iff \pd_{xx}^2 u + \pd_{yy}^2 u = 0
+	\]
+	che è vero per l'ipotesi di \(u\) armonica.
+	
+	A questo punto, per il Lemma di Poincarè, su \(B(z_0;r)\) trovo una primitiva \(v\) di \(\star\dd u\). In particolare il differenziale di \(v\) è proprio \(\star\dd u\), quindi
+	\[
+		\dd v = \pd_x v\,\dd x + \pd_y v\,\dd y = -\pd_y u\,\dd x + \pd_x u\,\dd y \implies \begin{cases}
+			\pd_x u = \pd_y v \\
+			\pd_y u = -\pd_x v
+		\end{cases}
+	\]
+	Cioè \(u,v\) soddisfano le equazioni di Cauchy-Riemann e quindi \(u+i\,v\) è olomorfa su \(B(z_0;r)\).
+\end{proof}
+
+\begin{notz}
+	La funzione \(v\) si chiama \emph{coniugato armonico} di \(u\).
+\end{notz}
+
+\begin{oss}
+	Il teorema ha valore locale, infatti globalmente \(v\) può non essere definita.
+	Ad esempio prendiamo \(\Omega=\C\setminus\{0\}\) e \(u(z)=\ln \abs{z} = \ln\sqrt{x^2+y^2}\) che sappiamo essere armonica per gli esempi precedenti. In questo caso non esiste \(v\) tale che \(u+i\,v\) è olomorfa in \(\C\setminus\{0\}\) poiché \(u+i\,v=\ln z\) che sappiamo non essere definita su \(\C\setminus\{0\}\)
+\end{oss}
+
+\begin{ese}
+	Consideriamo
+	\[
+		u(x,y) = \ln \sqrt{x^2+y^2} = \frac{1}{2}\ln (x^2+y^2).
+	\]
+	Applicando il teorema troviamo
+	\[
+		\star\dd u (x,y) = -\frac{y}{x^2+y^2}\,\dd x + \frac{x}{x^2+y^2}\,\dd y.
+	\]
+	Tramite pullback si trova che
+	\[
+		\star\dd u = \dd \q \qquad\text{con }\q = \arctan \frac{y}{x}
+	\]
+	ovvero che \(\star\dd u\) è esatta.
+\end{ese}
+%%%%%%%%%%%%%%%%%%%%%%%
+%PROPRIETA' PRINCIPALI%
+%%%%%%%%%%%%%%%%%%%%%%%
+\section{Proprietà principali}
+
+\begin{prop}{Proprietà del valor medio per funzioni armoniche}{valorMedioFunzioniArmoniche}
+	Siano \(\Omega\subseteq\R^2\) aperto e \(u\colon \Omega \to \R\) una funzione armonica.
+	Se \(B(z_0;R)\subseteq\Omega\) e \(r\in (0,R)\), allora
+	\[
+		u(z_0) = \frac{1}{2\p} \int_0^{2\p} u(z_0+r\,e^{i\,t})\,\dd t.
+	\]
+\end{prop}
+
+\begin{proof}
+	Per il teorema precedente posso trovare \(v\colon B(z_0;R) \to \R\) il coniugato armonico di \(u\). Quindi
+	\[
+		f(x+i\,y) = u(x,y) + i\,v(x,y)
+	\]
+	è olomorfa in \(B(z_0;R)\). Se \(r<R\), \(f\) soddisfa la \hyperref[th:valorMedio]{proprietà del valor medio}, quindi
+	\[
+		\begin{split}
+			u(z_0) & = \Re f(z_0) = \Re \left( \frac{1}{2\p} \int_0^{2\p} f(z_0+r\,e^{i\,t})\,\dd t \right) = \frac{1}{2\p}\int_0^{2\p} \Re\big(f(z_0+r\,e^{i\,t})\big)\,\dd t\\
+			& = \frac{1}{2\p} \int_0^{2\p} u(z_0 + r\,e^{i\,t})\,\dd t.\qedhere
+		\end{split}
+	\]
+\end{proof}
+
+\begin{prop}{Principio del massimo per funzioni armoniche}{principioMassimoFunzioniArmoniche}\index{Principio del massimo!per funzioni armoniche}
+	Siano \(\Omega\subseteq\R^2\) un aperto connesso e \(u\colon \Omega \to \R\) una funzione armonica.
+	Allora \(u\) non può assumere massimo in \(\Omega\) a meno di essere costante.
+\end{prop}
+
+\begin{proof}
+	Sia \(z_0\in\Omega\) un punto di massimo di \(u\) in \(\Omega\). Vogliamo dimostrare che \(u(z)=u(z_0)\,\fa z\in\Omega\).
+	Definiamo
+	\[
+		A = \Set{z\in\Omega | u(z)=u(z_0)} \qquad\text{e}\qquad B=\Set{z\in\Omega | u(z)<u(z_0)}.
+	\]
+	\'E chiaro che \(A\cap B = \emptyset\) e \(A\cup B=\Omega\).
+	Inoltre \(B\) è aperto in quanto \(B=u^{-1}\big(-\infty,u(z_0)\big)\) e \(u\) è continua.
+	Se dimostriamo che \(A\) è aperto, per connessione avremo che \(B=\emptyset\) poichè \(z_0\in A\). Di conseguenza
+	\[
+		A = \Omega \implies u(z) = u(z_0),\,\fa z\in \Omega.
+	\]
+	Sia \(z_1\in A\) e \(B(z_1;R)\subseteq \Omega\). Per il valor medio, se \(r<R\) avremo
+	\[
+		u(z_1) = \frac{1}{2\p} \int_0^{2\p} u(z_1+r\,e^{i\,t})\,\dd t.
+	\]
+	Ora
+	\[
+		u(z_1) = \max_{z\in \Omega} u(z) \qquad\text{mentre}\qquad u(z_1+r\,e^{i\,t}) \le \max_{z\in\Omega} u(z).
+	\]
+	Quindi con un semplici argomento di analisi reale si deduce che
+	\[
+		u(z_1+r\,e^{i\,t}) = u(z_1) ,\,\fa t\in [0,2\p].
+	\]
+	Inoltre \(r\) è arbitrario in \((0,R)\), quindi tale conclusione vale anche per ogni \(r\in(0,R)\). Segue che
+	\[
+		u(z) = u(z_1) = u(z_0),\,\fa z\in B(z_1;R)
+	\]
+	da cui \(A\) aperto che implica la tesi.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%
+%PROBLEMI ELLETTICI%
+%%%%%%%%%%%%%%%%%%%%
+\section{Problemi ellittici}
+
+In questo paragrafo introdurremo la risoluzione di problemi ellettici. Se \(\Omega \subseteq \R^2\) è aperto e \(\j\colon \pd\Omega \to \R\) è continua, il problema è trovare
+\begin{equation*}
+	u\in C^2(\Omega,\R)\cap C(\chius{\Omega},\R) \qquad\text{tale che } \begin{cases}
+		\Delta u(x,y) = 0 & \text{se }(x,y)\in\Omega     \\
+		u(x,y) = \j(x,y)  & \text{se }(x,y)\in\pd\Omega
+	\end{cases}\tag{\(\star\)}
+\end{equation*}
+
+\begin{teor}{Unicità della soluzione}{soluzioneUnicaProbEllittici}
+	Sia \(\Omega\subseteq\R^2\) aperto e limitato. Se \((\star)\) ha una soluzione allora è unica.
+\end{teor}
+
+\begin{proof}
+	Supponiamo che vi siano due soluzioni \(u_1,u_2\) di \((\star)\). Consideriamo
+	\[
+		v(x,y) = u_2(x,y) - u_1(x,y).
+	\]
+	Ci basta dimostrare che \(v(x,y) = 0,\,\fa (x,y)\in\Omega\).
+	Per definizione \(v\in C^2(\Omega,\R)\cap C(\chius{\Omega},\R)\). Inoltre
+	\[
+		\Delta v(x,y) = \Delta u_2(x,y) - \Delta u_1(x,y) = 0,
+	\]
+	quindi \(v\) è armonica.
+	Siccome \(\chius{\Omega}\) è compatto, \(v\) ammette massimo e minimo in \(\chius{\Omega}\). D'altronde, per il principio del massimo per funzioni armoniche, tali massimo e minimo devono essere assunti su \(\pd\Omega\) da \(v\). Da cui
+	\[
+		\max_{z\in\chius{\Omega}} v(z) = 0
+	\]
+	poiché sul bordo \(u_1(x,y) = \j(x,y) = u_2(x,y)\).
+	Per la stessa ragione
+	\[
+		\min_{z\in\chius{\Omega}} v(z) = 0.
+	\]
+	Quindi \(v(z)=0,\,\fa z\in \Omega\).
+\end{proof}
+
+\begin{teor}{Integrale di Poisson}{integralePoisson}\index{Integrale di Poisson}
+	Sia \(\j\colon \pd B(0;R) \to \R\) una funzione continua.
+	Allora la soluzione di
+	\[
+		\begin{cases}
+			\Delta u(x,y) = 0 & \text{se }(x,y)\in B(0;R)      \\
+			u(x,y) = \j(x,y)  & \text{se }(x,y)\in \pd B(0;R)
+		\end{cases}
+	\]
+	è data da
+	\[
+		u(r\,e^{i\,\q}) = \frac{1}{2\p} \int_0^{2\p} \frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2}\j(R\,e^{i\,t})\,\dd t.
+	\]
+\end{teor}
+
+\begin{proof}
+	Per prima cosa mostriamo che \(\Delta u=0\). Un modo diretto per mostrarlo sarebbe quello di sfruttare la differenziazione sotto segno di integrale e calcolare direttamente il laplaciano di \(u\).
+	Alternativamente troviamo \(v\colon B(0;R) \to \R\) il coniugato armonico di \(u\). Quindi avremo \(f=u+i\,v\) olomorfa in \(B(0;R)\) a cui possiamo applicare la formula di Cauchy:
+	\[
+		f(r\,e^{i\,\q}) = \frac{1}{2\p\,i} \int_0^{2\p} \frac{f(R\,e^{i\,t})}{R\,e^{i\,t}-r\,e^{i\,\q}}\,i\,R\,e^{i\,t}\,\dd t.
+	\]
+	Se sposto il polo \(r\,e^{i\,\q}\) fuori dalla circonferenza \(B(0;R)\) ottengo una funzione olomorfa il cui integrale lungo la circonferenza sarà nullo per Cauchy. In particolare
+	\[
+		0 = \frac{1}{2\p\,i} \int_0^{2\p} \frac{f(R\,e^{i\,t})}{R\,e^{i\,t}-\frac{R^2}{r\,e^{-i\,\q}}}\,i\,R\,e^{i\,t}\,\dd t.
+	\]
+	dove la scelta di \(\frac{R^2}{r\,e^{-i\,\q}}\) è dovuta al fatto che se ho \(z_0\in B(0;R)\), il punto \(\frac{R^2}{\conj{z_0}}\) ha lo stesso argomento di \(z_0\) ma il suo modulo è maggiore di \(R\).
+	A questo punto sottraggo le due espressioni precedenti per ottenere
+	\[
+		f(r\,e^{i\,\q}) =  \frac{1}{2\p} \int_0^{2\p} \frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2}f(R\,e^{i\,t})\,\dd t.
+	\]
+	Ne prendo la parte reale e ottengo che \(u(r\,e^{i\,\q})\) è armonica in quanto parte reale di una funzione olomorfa. Inoltre con lo stesso argomento avremo che \(u\in C^2\big(B(0;R)\big)\).
+	Resta da mostrare che \(u\in C\big(\chius{B(0;R)}\big)\), che nel nostro caso si riduce a verificare la continuità su \(\pd B(0;R)\). Per farlo dimostreremo che
+	\[
+		u(r,\q) \longrightarrow \j(R\,e^{i\,\q}) \text{ uniformemente per }r \to R.
+	\]
+	Ciò implica la continuità al bordo poiché vi è convergenza uniforme e \(\j\in C\big(\pd B(0;R)\big)\).
+	
+	Per prima cosa studiamo alcune proprietà del nucleo di Poisson:
+	\begin{equation*}
+		\frac{1}{2\p}\int_0^{2\p} \frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2}\,\dd t =1.\tag{1}
+	\end{equation*}
+	Infatti, se \(f\) è olomorfa, dalla formula di Cauchy avremo
+	\[
+		f(z) = \frac{1}{2\p\,i} \int_0^{2\p} \frac{f(R\,e^{i\,t})}{R\,e^{i\,t}-z}\,i\,R\,e^{i\,t}\,\dd t,
+	\]
+	dove chiaramente abbiamo sfruttato la curva \(\pd B(0;R)\). Come abbiamo visto nella prima parte della dimostrazione, se al posto di \(z\) prendiamo \(\frac{R^2}{\conj{z}}\), il medesimo integrale è nullo per il teorema di Cauchy, in quanto la funzione integranda è olomorfa in \(B(0;R)\). Da cui
+	\[
+		\begin{split}
+			f(z) & = \frac{1}{2\p\,i} \int_0^{2\p} \frac{f(R\,e^{i\,t})}{R\,e^{i\,t}-z}\,i\,R\,e^{i\,t}\,\dd t - \frac{1}{2\p\,i} \int_0^{2\p} \frac{f(R\,e^{i\,t})}{R\,e^{i\,t}-\frac{R^2}{\conj{z}}}\,i\,R\,e^{i\,t}\,\dd t\\
+			& = \frac{1}{2\p} \int_0^{2\p} \frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2} f(R\,e^{i\,t})\,\dd t
+		\end{split}
+	\]
+	Posto \(f\equiv 1\) otteniamo \((1)\).
+	\begin{equation*}
+		0 \le \frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2} \le \e \qquad\text{se }t\not\in [\q-\d,\q+\d].\tag{2}
+	\end{equation*}
+	Osserviamo che per \(r \to R\) abbiamo sempre \(r\le R\). Quindi
+	\[
+		R^2 -r^2 \ge 0.
+	\]
+	Inoltre se \(t\not\in[\q-\d,\q+\d]\)
+	\[
+		R^2-2R\,r\,\cos(\q-t)+r^2 > R^2-2R\,r+r^2 = (R-r)^2 \ge 0,
+	\]
+	quindi la prima parte della disuguaglianza è dimostrata. La seconda è altrettanto chiara in quanto \(R^2-r^2 \to 0\) quando \(r\to R\). Mentre
+	\[
+		R^2-2R\,r\,\cos(\q-t)+r^2 \to R^2\big(1-2\cos(\q-t)+1) > \g > 0 \qquad\text{se }t\not\in[\q-\d,\q+\d].
+	\]
+	Quindi anche la \((2)\) è dimostrata. Mostriamo la convergenza uniforme:
+	\[
+		\begin{split}
+			\abs{u(r\,e^{i\,\q})-\j(R\,e^{i\,\q})} & = \bigg\lvert \frac{1}{2\p} \int_0^{2\p} \frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2}\j(R\,e^{i\,t})\,\dd t - \j(R\,e^{i\,\q}) \bigg\rvert\\
+			& \overset{(1)}{=} \bigg\lvert \frac{1}{2\p} \int_0^{2\p}\frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2}\big[\j(R\,e^{i\,t})-\j(R\,e^{i\,\q})\big]\,\dd t \bigg\rvert\\
+			& \le \frac{1}{2\p} \int_0^{2\p} \underbrace{\frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2}}_{>0 \text{ per }(2)} \abs{\j(R\,e^{i\,t})-\j(R\,e^{i\,\q})}\,\dd t
+		\end{split}
+	\]
+	Ora \(\j\) è continua su \(\pd B(0;R)\) compatto, quindi è ivi uniformemente continua. In particolare
+	\[
+		\abs{\j(R\,e^{i\,t})-\j(R\,e^{i\,\q})} \le \g(\d) \qquad\text{con }\g(\d) \to 0 \text{ se }\d \to 0\text{ e }t\in[\q-\d,\q+\d]
+	\]
+	Spezziamo l'integrale:
+	\begin{multline*}
+		\frac{1}{2\p} \int\limits_{\mathclap{[0,2\p]\setminus[\q-\d,\q+\d]}} \frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2} \abs{\j(R\,e^{i\,t})-\j(R\,e^{i\,\q})}\,\dd t\\
+		+ \frac{1}{2\p} \int_{\q-\d}^{\q+\d} \frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2} \abs{\j(R\,e^{i\,t})-\j(R\,e^{i\,\q})}\,\dd t.\tag{\(\star\)}
+	\end{multline*}
+	\graffito{l'ampliamento del dominio è una maggiorazione valida in quanto la funzione integranda è strettamente positiva}Osserviamo che per il primo integrale possiamo stimare la frazione con \((2)\) è le funzioni in modulo con \(2\norma{\j}_{\sup}\). Per il secondo sfruttiamo la convergenza uniforme per la stima del modulo e ampliamo il dominio di integrazione a \([0,2\p]\). Quindi
+	\[
+		\begin{split}
+			(\star) & \le \frac{1}{2\p}\int\limits_{\mathclap{[0,2\p]\setminus[\q-\d,\q+\d]}} 2\e\,\norma{\j}_{\sup}\,\dd t + \frac{1}{2\p} \int_0^{2\p}\frac{R^2-r^2}{R^2-2R\,r\,\cos(\q-t)+r^2}\,\g(\d)\,\dd t\\
+			& \overset{(1)}{\le} 2\e\,\norma{\j}_{\sup}+\g(\d).
+		\end{split}
+	\]
+	In conclusione, dato \(\e>0\) ho che
+	\[
+		\abs{u(r\,e^{i\,\q})-\j(R\,e^{i\,\q})} \le 2\e\,\norma{\j}_{\sup}+\g(\d).
+	\]
+	Scelgo \(\d\) tale che \(\g(\d)<\e\) se \(r\) è sufficientemente vicino a \(R\). Quindi
+	\[
+		\abs{u(r\,e^{i\,\q})-\j(R\,e^{i\,\q})} \le 2\e\,\norma{\j}_{\sup}+\e
+	\]
+	che è la definizione di convergenza uniforme.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 02/12/2016 - OTTAVA SETTIMANA (2)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{teor}{Caratterizzazione delle funzioni armoniche tramite valor medio}{valorMedioFunzioniArmoniche}\index{Proprietà del valor medio!per funzioni armoniche}
+	Sia \(\Omega \subseteq \R^2\) aperto e sia \(u\colon \Omega \to \R\) continua.
+	Allora \(u\) è armonica se e soltanto se soddisfa il principio della media, ovvero
+	\[
+		u(z_0) = \frac{1}{2\p}\int_0^{2\p} u(z_0+r\,e^{i\,t})\,\dd t \qquad\text{se }\chius{B(z_0;r)} \subseteq \Omega.
+	\]
+\end{teor}
+
+\begin{proof}
+	Abbiamo già dimostrato nella \autoref{pr:valorMedioFunzioniArmoniche} che se \(u\) è armonica allora soddisfa il valor medio.
+	
+	Supponiamo quindi che \(u\) soddisfi la proprietà del valor medio. La proprietà di essere armonica è locale, quindi ci basta dimostrare che \(u\) è armonica in ogni \(B(z_0;r)\) tale che \(\chius{B(z_0;r)}\subseteq \Omega\).
+	Consideriamo una palla con queste proprietà e definiamo
+	\[
+		v\colon \chius{B(z_0;r)} \to \C \qquad v(z_0+\r\,e^{i\,\q}) = \frac{1}{2\p} \int_0^{2\p} \frac{r^2-\r^2}{r^2-2r\,\r\,\cos(\q-t)+\r^2}\,u(z_0+r\,e^{i\,t})\,\dd t.
+	\]
+	Per quanto visto nella dimostrazione del teorema precedente, \(v\) è armonica in \(B(z_0;r)\) e continua fino al bordo.
+	Consideriamo \(w=u-v\) e dimostriamo che \(w\equiv 0\). Osserviamo che \(w\) soddisfa il principio della media in quanto \(u\) lo soddisfa per ipotesi e \(v\) è armonica. D'altronde come abbiamo visto nella dimostrazione della \autoref{pr:valorMedioFunzioniArmoniche}, il principio della media implica il principio del massimo.
+	Segue che \(w\) soddisfa il principio del massimo. D'altronde
+	\[
+		w(z) = u(z)-v(z) = 0 \qquad\text{se }z\in \pd B(z_0;r)
+	\]
+	poiché \(v\) soddisfa il problema ellittico in \(B(z_0;r)\) e il dato al bordo è proprio \(u\). Da cui
+	\[
+		\max_{z\in B(z_0;r)} w(z) = \min_{z\in B(z_0;r)} w(z) = 0 \implies w(z) = 0,\,\fa z\in B(z_0;r).
+	\]
+	Quindi \(u\) coincide con \(v\) che è armonica per costruzione, pertanto \(u\) è armonica.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%PRINCIPIO DI RIFLESSIONE DI SCHWARZ%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Principio di riflessione di Schwarz}
+
+In questo paragrafo studieremo un modo per estendere il dominio di una funzione olomorfa, il cui dominio è stato definita all'interno del semipiano superiore e il cui bordo può comprendere parte dell'asse reale. In particolare dimostreremo che l'estensione di \(f\colon \Omega \to \C\) a \(\conj{\Omega}\) è data da
+\[
+	\conj{f(\conj{z})}.
+\]
+Osserviamo che \(\conj{\Omega}\) non è la chiusura di \(\Omega\) ma il suo insieme coniugato, che andremo a definire tra poco.
+Per raggiungere tale risultato analizzeremo diversi casi, fino a giungere a quello più generale.
+
+\begin{defn}{Insieme Coniugato}{insiemeConiugato}\index{Insieme coniugato}
+	Sia \(\Omega\subseteq \C\) un insieme qualsiasi. Si definisce il suo \emph{coniugato} come
+	\[
+		\conj{\Omega} := \Set{\conj{z} | z \in \Omega}.
+	\]
+\end{defn}
+
+\begin{notz}
+	Vi è un evidente ambiguità di notazione con la chiusura di un insieme. In questo paragrafo faremo uso dell'insieme coniugato solo in riferimento ad \(\Omega\) per limitare il problema. Quando sarà necessario specificheremo l'uso di una o dell'altra notazione.
+\end{notz}
+
+\begin{prop}{Estensione di un dominio nel semipiano superiore}{estensioneDominioSemipianoSuperiore}
+	Sia \(\Omega\subseteq\Set{z | \Im(z)>0}\) tale che \(\pd\Omega \cap \R = \emptyset\). Sia inoltre \(f\colon \Omega \to \C\) olomorfa. Allora
+	\[
+		g(z) \colon \Omega \cup \conj{\Omega} \to \C, \qquad g(z) = \begin{cases}
+			f(z)               & z\in\Omega        \\
+			\conj{f(\conj{z})} & z\in\conj{\Omega}
+		\end{cases}
+	\]
+	è olomorfa.
+\end{prop}
+
+\begin{proof}
+	Mostriamo in figura i domini della proposizione:
+	\[
+		\input{Immagini/tikz/riflessioneSchwarz1.tikz}
+	\]
+	L'olomorfia di \(\conj{f(\conj{z})}\) è già stata dimostrata in un \hyperref[exe:olomorfiaEstensioneSchwarz]{precedente esercizio}. Possiamo anche dimostrarlo in maniera alternativa osservando che \(\big(\conj{f(\conj{z})}\big)'\) è \(f'|_{\conj{z}}\) composta a destra e a sinistra con un ribaltamento. Infatti una rotodilatazione composta con due ribaltamenti è ancora una rotodilatazione. Mostriamolo esplicitamente per una rotazione: la matrice del coniugio è il ribaltamento
+	\[
+		\begin{pmatrix}
+			1 & 0   \\
+			0 & -1
+		\end{pmatrix}
+	\]
+	quindi
+	\[
+		\begin{pmatrix}1 & 0\\0 & -1\end{pmatrix}\begin{pmatrix}\cos \q & \sin \q\\-\sin \q & \cos \q\end{pmatrix}\begin{pmatrix}1 & 0\\0 & -1\end{pmatrix} = \begin{pmatrix}\cos\q & -\sin\q\\\sin \q & \cos \q\end{pmatrix}
+	\]
+	che è ancora una rotazione.
+\end{proof}
+
+\begin{prop}{Estensione di un dominio coincidente con il suo coniugio}{estensioneDominioCoincidenteConiugio}
+	Sia \(\Omega\subseteq \C\) tale che \(\conj{\Omega}=\Omega\) e \(\Omega\cap\R\) è un intervallo.
+	Supponiamo che \(f\colon \Omega \to \C\) sia una funzione olomorfa tale che \(f(x)\in\R\) se \(x\in\R\). Allora \(g(z)=\conj{f(\conj{z})}\) coincide con \(f(z)\).
+\end{prop}
+
+\begin{proof}
+	Mostriamo in figura il dominio della proposizione:
+	\[
+		\input{Immagini/tikz/riflessioneSchwarz2.tikz}
+	\]
+	Siccome \(\conj{\Omega}=\Omega\), \(g\) è definito su \(\Omega\) ed è olomorfa per la proposizione precedente.
+	Osserviamo inoltre che se \(x\in\R\), allora
+	\[
+		g(x) = \conj{f(\conj{x})} = \conj{f(x)} = f(x)
+	\]
+	in quanto \(f(x)\in\R\). Quindi \(f\) è \(g\) coincidono sull'asse reale.
+	Dal \hyperref[th:principioIdentità]{principio di identità}, segue che \(f(z)=\conj{f(\conj{z})},\,\fa z\in\Omega\).
+\end{proof}
+
+\begin{prop}{Estensione di un dominio che interseca i reali}{estensioneDominioIntersecaReali}
+	Sia \(\Omega\subseteq\C\) aperto tale che \(\Omega \cap \R\) è un intervallo.
+	Sia inoltre \(f\colon \Omega \to \C\) olomorfa tale che \(f(x)\in\R\) se \(x\in\R\). Allora
+	\[
+		g(z) \colon \Omega \cup \conj{\Omega} \to \C, \qquad g(z) = \begin{cases}
+			f(z)               & z\in\Omega        \\
+			\conj{f(\conj{z})} & z\in\conj{\Omega}
+		\end{cases}
+	\]
+	è ben definita ed olomorfa.
+\end{prop}
+
+\begin{proof}
+	Mostriamo in figura i domini della proposizione:
+	\[
+		\input{Immagini/tikz/riflessioneSchwarz3.tikz}
+	\]
+	Affinché \(g\) sia ben definita basta dimostrare che \(f(z)=\conj{f(\conj{z})}\) su \(\Omega\cap\conj{\Omega}\). D'altronde ciò è banalmente vero per la proposizione precedente. Inoltre \(g\) è olomorfa per la prima proposizione del paragrafo.
+\end{proof}
+
+\begin{teor}{Principio di riflessione di Schwarz}{principioRiflessioneSchwarz}\index{Principio di riflessione di Schwarz}
+	Sia \(\Omega\subseteq\Set{z | \Im(z)>0}\) un aperto tale che \(E=\pd \Omega \cap \R\) sia un intervallo aperto.
+	Se \(v\colon \Omega \to \R\) è armonica e tende a zero su \(E\), allora \(v\) ha un'estensione armonica \(V\) su \(\Omega \cup E \cup \conj{\Omega}\), che soddisfa
+	\[
+		V(z) = -V(\conj{z}).
+	\]
+	Se poi \(f\in H(\Omega)\cap C(\Omega\cup E), f=u+i\,v\) su \(\Omega\) e \(v(z)=0\) per \(z\in E\), allora
+	\[
+		F(z) = 	\begin{cases}
+			f(z)               & z\in\Omega\cup E  \\
+			\conj{f(\conj{z})} & z\in\conj{\Omega}
+		\end{cases}
+	\]
+	definisce una funzione olomorfa su \(\Omega\cup E\cup \conj{\Omega}\).
+\end{teor}
+
+\begin{proof}
+	Definiamo \(V\colon \Omega\cup E\cup\conj{\Omega} \to \R\) tale che
+	\[
+		V(z) = 	\begin{cases}
+			v(z)         & z\in\Omega        \\
+			0            & z\in E            \\
+			-v(\conj{z}) & z\in\conj{\Omega}
+		\end{cases}
+		\qquad \qquad \input{Immagini/tikz/riflessioneSchwarz4.tikz}
+	\]
+	Ora \(V\) è continua in \(\Omega\) e \(\conj{\Omega}\) perchè \(v\) è armonica; è continua su \(E\) perché
+	\[
+		v(z_n) \longrightarrow 0 \qquad\text{se }z_n \to z_0\in E
+	\]
+	per ipotesi. Quindi, affinché \(V\) sia armonica, per la \hyperref[th:valorMedioFunzioniArmoniche]{caratterizzazione} ci basta dimostrare che soddisfa la proprietà del valor medio.
+	Se \(z_0\in\Omega\) e \(B(z_0;r)\) è tale che \(\chius{B(z_0;r)}\subseteq \Omega\) allora \(V\) verifica la proprietà del valor medio in \(B(z_0;r)\) poiché \(v\) è armonica. Infatti
+	\[
+		\frac{1}{2\p} \int_0^{2\p} V(z_0+r\,e^{i\,t})\,\dd t = \frac{1}{2\p} \int_0^{2\p} v(z_0+r\,e^{i\,t})\,\dd t = v(z_0) = V(z_0).
+	\]
+	Analogamente se \(z_0\in \conj{\Omega}\) e \(\chius{B(z_0;r)}\subseteq\conj{\Omega}\), \(V\) soddisfa la proprietà della media in \(B(z_0;r)\). Infatti
+	\[
+		\frac{1}{2\p} \int_0^{2\p} V(z_0+r\,e^{i\,t})\,\dd t = -\frac{1}{2\p} \int_0^{2\p} v(\conj{z_0}+r\,e^{-i\,t})\,\dd t = -v(\conj{z_0}) = V(z_0).\graffito{anche in questo caso la seconda uguaglianza è lecita perché \(v\) è armonica}
+	\]
+	A questo punto è sufficiente verificarlo per \(z_0\in E\).
+	Preso \(B(z_0;r)\) avremo
+	\[
+		\frac{1}{2\p} \int_0^{2\p} V(z_0+r\,e^{i\,t})\,\dd t = \frac{1}{2\p} \bigg[\int_0^\p V(z_0+r\,e^{i\,t})\,\dd t + \int_\p^{2\p} V(z_0+r\,e^{i\,t})\,\dd t\bigg].
+	\]
+	Osserviamo che per \(t\in[0,\p]\) i punti \(z_0+r\,e^{i\,t}\) sono in \(\Omega\), mentre per \(t\in[\p,2\p]\) sono in \(\conj{\Omega}\).
+	Inoltre da \(z_0\in E\) avremo \(\conj{z_0}=z_0\). Da cui, per definizione di \(V\),
+	\[
+		\frac{1}{2\p} \bigg[\int_0^\p v(z_0+r\,e^{i\,t})\,\dd t - \int_\p^{2\p} v(z_0+r\,e^{-i\,t})\,\dd t\bigg] = 0
+	\]
+	in quanto i due integrali assumono gli stessi valori con il segno scambiato.
+	
+	Se ora \(f\) è definita come per ipotesi. Per definizione \(F\) è continua, mostriamo che è olomorfa sfruttando il \hyperref[th:teoremaMorera]{teorema di Morera}. Dobbiamo quindi far vedere che l'integrale di \(F\) lungo rettangoli chiusi sufficientemente piccoli è sempre nullo.
+	Se \(R\) è un rettangolo interamente contenuto in \(\Omega\), avremo
+	\[
+		\int\limits_{\pd R}F(z)\,\dd z = 0
+	\]
+	per Cauchy. Infatti su \(\Omega\), \(F\equiv f\) che è olomorfa.
+	Analogamente se \(R\subseteq\conj{\Omega}\) poiché abbiamo precedentemente visto che \(\conj{f(\conj{z})}\) è olomorfa.
+	Infine se \(R\cap E\neq \emptyset\), suddivido \(R\) in \(3\) rettangoli \(R_1,R_2,R_3\) tali che
+	\[
+		R_1 \subseteq \Omega \qquad\text{e}\qquad R_3 \subseteq \conj{\Omega} \qquad\qquad \input{Immagini/tikz/riflessioneSchwarz5.tikz}
+	\]
+	Quindi
+	\[
+		\int\limits_{\pd R_1}F(z)\,\dd z = 0 \qquad\text{e}\qquad \int\limits_{\pd R_3}F(z)\,\dd z = 0
+	\]
+	per Cauchy. Per calcolare l'integrale su \(\pd R_2\), suddividiamo il rettangolo in \(4\) curve:
+	\begin{align*}
+		\g_1\colon [a,b] \longrightarrow \C  & , t\longmapsto t-i\,\d; & \g_2\colon [-\d,\d] \longrightarrow \C  & , t\longmapsto b+i\,t;  \\
+		-\g_3\colon [a,b] \longrightarrow \C & , t\longmapsto t+i\,\d; & -\g_4\colon [-\d,\d] \longrightarrow \C & , t\longmapsto a+i\,t.
+	\end{align*}
+	Chiaramente gli integrali di \(F\) lungo \(\g_2,\g_4\) sono nulli per \(\d \to 0\). Mentre
+	\begin{gather*}
+		\int\limits_{\g_1}F(z)\,\dd z = \int_a^b F(t-i\,\d)\,\dd t = \int_a^b \conj{f(t+i\,\d)}\,\dd t \xrightarrow{\d \to 0} \int_a^b \conj{f(t)}\,\dd t = \int_a^b f(t)\,\dd t;\\
+		-\int\limits_{-\g_3}F(z)\,\dd z = -\int_a^b F(t+i\,\d)\,\dd t = -\int_a^b f(t+i\,\d)\,\dd t \xrightarrow{\d \to 0} -\int_a^b f(t)\,\dd t.
+	\end{gather*}
+	Quindi
+	\[
+		\int\limits_{\pd R_2}F(z)\,\dd z \xrightarrow{\d \to 0} \int_a^b f(t)\,\dd t - \int_a^b f(t)\,\dd t = 0.
+	\]
+	Quindi \(F\) è olomorfa.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 09/12/2016 - NONA SETTIMANA (2)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%
+%ESERCIZI%
+%%%%%%%%%%
+\section{Esercizi}
+
+\begin{exeN}
+	Siano \(\Omega\subseteq \R^2\) e \(u,v\colon \Omega \to \R\) due funzioni armoniche.
+	Determinare sotto quali condizioni
+	\[
+		\j(x,y) = u(x,y)v(x,y),
+	\]
+	è armonica.
+\end{exeN}
+
+\begin{sol}
+	Applicando la regola della catena:
+	\[
+		\dd(u\cdot v) = (\pd_x u\cdot v + \pd_x v\cdot u)\,\dd x + (\pd_y u\cdot v + \pd_y v\cdot u)\,\dd y.
+	\]
+	Da cui
+	\[
+		\begin{split}
+			\Delta(u\cdot v) & = \pd_x(\pd_x u\cdot v + \pd_x v\cdot u) + \pd_y(\pd_y u\cdot v + \pd_y v\cdot u)\\
+			& = (\pd_{xx}^2 u + \pd_{yy}^2 u)\,v +\pd_x u\,\pd_x v + \pd_y u\,\pd_y v + (\pd_{xx}^2 v + \pd_{yy}^2 v)\,u + \pd_x v\,\pd_x u + \pd_y u\,\pd_y v\graffito{\(u,v\) sono armoniche}\\
+			& = 2(\pd_x u\,\pd_x v + \pd_y u\,\pd_y v).
+		\end{split}
+	\]
+	Quindi, per definizione, \(\j\) è armonica se e soltanto se
+	\[
+		\Delta(u\cdot v) = 0 \iff \pd_x u\,\pd_x v + \pd_y u\,\pd_y v = 0 \iff \left\langle \begin{pmatrix}\pd_x u\\\pd_y u\end{pmatrix}, \begin{pmatrix}\pd_x v\\\pd_y v\end{pmatrix}\right\rangle = 0.
+	\]
+\end{sol}
+
+\begin{oss}
+	Un caso particolare in cui ciò è vero è quando \(u,v\) sono parte reale e immaginaria di una funzione olomorfa. In tal caso infatti vale Cauchy-Riemann, da cui
+	\[
+		\left\langle \begin{pmatrix}\pd_x u\\\pd_y u\end{pmatrix}, \begin{pmatrix}\pd_x v\\\pd_y v\end{pmatrix}\right\rangle = \left\langle \begin{pmatrix}\pd_x u\\\pd_y u\end{pmatrix}, \begin{pmatrix}-\pd_y u\\\pd_x u\end{pmatrix}\right\rangle = 0
+	\]
+	in quanto \(u\) è armonica per ipotesi.
+\end{oss}
+
+\begin{oss}
+	Dall'esercizio segue inoltre che se \(u\) è armonica, allora \(u^2\) è armonica se e soltanto se \(u\) è costante.
+\end{oss}
+
+\begin{exeN}
+	Sia \(A\) una sezione del disco unitario determinata dalla retta reale e dalla retta di pendenza \(e^{i\,\frac{\p}{n}}\). Sia \(f\) una funzione olomorfa in \(A\) e continua su \(\chius{A}\).
+	Dimostrare che \(f\) si può prolungare analiticamente da una mappa del disco al \(2n\)-gono regolare.
+\end{exeN}
+
+\begin{sol}
+	Sfruttiamo la riflessione di Schwarz. Poniamo \(R\) il ribaltamento rispetto alla retta di pendenza \(e^{i\,\frac{\p}{n}}\) e definiamo
+	\[
+		F(z) = 	\begin{cases}
+			f(z)             & z\in A    \\
+			R\big(f(Rz)\big) & z\in RA.
+		\end{cases}
+	\]
+\end{sol}
+
+\begin{exeN}
+	Sia \(\Omega\subseteq \R^2\) un aperto limitato. Siano \(u,v\) armoniche in \(\Omega\) e continue fino al bordo.
+	Dimostrare che se \(u\le v\) su \(\pd \Omega\), allora \(u\le v\) su \(\Omega\).
+\end{exeN}
+
+\begin{sol}
+	Consideriamo la funzione \(\j=u-v\). Per ipotesi \(\j\) è armonica e \(\j|_{\pd \Omega} \le 0\).
+	In quanto funzione armonica, \(\j\) soddisfa il principio del massimo. Quindi il massimo di \(u-v\) viene assunto al bordo. In particolare \(u-v\le 0\) su tutto \(\Omega\), da cui la tesi.
+\end{sol}
+
+\begin{exeN}
+	Si mandi il dominio \(\Omega\) in figura nel semipiano superiore tramite una funzione olomorfa:
+	\[
+		\tikz[baseline=-0.5ex]{
+			\fill [contrast!10] (-2.2,0) rectangle (2.5,2.5);
+			\draw [-latex, thick] (-2.2,0) -- (2.5,0);
+			\draw [-latex, thick] (0,-1) -- (0,2.5);
+			
+			\node [minimum width=0.2cm, minimum height=1cm, inner sep=0pt, pattern=north east lines wide] at (0,0.5) {};
+			
+			\node [above right] at (0,1) {\(i\,h\)};
+		}
+	\]
+\end{exeN}
+
+\begin{sol}
+	Tramite la mappa \(z^2\) mandiamo \(\Omega\) in \(\C\setminus\{[-h^2,+\infty]\}\). Tramite \(z+h^2+\frac{1}{4}\) lo trasliamo in \(\C\setminus\{[1/4,+\infty]\}\). A questo punto prendiamo l'inversa della mappa di Koebe, \hyperref[es:mappaKoebe]{precedentemente analizzata} e arriviamo in \(B(0;1)\).
+	Infine utilizziamo la mappa
+	\[
+		-i\,\frac{z+1}{z-1}
+	\]
+	per mandare il disco unitario nel semipiano superiore.
+\end{sol}
+
+\begin{exeN}
+	Siano \(\Omega\subseteq\C\)  e \(u\colon \Omega \to \R\) una funzione armonica non costante.
+	Dimostrare che i punti \((x,y)\in\Omega\) tali che \(\nabla u(x,y)=0\) determinano un insieme discreto.
+\end{exeN}
+
+\begin{sol}
+	Per il \hyperref[th:coniugatoArmonicoFunzioneOlomorfa]{coniugato armonico}, localmente, in ogni palla \(B(z_0;r)\subseteq \Omega\), trovo \(v\colon B(z_0;r) \to \R\) tale che \(f(z) = u(z)+i\,v(z)\) è olomorfa in \(B(z_0;r)\).
+	Ora se \(\nabla u(x,y) = 0\), per Cauchy-Riemann, \(\nabla v(x,y)=0\).
+	Quindi \(f'(z)=0\) per \(z=x+i\,y\). D'altronde gli zeri di \(f'\) non possono essere di accumulazione in \(B(z_0;r)\), altrimenti \(f'(z)\equiv 0\) in \(B(z_0;r)\) da cui seguirebbe \(f\) costante che è assurdo per ipotesi.
+\end{sol}

@@ -1,0 +1,583 @@
+%!TEX root = ../main.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 22/11/2016 - SETTIMA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Cenni di geometria iperbolica}
+%%%%%%%%%%%%%%%%%%
+%Lemma di Schwarz%
+%%%%%%%%%%%%%%%%%%
+\section{Lemma di Schwarz}
+
+\begin{teor}{Lemma di Schwarz}{lemmaSchwarz}\index{Lemma di Schwarz}
+	Sia \(f\colon B(0;1) \to B(0;1)\) olomorfa tale che \(f(0)=0\). Allora
+	\begin{itemize}
+		\item \(\abs{f'(0)}\le 1\);
+		\item se \(\abs{f'(0)}=1\) si ha \(f(z)=e^{i\,\q}z\) con \(\q\in \R\).
+	\end{itemize}
+	Inoltre
+	\[
+		\abs{f(z)} \le \abs{z},\,\fa z\in B(0;1),
+	\]
+	e, se \(\abs{f(z_0)}=\abs{z_0}\) per qualche \(z_0\in B(0;1)\setminus\{0\}\), allora \(f(z)=e^{i\,\q}z\) con \(\q\in\R\).
+\end{teor}
+
+\begin{proof}
+	Per ipotesi \(f\) è olomorfa e \(f(0)=0\), quindi
+	\[
+		f(z) = a_1 z + a_2 z^2 + a_3 z^3 + \ldots \graffito{\(a_0=f(0)=0\)}
+	\]
+	Definiamo
+	\[
+		g(z) = \frac{f(z)}{z} = a_1 + a_2 z + a_3 z^2 +\ldots
+	\]
+	Prendo \(r<1\) e applico a \(g\) il \hyperref[th:teoremaMassimoModulo]{principio del massimo} su \(B(0;r)\). Quindi
+	\[
+		\abs{g(z)} \le \sup_{\abs{w}=r} \abs{g(w)} \qquad\text{se }\abs{z}<r.
+	\]
+	Ora
+	\[
+		\sup_{\abs{w}=r}\abs{g(w)} = \sup_{\abs{w}=r} \frac{\abs{f(w)}}{\abs{w}} \le \frac{1}{r} \implies \abs{g(z)} \le \frac{1}{r} \qquad\text{se }\abs{z}<r.
+	\]
+	Quindi, per \(r\to 1\), avremo
+	\[
+		\abs{g(z)} \le 1 \iff \abs{f(z)} \le \abs{z},\,\fa z\in B(0;1).
+	\]
+	Mostriamo ora che se \(\abs{f(z_0)} = \abs{z_0}\) con \(z_0\in B(0;1)\) allora \(f(z)=e^{i\,\q}z\).
+	Da \(\abs{f(z_0)}=\abs{z_0}\) segue \(\abs{g(z_0)}=1\). Ma \(z_0\in B(0;1)\), quindi per il principio del massimo
+	\[
+		g(z) \equiv c.
+	\]
+	D'altronde \(\abs{g(z_0)}=1\) quindi \(\abs{c}=1 \implies c=e^{i\,\q}\). Da cui
+	\[
+		f(z) = e^{i\,\q}z.
+	\]
+	Mostriamo ora le affermazioni riguardo alla derivata. Sfruttiamo il rapporto incrementale:
+	\[
+		\abs{f'(0)} = \lim_{z\to 0} \bigg\lvert \frac{f(z)-f(0)}{z} \bigg\rvert = \lim_{z \to 0} \bigg\lvert \frac{f(z)}{z} \bigg\rvert = \lim_{z \to 0} \abs{g(z)} \le 1,
+	\]
+	poiché abbiamo precedentemente dimostrato che \(\abs{g(z)}\le 1,\,\fa z\in B(0;1)\).
+	Supponiamo infine che \(\abs{f'(0)}=1\). Dalla scrittura in forma di serie di \(g(z)\) si deduce immediatamente che \(f'(0)=a_1\), quindi
+	\[
+		\abs{f'(0)} = 1 \iff \abs{g(0)} = 1,
+	\]
+	cioè \(g\) assume il massimo nell'origine, che è un punto interno a \(B(0;1)\). Quindi, nuovamente per il principio del massimo, si ha
+	\[
+		g(z) \equiv c \equiv e^{i\,\q},
+	\]
+	da cui \(f(z) = e^{i\,\q}z\).
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%AUTOMORFISMI DEL DISCO UNITARIO%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Automorfismi del disco unitario}
+
+In questo paragrafo cercheremo di determinare gli automorfismi del disco unitario. Dove con automorfismo intendiamo una mappa biettiva e biolomorfa in se stessa.
+Una volta determinato ciò, saremo in grado di classificare anche gli automorfismi di \(\C\) e della sfera di Riemann.
+
+\begin{defn}{Mappa di M\"obius}{mappaMobius}\index{Mappa di M\"obius}
+	Sia \(a\in \C\) con \(\abs{a}<1\). Una trasformazione lineare fratta \(g\) si definisce \emph{di M\"obius} se è del tipo
+	\[
+		g(z) = e^{i\,\q}\frac{z-a}{1-\conj{a}z}.
+	\]
+\end{defn}
+
+\begin{teor}{Automorfismi del disco unitario}{automorfismiDiscoUnitario}
+	Le mappe di M\"obius sono tutti e soli gli automorfismi del disco unitario.
+\end{teor}
+
+\begin{proof}
+	Sia \(g\) una mappa di M\"obius, mostriamo che \(g\in \Aut\big(B(0;1)\big)\):
+	sia \(z=e^{i\,t}\) un punto della circonferenza unità, allora
+	\[
+		\begin{split}
+			\abs{g(e^{i\,t})} & = \bigg\lvert \frac{e^{i\,t}-a}{1-\conj{a}e^{i\,t}} \bigg\rvert = \bigg\lvert e^{-i\,t} \frac{e^{i\,t}-a}{e^{-i\,t}-\conj{a}} \bigg\rvert = \abs{e^{-i\,t}} \bigg\lvert \frac{e^{i\,t}-a}{e^{-i\,t}-\conj{a}} \bigg\rvert = \bigg\lvert \frac{e^{i\,t}-a}{e^{-i\,t}-\conj{a}} \bigg\rvert\\
+			& = \bigg\lvert \frac{e^{i\,t}-a}{\conj{e^{i\,t}-a}} \bigg\rvert = 1.
+		\end{split}
+	\]
+	Quindi \(g\) manda i punti della circonferenza unitaria in se stessi. Inoltre \(g(a)=0\), dove per definizione \(a\in B(0;1)\). Quindi, per connessione, \(g\) manda il disco unitario nel disco unitario.
+	
+	Inoltre è facile verificare che \(g^{-1}\) è ancora una mappa di M\"obius. Dalla \hyperref[df:trasformazioneLineareFratta]{teoria sulle lineari fratte} sappiamo infatti che esse sono in corrispondenza con le matrici. In particolare \(g^{-1}\) sarà in corrispondenza con
+	\[
+		\begin{pmatrix}
+			1         & -a \\
+			-\conj{a} & 1
+		\end{pmatrix}^{-1}
+		= \frac{1}{1-\abs{a}^2}
+		{}^t\begin{pmatrix}
+			1 & \conj{a} \\
+			a & 1
+		\end{pmatrix}
+	\]
+	che è ancora della forma associata alle mappe di M\"obius. Osserviamo che entrambe sono olomorfe in \(B(0;1)\) in quanto i rispettivi poli non appartengono al disco unitario. Per cui le mappe di M\"obius sono automorfismi del disco unitario.
+	
+	Viceversa sia \(h\in \Aut\big(B(0;1)\big)\), dimostriamo che \(h\) è di M\"obius. Supponiamo che \(h(0)=a\) dove \(\abs{a}<1\) in quanto \(\im(h)\subseteq B(0;1)\). Definiamo la seguente mappa di M\"obius:
+	\[
+		g(z) = - \frac{z-a}{1-\conj{a}z}.
+	\]
+	Poniamo inoltre \(H(z)=g\circ h(z)\). Osserviamo che \(H\) è la composizione di due automorfismi ed è pertanto un automorfismo. Inoltre
+	\[
+		H(0) = g\big(h(0)\big) = g(a) = 0,
+	\]
+	quindi \(H\) è un automorfismo del disco unitario che fissa l'origine. Possiamo applicare il lemma di Schwarz: per prima cosa osserviamo che
+	\[
+		\abs{H'(0)} \le 1.
+	\]
+	Inoltre, dal momento che anche \(H^{-1}\) è un automorfismo del disco unitario che fissa l'origine, avremo
+	\[
+		1 \ge \big\lvert \big(H^{-1}\big)'(0)\big\rvert = \bigg\lvert \frac{1}{H'(w)|_{w=H^{-1}(0)}} \bigg\rvert = \bigg\lvert \frac{1}{H'(0)} \bigg\rvert \implies \abs{H'(0)} \ge 1.
+	\]
+	Quindi \(\abs{H'(0)} = 1\). Possiamo quindi applicare ulteriormente Schwarz, ottenendo
+	\[
+		H(z) = e^{i\,\q}z \qquad\text{con }\q\in\R.
+	\]
+	Ricordando la definizione di \(H\):
+	\[
+		e^{i\,\q}z = H(z) = g\circ h(z) \implies h(z) = g^{-1}(e^{i\,\q}z)
+	\]
+	che è una mappa di M\"obius in quanto composizione di mappe di M\"obius.
+	Osserviamo infatti che \(e^{i\,\q}z\) è di M\"obius se nella forma generale prendiamo \(a=0\).
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%
+%DISTANZA IPERBOLICA%
+%%%%%%%%%%%%%%%%%%%%%
+\section{Distanza iperbolica}
+
+Presa \(\g\colon [0,1] \to B(0;1)\) una curva di classe \(C^1\). Sappiamo che possiamo definirne la lunghezza come
+\[
+	L(\g) = \int_0^1 \abs{\dot{\g}(t)}\,\dd t.
+\]
+Presi inoltre due punti \(A,B\) possiamo determinare la loro distanza euclidea come
+\[
+	d(A,B) = \inf\Set{\int_0^1 \abs{\dot{\g}(t)}\,\dd t : \g\in C^1,\g(0)=A,\g(1)=B}.
+\]
+Questa non è altro che la definizione di geodetica in uno spazio euclideo.
+Preso \(a\colon \chius{B(0;1)} \to (0,+\infty)\), possiamo perturbare tale geodetica. Moralmente invece che prendere la retta come distanza più breve fra due punti, prendiamo il percorso più economico nella regione di \(\g\). Questo avviene evitando le zone dove \(a\) assume valori troppo elevati e quindi costosi.
+
+In questo paragrafo troveremo un valore di \(a\) che sia "adatto" al disco unitario.
+
+\begin{defn}{Lunghezza non euclidea}{lunghezzaNonEuclidea}
+	Sia \(\g\colon [0,1] \to B(0,1)\) una curva di classe \(C^1\). Sia \(a\colon \chius{B(0;1)} \to (0,+\infty)\). Definiamo la \emph{lunghezza non euclidea di \(\g\)} relativa ad \(a\), come
+	\[
+		L_a(\g) = \int_0^1 a\big(\g(t)\big)\abs{\dot{\g}(t)}\,\dd t.
+	\]
+\end{defn}
+
+\begin{defn}{Distanza non euclidea}{distanzaNonEuclidea}
+	Siano \(A,B\in B(0,1)\) e sia \(a\colon \chius{B(0;1)}\to (0,+\infty)\). Definiamo la \emph{distanza non euclidea} tra \(A\) e \(B\) come
+	\[
+		d_a(A,B) = \inf\Set{\int_0^1 a\big(\g(t)\big)\abs{\dot{\g}(t)}\,\dd t : \g\in C^1(0,1),\g(0)=A,\g(1)=B}.
+	\]
+\end{defn}
+
+\begin{prop}{La distanza non euclidea è una distanza}{distanzaNonEuclideaDistanza}
+	Fissato \(a\colon \chius{B(0;1)} \to (0,+\infty)\), \(d_a\) costituisce una distanza.
+\end{prop}
+
+\begin{proof}
+	Affinché \(d_a\) sia una distanza deve essere positiva, simmetrica e soddisfare la triangolare.
+	Per prima cosa osserviamo che gli integrali delle lunghezze non dipendono dalla parametrizzazione per un ben noto fatto di analisi. Quindi abbiamo
+	\[
+		d_a(A,B) = d_a(B,A).
+	\]
+	Inoltre \(a\colon \chius{B(0;1)} \to (0,+\infty)\) per cui \(\im(a)\) è compatto. In particolare \(a(z)\ge \e\) per un \(\e>0\). Quindi
+	\[
+		d_a(A,B) = \inf\Set{\int_0^1 a\big(\g(t)\big)\abs{\dot{\g}(t)}\,\dd t} \ge \inf\Set{\int_0^1 \e\abs{\dot{\g}(t)}\,\dd t} = \e\,d(A,B),
+	\]
+	e pertanto \(d_a\) è positiva e \(d_a(A,B)=0\implies A=B\).
+	Infine per dimostrare la validità della disuguaglianza triangolare, prendo \(\g\) tale che
+	\[
+		\g(0)=A,\g(1)=B \qquad\text{e}\qquad \int_0^1 a\big(\g(t)\big)\abs{\dot{\g}(t)}\,\dd t \le d_a(A,B)+\frac{\e}{2}.\graffito{è lecito per la definizione di estremo inferiore}
+	\]
+	Analogamente prendo \(\tilde{\g}\) tale che
+	\[
+		\tilde{\g}(0)=B,\tilde{\g}(1)=C \qquad\text{e}\qquad \int_0^1 a\big(\tilde{\g}(t)\big) \abs{\dot{\tilde{\g}}(t)}\,\dd t \le d_a(B,C) + \frac{\e}{2}.
+	\]
+	Infine definisco
+	\[
+		\hat{\g} = 	\begin{cases}
+			\g(2t)           & t\in[0,\rfrac{1}{2}] \\
+			\tilde{\g}(2t-1) & t\in[\rfrac{1}{2},1]
+		\end{cases}
+	\]
+	notando che \(\hat{\g}(0)=A\) e \(\hat{\g}(1)=C\). A questo punto, sfruttando prima la definizione di estremo inferiore e poi l'invarianza per parametrizzazione, otteniamo
+	\[
+		\begin{split}
+			d_a(A,C) & \le \int_0^1 a\big(\hat{\g}(t)\big)\abs{\dot{\hat{\g}}(t)}\,\dd t = \int_0^1 a\big(\g(t)\big)\abs{\dot{\g}(t)}\,\dd t + \int_0^1 a\big(\tilde{\g}(t)\big)\abs{\dot{\tilde{\g}}(t)}\,\dd t\\
+			& \le d_a(A,B) + d_a(B,C) + \e
+		\end{split}
+	\]
+	dove \(\e\) è arbitrario. Da cui la triangolare.
+\end{proof}
+
+\begin{oss}
+	A questo punto vorremmo scegliere \(a\) tale che \(d_a\) sia invariante per automorfismi del disco. Ovvero tale che
+	\[
+		d_a(A,B) = d_a\big(g(A),g(B)\big),\,\fa A,B\in B(0;1)\,\fa g\in\Aut\big(B(0;1)\big).
+	\]
+	In particolare, ricordando che gli automorfismi di \(B(0;1)\) sono tutte sole le mappe di M\"obius, ci basta trovare un \(a\) tale che le mappe di M\"obius conservino la lunghezza delle curve. Ovvero \(L_a(\g)=L_a\big(g(\g)\big)\).
+	Per definizione
+	\[
+		L_a(\g) = \int_0^1 a\big(\g(t)\big)\abs{\dot{\g}(t)}\,\dd t.
+	\]
+	Ora
+	\[
+		L_a\big(g(\g)\big) = \int_0^1 a\Big(g\big(\g(t)\big)\Big) \bigg\lvert \frac{\dd}{\dd t} g\circ \g(t) \bigg\rvert\,\dd t = \int_0^1 a\Big(g\big(\g(t)\big)\Big) \abs*{g'|_{\g(t)}}\abs{\dot{\g}(t)}\,\dd t.
+	\]
+	Affinché tali integrali siano uguali, possiamo richiedere che lo siano gli integrandi. Ci basta quindi mostrare che
+	\[
+		a\big(\g(t)\big) = a\Big(g\big(\g(t)\big)\Big)\abs*{g'|_{\g(t)}}.
+	\]
+	D'altronde \(\g\) può passare per qualsiasi \(z\in B(0;1)\), quindi è sufficiente chiedere
+	\begin{equation*}\label{eq:ossDistNonEuc}
+		a(z) = a\big(g(z)\big)\abs{g'(z)},\,\fa g\text{ di M\"obius}\tag{\(\star\)}
+	\end{equation*}
+	Procediamo definendo \(a(0)=2\) e cercando di imporre \eqref{eq:ossDistNonEuc}. Definiamo una generica mappa di M\"obius
+	\[
+		g(z) = e^{i\,\q} \frac{z-z_0}{1-\conj{z_0}z}.
+	\]
+	Osserviamo che
+	\[
+		g(0) = -z_0 e^{i\,\q} \qquad\text{e}\qquad \abs{g'(0)} = 1-\abs{z_0}^2.
+	\]
+	Imponendo \eqref{eq:ossDistNonEuc} in \(z=0\), otteniamo
+	\[
+		2 = a(-z_0 e^{i\,\q})(1-\abs{z_0}^2).
+	\]
+	Per cui definendo
+	\[
+		a(z) = \frac{2}{1-\abs{z}^2} \implies a(-z_0 e^{i\,\q}) = \frac{2}{1-\abs{z_0 e^{i\,\q}}} = \frac{2}{1-\abs{z_0}^2},
+	\]
+	che soddisfa \eqref{eq:ossDistNonEuc}.
+	Possiamo quindi definire la lunghezza e la distanza iperbolica.
+\end{oss}
+
+\begin{defn}{Lunghezza iperbolica}{lunghezzaIperbolica}\index{Lunghezza iperbolica}
+	Sia \(\g\colon[0,1] \to B(0;1)\) una curva \(C^1\) a tratti. Definiamo la sua \emph{lunghezza iperbolica} come
+	\[
+		L_{ip}(\g) = \int_0^1 \frac{2}{1-\abs{\g(t)}^2}\abs{\dot{\g(t)}}\,\dd t.
+	\]
+\end{defn}
+
+\begin{defn}{Distanza iperbolica}{distanzaIperbolica}\index{Distanza iperbolica}
+	Presi \(A,B\in B(0;1)\) definiamo la loro \emph{distanza iperbolica} come
+	\[
+		d_{ip}(A,B) = \inf\Set{\int_0^1 \frac{2}{1-\abs{\g(t)}^2}\abs{\dot{\g(t)}}\,\dd t : \g\in C^1\big([0,1],B(0;1)\big), \g(0)=A,\g(1)=B}.
+	\]
+\end{defn}
+
+\begin{notz}
+	Faremo riferimento alla distanza iperbolica anche con il termine \emph{geodetica}. Questo termine, che nella sua accezione più generale indica la distanza fra due punti in un certo spazio metrico, è particolarmente indicato nella geometria iperbolica.
+\end{notz}
+
+\begin{teor}{Distanza iperbolica invariante per automorfismi del disco}{distanzaIperbolicaInvarianteDisco}
+	La distanza iperbolica su \(B(0;1)\) è invariante per automorfismi.
+\end{teor}
+
+\begin{proof}
+	Dall'osservazione precedente sappiamo che è sufficiente dimostrare che
+	\begin{equation*}\label{eq:distNonEuc}
+		a(z) = a\big(g(z)\big)\abs{g'(z)},\,\fa g\in\Aut\big(B(0;1)\big).\tag{\(\star\)}
+	\end{equation*}
+	Dalla definizione di \(a\) e per l'osservazione precedente, sappiamo che ciò è vero per \(z=0\), ovvero
+	\[
+		a(0)=a\big(g(0)\big)\abs{g'(0)},\,\fa g\in\Aut\big(B(0;1)\big).
+	\]
+	Sia quindi \(g\in \Aut\big(B(0;1)\big)\) e \(z_0\in B(0;1)\). Prendiamo \(h\in\Aut\big(B(0;1)\big)\) tale che \(h(0)=z_0\), esplicitamente
+	\[
+		h(z) = - \frac{z-z_0}{1-\conj{z_0}z}.
+	\]
+	Dal momento che la composizione di automorfismi è un automorfismo, la \eqref{eq:distNonEuc} è valida in \(g\circ h(0)\), ovvero
+	\[
+		a(0) = a\big(g\circ h(0)\big) \big\lvert \big(g\circ h\big)'(0)\big\rvert = a\big(g(z_0)\big) \abs*{g'|_{z_0}}\abs{h'(0)}.
+	\]
+	Da cui
+	\[
+		a(0)\abs{h'(0)}^{-1} = a\big(g(z_0)\big) \abs{g'(z_0)}.
+	\]
+	D'altronde ciò vale anche in \(h(0)\):
+	\[
+		a(0) = a\big(h(0)\big)\abs{h'(0)} \implies a(0)\abs{h'(0)}^{-1} = a\big(h(0)\big) = a(z_0).
+	\]
+	Combinando i due risultati otteniamo
+	\[
+		a(z_0) = a(0) \abs{h'(0)}^{-1} = a\big(g(z_0)\big)\abs{g'(z_0)}
+	\]
+	ovvero la tesi.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 25/11/2016 - SETTIMA SETTIMANA (2)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+%GEODETICHE IPERBOLICHE%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Geodetiche iperboliche}
+
+A questo punto è lecito chiedersi se tale distanza si realizza mai come una geodetica sul disco, ovvero se l'estremo inferiore nella definizione di \(d_{ip}\) è un minimo.
+
+Una strada percorribile sarebbe quella di verificare il teorema di Weierstrass. D'altronde ciò richiederebbe lo studio di una topologia funzionale con buone proprietà di compattezza. Nonostante sia possibile, questa strada esula dai fini di questo corso. Per rispondere alla domanda, in questo paragrafo esibiremo esplicitamente la geodetica che costituisce il minimo.
+
+Per prima cosa vediamo cosa accade se uno dei due punti è l'origine
+
+\begin{prop}{Geodetica dall'origine}{geodeticaOrigine}
+	Sia \(A\in B(0;1)\). Allora
+	\[
+		d_{ip}(0,A) = \ln \frac{1+\abs{A}}{1-\abs{A}}.
+	\]
+\end{prop}
+
+\begin{proof}
+	Per prima cosa studiamo il caso in cui \(A\in (0,1)\subseteq\R\).
+	Sia \(\tilde{\g}\colon[0,1] \to B(0;1), t\mapsto A\,t\) il segmento fra \(0\) e \(A\). Affermiamo che
+	\[
+		d_{ip}(0,A) = L(\tilde{\g}).
+	\]
+	Supponiamo che \(\g\colon [0,1] \to B(0;1)\) sia una seconda curva \(C^1\) a tratti tale che \(\g(0)=0\) e \(\g(1)=A\). Per dimostrare la tesi è sufficiente verificare che
+	\[
+		L_{ip}(\g) \ge L_{ip}(\tilde{\g}).
+	\]
+	Applichiamo la definizione di lunghezza iperbolica a \(\tilde{\g}\):
+	\[
+		\begin{split}
+			L_{ip}(\tilde{\g}) & = \int_0^1 \frac{2}{1-\abs{\tilde{\g}(t)}^2}\abs{\dot{\tilde{\g}}(t)}\,\dd t = \int_0^1 \frac{2}{1-\abs{A\,t}^2}\abs{A}\,\dd t = \int_0^1 \frac{2}{1-(A\,t)^2}A\,\dd t\graffito{possiamo togliere il modulo perché \(A\in\R\)}\\
+			& \overset{s=A\,t}{=} \int_0^A \frac{2}{1-s^2}\,\dd s = \int_0^A \left( \frac{1}{1-s}+\frac{1}{1+s} \right)\,\dd s = \ln \frac{1+A}{1-A}.
+		\end{split}
+	\]
+	Poniamo \(\g(t)=\a(t)+i\,\b(t)\), dalle ipotesi su \(\g\) avremo che
+	\[
+		\g(0)=0 \implies \a(0)=0 \qquad\text{e}\qquad \g(1)=A \implies \a(1)=A.
+	\]
+	Applichiamo nuovamente la definizione di lunghezza iperbolica:
+	\[
+		\begin{split}
+			L_{ip}(\g) & = \int_0^1 \frac{2}{1-\abs{\g(t)}^2}\abs{\dot{\g}(t)}\,\dd t = \int_0^1 \frac{2\sqrt{\dot{\a}(t)^2+\dot{\b}(t)^2}}{1-\big(\a(t)^2+\b(t)^2\big)}\,\dd t \ge \int_0^1 \frac{2\abs{\dot{\a}(t)}}{1-\a(t)^2}\,\dd t\\
+			& \ge \bigg\lvert \int_0^1 \frac{2\dot{\a}(t)}{1-\a(t)^2}\,\dd t \bigg\rvert = \bigg\lvert \int_0^A \frac{2}{1-s^2}\,\dd s \bigg\rvert = \bigg\lvert \int_0^A \left( \frac{1}{1-s}+\frac{1}{1+s} \right)\,\dd s \bigg\rvert\graffito{\(s=\a(t)\)}\\
+			& = \ln \frac{1+A}{1-A} = L_{ip}(\tilde{\g}).
+		\end{split}
+	\]
+	Per generalizzare il risultato ad \(A\in B(0;1)\) qualsiasi, osserviamo che le rotazioni sono, in quanto mappe di M\"obius, particolare automorfismi del disco. Sappiamo che la \hyperref[th:distanzaIperbolicaInvarianteDisco]{ lunghezza iperbolica è invariante per gli automorfismi del disco}. Quindi se \(g\) la rotazione che porta \(A\) sull'asse reale, avremo che
+	\[
+		g(0) = 0 \qquad\text{e}\qquad g(A) = \abs{A}.
+	\]
+	Da cui
+	\[
+		d_{ip}(0,A) = d_{ip}\big(g(0),g(A)\big) = d_{ip}(0,\abs{A}) = \ln \frac{1+\abs{A}}{1-\abs{A}}.\qedhere
+	\]
+\end{proof}
+
+\begin{oss}
+	A questo punto possiamo generalizzare per ogni coppia di punti. Ricordando le proprietà delle lineari fratte che mantengono l'insieme di rette e circonferenze, sarà facile convincersi del prossimo risultato.
+\end{oss}
+
+\begin{teor}{Geodetiche del piano iperbolico}{geodetichePianoIperbolico}
+	Le geodetiche del piano iperbolico sono tutte e sole le circonferenze ortogonali alla circonferenza unità.
+\end{teor}
+
+\begin{proof}
+	Supponiamo che \(\g\) sia una circonferenza ortogonale alla circonferenza unitaria. Dal momento che gli automorfismi del disco conservano le geodetiche, possiamo portarla in un diametro. Per farlo prendo \(a\) sulla geodetica e definisco il seguente automorfismo
+	\[
+		g(z) = \frac{z-a}{1-\conj{a}z}.
+	\]
+	Tale \(g\) porta la geodetica in un diametro. Infatti
+	\[
+		0=g(a) \in g(\g).
+	\]
+	Quindi \(g(\g)\) è una circonferenza o una retta ortogonale a \(S^1\), ma \(0\in g(\g)\) quindi \(g(\g)\) è un diametro.
+\end{proof}
+
+\begin{oss}
+	Questa metrica ci fornisce un esempio di geometria che non soddisfa il quinto assioma di Euclide. Infatti, se prendiamo una retta ed un punto fuori da essa, vi sono infinite geodetiche passanti per il punto e parallele alla retta data.
+\end{oss}
+
+\begin{notz}
+	Il disco \(B(0;1)\), con questa metrica, si chiama anche \emph{Piano di Poincaré}.
+\end{notz}
+%%%%%%%%%%%
+%APPENDICE%
+%%%%%%%%%%%
+\section{Appendice}
+
+\begin{prop}{Palle iperboliche}{palleIperboliche}
+	La generica palla iperbolica
+	\[
+		B_{ip}(z_0;r) = \Set{z : d_{ip}(z,z_0)<r}
+	\]
+	è una palla euclidea.
+\end{prop}
+
+\begin{proof}
+	Per prima cosa studiamo le palle nell'origine. Per definizione
+	\[
+		B_{ip}(0;r) = \Set{z : d_{ip}(z,0) < r} = \Set{z : \ln \frac{1+\abs{z}}{1-\abs{z}}<r} = \Set{{z : \abs{z}<R(r)}} = B(0;R).\graffito{per trovare \(R\) abbiamo esplicitato la \(z\) in funzione di \(r\)}
+	\]
+	Per studiare una generica palla iperbolica centrata in \(z_0\), consideriamo un automorfismo \(g\) che porta \(0\) in \(z_0\). Segue
+	\[
+		B_{ip}(z_0;r) = g\big(B_{ip}(0;r)\big) = g\big(B(0;R)\big)
+	\]
+	che è ancora un cerchio in quanto le lineari fratte mantengono l'insieme dei cerchi e delle rette.
+\end{proof}
+
+\begin{oss}
+	Il centro della palla euclidea non è lo stesso della palla iperbolica di partenza.
+	Ciò non toglie che la distanza iperbolica induca la topologia euclidea.
+\end{oss}
+
+\begin{teor}{di Schwarz-Pick}{Teorema!di Schwarz-Pick}
+	Sia \(g\colon B(0;1) \to B(0;1)\) un endomorfismo del disco unitario olomorfo. Allora
+	\[
+		d_{ip}\big(g(A),g(B)\big) \le d_{ip}(A,B),\,\fa A,B\in B(0;1).
+	\]
+\end{teor}
+
+\begin{proof}
+	Basta dimostrare che se \(\g\) è una curva di classe \(C^1\) allora \(L_{ip}\big(g(\g)\big)\le L_{ip}(\g)\), ovvero che
+	\[
+		\begin{split}
+			L\big(g(\g)\big) & = \int_0^1 \frac{2}{1-\big\lvert g\big(\g(t)\big)\big\rvert^2} \bigg\lvert \frac{\dd}{\dd t}g\circ \g(t) \bigg\rvert\,\dd t = \int_0^1 \frac{2}{1-\big\lvert g\big(\g(t)\big)\big\rvert^2} \big\lvert g'\big(\g(t)\big) \big\rvert \abs{\dot{\g}(t)}\,\dd t\\
+			& \le \int_0^1 \frac{2}{1-\abs{\g(t)}^2}\abs{\dot{\g}(t)}\,\dd t = L(\g).
+		\end{split}
+	\]
+	Tale condizione segue se dimostriamo che
+	\[
+		\frac{1}{1-\abs{g(z)}^2}\abs{g'(z)} \le \frac{1}{1-\abs{z}^2},\,\fa z\in B(0;1).
+	\]
+	Cerchiamo di ricondurci ad una mappa a cui poter applicare il \hyperref[th:lemmaSchwarz]{lemma di Schwarz}.
+	Fissato \(z\in B(0;1)\), definiamo \(\j_1,\j_2\in\Aut\big(B(0;1)\big)\) tali che
+	\[
+		\j_1(0) = z \qquad\text{e}\qquad \j_2\big(g(z)\big)=0.
+	\]
+	Definiamo inoltre \(F(w)=\j_2\circ g\circ \j_1(w)\) che è un endomorfismo olomorfo di \(B(0;1)\) che mappa l'origine in se.
+	Per Schwarz avremo
+	\[
+		\abs{F'(0)} \le 1.
+	\]
+	Dalla regola della catena
+	\[
+		1 \ge \abs{F'(0)} = \abs*{\j_2'|_{g\circ \j_1(0)}}\abs*{g'|_{\j_1(0)}}\abs{\j_1'(0)} = \big\lvert \j_2'\big(g(z)\big) \big\rvert \abs{g'(z)}\abs{\j_1'(0)}.
+	\]
+	In quanto automorfismi del disco, \(\j_1\) e \(\j_2\) si scrivono esplicitamente:
+	\[
+		\j_1(w) = -\frac{w-z}{1-\conj{z}w} \qquad\text{e}\qquad \frac{w-g(z)}{1-\conj{g(z)}w},
+	\]
+	da cui, svolgendo i calcoli,
+	\[
+		\abs{F'(0)} = \frac{1}{1-\abs{g(z)}^2}\abs{g'(z)} \big\lvert 1-\abs{z}^2 \big\rvert \le 1
+	\]
+	che è proprio la tesi.
+\end{proof}
+%%%%%%%%%%
+%ESERCIZI%
+%%%%%%%%%%
+\section{Esercizi}
+
+\begin{exeN}
+	Sia \(f\colon B(0;1) \to B(0;1)\) olomorfa e tale che \(f(0)=a\in B(0;1)\).
+	Fornire una stima di \(\abs{f'(0)}\).
+\end{exeN}
+
+\begin{sol}
+	L'enunciato è molto simile al \hyperref[th:lemmaSchwarz]{lemma di Schwarz}, cerchiamo quindi di ripercorrere alcuni punti della dimostrazione.
+	Per ipotesi \(f\) è olomorfa e \(f(0)=a\), quindi
+	\[
+		f(z) = a+a_1 z + a_2 z^2 + a_3 z^3 + \ldots
+	\]
+	Definiamo
+	\[
+		g(z) = \frac{f(z)-a}{z} = a_1 + a_2 z + a_3 z^2 + \ldots
+	\]
+	Preso \(r<1\), applichiamo a \(g\) il principio del massimo su \(B(0;r)\):
+	\[
+		\abs{g(z)} \le \sup_{\abs{w}=r} \frac{\abs{f(w)-a}}{\abs{w}} \le \frac{2}{r} \implies \abs{g(z)} \le \frac{2}{r} \qquad\text{se }\abs{z}<r.
+	\]
+	Per \(r\to 1\), avremo
+	\[
+		\abs{g(z)} \le 2,\,\fa z \in B(0;1).
+	\]
+	Andiamo quindi a studiare la derivata:
+	\[
+		\abs{f'(0)} = \lim_{z\to 0} \bigg\lvert \frac{f(z)-f(0)}{z} \bigg\rvert = \lim_{z \to 0} \bigg\lvert \frac{f(z)-a}{z} \bigg\rvert = \lim_{z \to 0} \abs{g(z)} \le 2.
+	\]
+\end{sol}
+
+\begin{exeN}
+	Sia \(f\colon \Set{z: \Im z>0} \to B(0;1)\) olomorfa e tale che \(f(i)=0\).
+	Fornire una stima di \(\abs{f'(i)}\).
+\end{exeN}
+
+\begin{sol}
+	Di nuovo cerchiamo di ripercorrere la dimostrazione del \hyperref[th:lemmaSchwarz]{lemma di Schwarz}.
+	Per ipotesi \(f\) è olomorfa e \(f(i)=0\), quindi
+	\[
+		f(z) = a_1 (z-i) + a_2 (z-i)^2 + a_3(z-i)^3 + \ldots
+	\]
+	Definiamo
+	\[
+		g(z) = \frac{f(z)}{z-i} = a_1 + a_2 (z-i) + a_3 (z-i)^2 + \ldots
+	\]
+	Preso \(r<1\), applichiamo a \(g\) il principio del massimo su \(B(i;r)\):
+	\[
+		\abs{g(z)} \le \sup_{\abs{w-i}=r} \frac{\abs{f(w)}}{\abs{w-i}} \le \frac{1}{r} \implies \abs{g(z)} \le \frac{1}{r} \qquad\text{se }\abs{z-i}<r.
+	\]
+	Per \(r\to 1\), avremo
+	\[
+		\abs{g(z)} \le 1,\,\fa z\in B(i;r).
+	\]
+	Andiamo quindi a studiare la derivata:
+	\[
+		\abs{f'(i)} = \lim_{z \to i} \bigg\lvert \frac{f(z)-f(i)}{z-i} \bigg\rvert = \lim_{z\to i} \bigg\lvert \frac{f(z)}{z-i} \bigg\rvert = \lim_{z \to i} \abs{g(z)} \le 1.
+	\]
+\end{sol}
+
+\begin{exeN}
+	Si confronti la lunghezza iperbolica \(L_{ip}\big(\pd B_{ip}(0;r)\big)\) di una circonferenza di raggio \(r\) con la rispettiva lunghezza euclidea.
+\end{exeN}
+
+\begin{sol}
+	Per ipotesi \(r\) è il raggio iperbolico, se poniamo \(R\) quello euclideo avremo che
+	\[
+		r = \ln \frac{1+R}{1-R}
+	\]
+	Calcoliamo la lunghezza della circonferenza con la definizione di lunghezza iperbolica.
+	Sia \(\g\colon [0,2\p] \to \C, t \mapsto R\,e^{i\,t}\), segue
+	\[
+		L_{ip}(\g) = \int_0^{2\p} \frac{2}{1-\abs{\g(t)}^2}\abs{\dot{\g}(t)}\,\dd t = \int_0^{2\p} \frac{2}{1-R^2}R\,\dd t = \frac{4\p\,R}{1-R^2}.
+	\]
+	Esplicitiamo \(R\) in termini di \(r\):
+	\[
+		r = \ln \frac{1+R}{1-R} \implies e^r = \frac{1+R}{1-R} \implies R = \frac{e^r-1}{e^r+1},
+	\]
+	da cui
+	\[
+		L_{ip}(\g) = 2\p\,\sinh(r).
+	\]
+	Quindi la lunghezza iperbolica cresce in modo esponenziale, infatti
+	\[
+		2\p\,\sinh(r) \simeq e^r \qquad\text{per \(r\) grande}.
+	\]
+\end{sol}
+
+\begin{exeN}
+	Usando una trasformazione di M\"obius, dimostrare che
+	\[
+		d_{ip}(t,w) = \ln \frac{\abs{1+t\conj{w}}+\abs{t-w}}{\abs{1-t\conj{w}}-\abs{t-w}}.
+	\]
+\end{exeN}
+
+\begin{sol}
+	Sia \(g(z)\in\Aut\big(B(0;1)\big)\) tale che \(g(w)=0\), esplicitamente
+	\[
+		g(z) = \frac{z-w}{1-\conj{w}z}.
+	\]
+	In quanto automorfismo del disco, le distanze vengono preservate. Quindi
+	\[
+		d_{ip}(t,w) = d_{ip}\big(g(t),g(w)\big) = d_{ip}\big(g(t),0\big) = d_{ip}\big(0,g(t)\big).
+	\]
+	Abbiamo già studiato l'espressione della distanza iperbolica se un punto è l'origine:
+	\[
+		d_{ip}\big(0,g(t)\big) = \ln \frac{1+\abs{g(t)}}{1-\abs{g(t)}}.
+	\]
+	Svolgendo i calcoli si giunge alla tesi.
+\end{sol}

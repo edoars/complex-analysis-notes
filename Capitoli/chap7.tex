@@ -1,0 +1,522 @@
+%!TEX root = ../main.tex
+\chapter{Estensioni analitiche}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 06/12/2016 - NONA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%
+%INTRODUZIONE%
+%%%%%%%%%%%%%%
+\section{Introduzione}
+
+In questo capitolo affronteremo due problemi principali:
+\begin{itemize}
+	\item L'estensione di una funzione olomorfa in \(\Omega\subseteq\C\) al di fuori di \(\Omega\).
+	\item La definizione di funzioni a valori multipli come \(\ln z\) e\(\sqrt{z}\).
+\end{itemize}
+Ci occuperemo in particolare del primo. Mostrando ad esempio quale relazione vi è fra
+\[
+	f(z) = \sum_{n\ge 0} z^n \qquad\text{definita su }B(0;1),
+\]
+e
+\[
+	g(z) = \frac{1}{1-z} \qquad\text{definita su }\C\setminus\{1\}.
+\]
+che è chiaramente un'estensione di \(f\).
+
+\begin{defn}{Punto regolare}{puntoRegolare}\index{Punto regolare}
+	Sia \(D\subseteq\C\) un disco e sia \(f\colon D \to \C\) una funzione olomorfa.
+	Diciamo che \(\b\in \pd D\) è un \emph{punto regolare} per \(f\), se esiste un disco \(D_1\) centrato in \(\b\) e una funzione \(g\in H(D_1)\), tale che
+	\[
+		f(z) = g(z)\,\fa z\in D\cap D_1.
+	\]
+\end{defn}
+
+\begin{figure}[tp]
+	\centering
+	\begin{tikzpicture}
+		\coordinate[label={[font=\footnotesize]below:\(z_0\)}] (O) at (0,0);
+		\coordinate[label={[font=\footnotesize]left:\(\b\)}] (B) at (135:2);
+		
+		\begin{scope}
+			\clip (O) circle (2);
+			\fill [lighter] (B) circle (1);
+		\end{scope}
+		
+		\fill (O) circle (0.05);
+		\fill (B) circle (0.05);
+		
+		\draw (O) circle (2);
+		\draw (B) circle (1);
+		
+		\node[above right, font=\large] at (30:2) {\(D\)};
+		\node[above left, font=\large] at ($(135:2)+(150:1)$) {\(D_1\)};
+		\node at (-45:1.25) {\(f(z)\)};
+		\node at ($(135:2)+(70:0.6)$) {\(g(z)\)};
+		\node at (145:1.55) {\(f\equiv g\)};
+	\end{tikzpicture}
+	\caption{Punto regolare.}
+\end{figure}
+
+\begin{notz}
+	Se \(\b\) non è un punto regolare lo chiamiamo \emph{punto singolare}.
+\end{notz}
+
+\begin{teor}{Punto singolare per serie di potenze}{puntoSingolareSeriePotenze}
+	Sia \(f(z)=\sum a_n z^n\) una serie di potenze che ha raggio di convergenza \(R\).
+	Allora \(f\) ha almeno un punto singolare su \(\pd B(0;R)\).
+\end{teor}
+
+\begin{proof}
+	Supponiamo per assurdo che \(f\) non abbia punti singolari. Quindi, per definizione, per ogni \(\b\in \pd B(0;R)\), trovo \(D_\b\) un disco centrato in \(\b\) su cui è definita un'estensione \(g_\b\) di \(f\).
+	Per compattezza di \(\pd B(0;R)\) vi è un ricoprimento finito di tali dischi, quindi trovo \(D_{\b_1},\ldots, D_{\b_n}\) tali che
+	\[
+		\bigcup_{i=1}^n D_{\b_i} \supseteq \pd B(0;R).
+	\]
+	Definiamo
+	\[
+		h\colon B(0;R)\cup \bigcup_{i=1}^n D_{\b_i} \longrightarrow \C, z \longmapsto 	\begin{cases}
+			f(z)        & z\in B(0;R)   \\
+			g_{\b_i}(z) & z\in D_{\b_i}
+		\end{cases}
+	\]
+	Osserviamo che, per ipotesi,
+	\[
+		f(z) = g_{\b_i}(z) \qquad\text{se }z\in B(0;R)\cap D_{\b_i}.
+	\]
+	Quindi affinché \(h\) sia ben definita resta da mostrare che
+	\[
+		D_{\b_i}\cap D_{\b_j} \neq \emptyset \implies g_{\b_i}(z) = g_{\b_j}(z) \qquad\text{se }z\in D_{\b_i}\cap D_{\b_j}.
+	\]
+	Ora \(D_{\b_i}\cap D_{\b_j} \neq \emptyset \implies D_{\b_i}\cap D_{\b_j}\cap B(0;R) \neq \emptyset\), quindi, per ipotesi,
+	\[
+		g_{\b_i}(z) = f(z) = g_{\b_j}(z) \qquad\text{se }z\in D_{\b_i}\cap D_{\b_j}\cap B(0;R).
+	\]
+	Pertanto \(g_{\b_i},g_{\b_j}\) coincidono su tutto \(D_{\b_i}\cap D_{\b_j}\) per il \hyperref[th:principioIdentità]{principio di identità}.
+	D'altronde
+	\[
+		B(0;R) \cup \bigcup_{i=1}^n D_{\b_i} \supseteq B(0;R+\e) \qquad\text{per un }\e>0.
+	\]
+	Quindi il raggio di convergenza di \(f\) è maggiore o uguale a \(R+\e\). Ciò è assurdo poiché tale raggio è \(R\) per ipotesi.
+\end{proof}
+
+\begin{oss}
+	L'esistenza di punti singolari non ha molto a che fare con la convergenza della serie sul bordo.
+	Ad esempio
+	\[
+		\sum_{n\ge 1} \frac{z^n}{n^2},
+	\]
+	ha raggio di convergenza \(R=1\). Inoltre converge in ogni \(z\) con \(\abs{z}=1\). D'altronde deve avere un punto singolare per il teorema precedente.
+\end{oss}
+
+\begin{ese}
+	La funzione
+	\[
+		f(z) = z+z^2+z^4+z^8+\ldots = \sum_{n\ge 0} z^{2^n}
+	\]
+	ha raggio di convergenza \(R=1\). Mostriamo che ogni punto sul bordo del disco \(B(0;1)\) è singolare.
+	Per farlo dimostreremo che \(f\) è illimitato in un intorno dei punti
+	\[
+		e^{2\p\,i\,\frac{j}{2^n}} \qquad\text{con }j,n\in\N.
+	\]
+	Dal momento che l'insieme di tali punti è denso in \(\pd B(0;1)\), segue che \(f\) non può avere punti regolari.
+	Per \(j=0\), consideriamo \(f(r)\) al tendere di \(r\to 1\):
+	\[
+		\lim_{r\to 1} f(r) = \lim_{r\to 1} \sum_{n\ge 0} r^{2^n} \ge \lim_{r\to 1} \sum_{n=0}^N r^{2^n} = N+1 \qquad\text{con \(N\) arbitrario}.
+	\]
+	Quindi \(f(r) \to +\infty\).
+	Per gli altri \(j\), osserviamo che
+	\[
+		f(z^2) = f(z)-z \implies f(z) = f(z^2)+z.
+	\]
+	Quindi in un intorno di \(-1\), avremo
+	\[
+		\lim_{r\to 1^-} f(-r) = \lim_{r\to 1^-} f(r\,e^{i\,\p}) = \lim_{r\to 1^-} \big[f(r^2)+r\,e^{i\,\p}\big] = \lim_{r\to 1^-} \big[f(r^2)-r\big] = +\infty.
+	\]
+	Analogamente si mostra per gli altri punti.
+\end{ese}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%PROLUNGAMENTO ANALITICO%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Prolungamento analitico}
+
+Supponiamo di avere funzioni come \(\ln z\) o \(\sqrt{z}\). L'idea alla base del prolungamento analitico, è quella di partire dalla loro scrittura in serie di potenze (quindi nel dominio del disco di convergenza), ed estenderle passo passo in dischi che intersecano il precedente.
+
+\begin{defn}{Elemento analitico}{elementoAnalitico}\index{Elemento analitico}
+	Un \emph{elemento analitico} è una coppia \((f,D)\), con \(D\) un disco e \(f\in H(D)\).
+\end{defn}
+
+\begin{defn}{Continuazione diretta}{continuazioneDiretta}\index{Continuazione Diretta}
+	Siano \((f_1,D_1)\) e \((f_2,D_2)\) due elementi analitici.
+	Diciamo che \((f_2,D_2)\) è una \emph{continuazione diretta} di \((f_1,D_1)\) se
+	\begin{itemize}
+		\item \(D_1\cap D_2\neq \emptyset\);
+		\item \(f_1(z)=f_2(z)\) per ogni \(z\in D_1\cap D_2\).
+	\end{itemize}
+\end{defn}
+
+\begin{notz}
+	Se \((f_2,D_2)\) è una continuazione diretta di \((f_1,D_1)\), scriviamo
+	\[
+		(f_1,D_1) \sim (f_2,D_2).
+	\]
+\end{notz}
+
+\begin{defn}{Catena analitica}{catenaAnalitica}\index{Catena analitica}
+	Siano \(D_0,\ldots,D_n\) una successione di dischi con \(D_i\cap D_{i+1}\neq\emptyset\).
+	\((D_0,\ldots,D_n)\) si definisce \emph{catena analitica} se esistono elementi analitici \((f_0,D_0),\ldots,(f_n,D_n)\) tali che
+	\[
+		(f_{i+1},D_{i+1}) \sim (f_i,D_i)\,\fa i=0,\ldots,n-1.
+	\]
+\end{defn}
+
+\begin{defn}{Prolungamento analitico}{prolungamentoAnalitico}\index{Prolungamento analitico}
+	Supponiamo di avere una catena analitica i cui elementi analitici sono \((f_0,D_0),\ldots,(f_n,D_n)\).
+	Diciamo che \((f_n,D_n)\) è il \emph{prolungamento analitico} di \((f_0,D_0)\) lungo la catena \((D_0,\ldots,D_n)\).
+\end{defn}
+
+\begin{figure}[tp]
+	\centering
+	\begin{tikzpicture}
+		\coordinate[label=center:\(f_0\)] (A) at (0,0);
+		\coordinate[label=center:\(f_1\)] (B) at (2,0);
+		\coordinate[label=center:\(f_2\)] (C) at (4,0);
+		\coordinate[label=center:\(f_3\)] (D) at (6,0);
+		\coordinate[label=center:\(f_4\)] (E) at (8,0);
+		
+		\begin{scope}
+			\clip (A) circle (1);
+			\fill [lighter] (B) circle (1.5);
+		\end{scope}
+		\begin{scope}
+			\clip (B) circle (1.5);
+			\fill [lighter] (C) circle (0.7);
+		\end{scope}
+		\begin{scope}
+			\clip (C) circle (0.7);
+			\fill [lighter] (D) circle (1.6);
+		\end{scope}
+		\begin{scope}
+			\clip (D) circle (1.6);
+			\fill [lighter] (E) circle (1.2);
+		\end{scope}
+		
+		\draw (A) circle (1);
+		\draw (B) circle (1.5);
+		\draw (C) circle (0.7);
+		\draw (D) circle (1.6);
+		\draw (E) circle (1.2);
+		
+		\node[above, font=\large] at ($(A)+(90:1)$) {\(D_0\)};
+		\node[above, font=\large] at ($(B)+(90:1.5)$) {\(D_1\)};
+		\node[above, font=\large] at ($(C)+(90:0.7)$) {\(D_2\)};
+		\node[above, font=\large] at ($(D)+(90:1.6)$) {\(D_3\)};
+		\node[above, font=\large] at ($(E)+(90:1.2)$) {\(D_4\)};
+	\end{tikzpicture}
+	\caption{Catena analitica.}
+\end{figure}
+
+\begin{prop}{Transitività della continuazione diretta}{transitivitàContinuazione}
+	Siano \(D_1,D_2,D_3\) dischi tali che \(D_1\cap D_2\cap D_3 \neq \emptyset\).
+	Se \((f_1,D_1)\sim (f_2,D_2)\) e \((f_3,D_3)\sim (f_2,D_2)\) allora
+	\[
+		(f_1,D_1) \sim (f_3,D_3).
+	\]
+\end{prop}
+
+\begin{proof}
+	Consideriamo la seguente figura:
+	\[
+		\tikz[baseline=-0.5ex, x=0.66cm, y=0.66cm]{
+			\begin{scope}
+				\clip (-1,0) circle (2);
+				\fill [contrast!10] (1,0) circle (2);
+			\end{scope}
+			\begin{scope}
+				\clip (1,0) circle (2);
+				\fill [lighter] (0,-2) circle (2);
+			\end{scope}
+			\begin{scope}
+				\clip (1,0) circle (2);
+				\clip (-1,0) circle (2);
+				\fill [contrast!10!lighter] (0,-2) circle (2);
+			\end{scope}
+			
+			\draw (-1,0) circle (2);
+			\draw (1,0) circle (2);
+			\draw (0,-2) circle (2);
+			
+			\node[above left, font=\large] at ($(-1,0)+(135:2)$) {\(D_1\)};
+			\node[above right, font=\large] at ($(1,0)+(45:2)$) {\(D_2\)};
+			\node[below, font=\large] at ($(0,-2)+(-90:2)$) {\(D_3\)};
+			\node[above left] at ($(-1,0)+(180:1)$) {\(f_1\)};
+			\node[above right] at ($(1,0)+(0:1)$) {\(f_2\)};
+			\node[below] at ($(0,-2)+(-90:1)$) {\(f_3\)};
+		}
+		\qquad \text{dove per ipotesi }
+		\begin{aligned}
+			f_1 & \equiv f_2 & \text{in }D_1 & \cap D_2  \\
+			f_2 & \equiv f_3 & \text{in }D_2 & \cap D_3
+		\end{aligned}
+	\]
+	In particolare avremo \(f_1 \equiv f_3\) in \(D_1\cap D_2\cap D_3\). Quindi
+	\[
+		f_1 \equiv f_3 \qquad\text{in }D_1 \cap D_3
+	\]
+	per il \hyperref[th:principioIdentità]{principio di identità}. Da cui
+	\[
+		(f_1,D_1) \sim (f_3,D_3).\qedhere
+	\]
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%PROLUNGAMENTO ANALITICO LUNGO UNA CURVA%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Prolungamento analitico lungo una curva}
+
+\begin{defn}{Catena che copra una curva}{catenaCopreCurva}\index{Catena analitica!che copre una curva}
+	Siano \((D_0,\ldots,D_n)\) una catena e \(\g\colon [0,1] \to \C\) una curva.
+	Diciamo che \((D_0,\ldots,D_n)\) \emph{copre} \(\g\) se esistono \(0=s_0<s_1<\ldots<s_n=1\) tali che
+	\begin{itemize}
+		\item \(\g(0)\) e \(\g(1)\) sono i rispettivi centri di \(D_0\) e \(D_n\);
+		\item \(\g\big[(s_i,s_{i+1})\big]\subseteq D_i\) per ogni \(i\in\{0,\ldots,n-1\}\).
+	\end{itemize}
+\end{defn}
+
+\begin{figure}[tp]
+	\centering
+	\begin{tikzpicture}
+		\coordinate[label=below:\(\g(0)\)] (A) at (0,0);
+		\coordinate[label=above:\(\g(s_1)\)] (B) at (1,0.87);
+		\coordinate[label=below:\(\g(s_2)\)] (C) at (2.85,0.71);
+		\coordinate[label=above:\(\g(s_3)\)] (D) at (3.95,0.23);
+		\coordinate[label=above:\(\g(1)\)] (E) at (8,0);
+		\coordinate (D1) at (1.99,0.95);
+		\coordinate (D2) at (3.42,0.47);
+		
+		\fill (A) circle (0.05);
+		\fill (B) circle (0.05);
+		\fill (C) circle (0.05);
+		\fill (D) circle (0.05);
+		\fill (E) circle (0.05);
+		
+		\draw (0,0) .. controls (2,3) and (5,-2) .. (8,0);
+		\draw (A) circle (2);
+		\draw (E) circle (1.4);
+		\draw (D1) circle (1.5);
+		\draw (D2) circle (1);
+		
+		\node[below, font=\large] at ($(A)+(-90:2)$) {\(D_0\)};
+		\node[above, font=\large] at ($(D1)+(90:1.5)$) {\(D_1\)};
+		\node[below, font=\large] at ($(D2)+(-90:1)$) {\(D_2\)};
+		\node[above, font=\large] at ($(E)+(90:1.4)$) {\(D_n\)};
+	\end{tikzpicture}
+	\caption{Catena che copre una curva.}
+	\label{fig:catenaCurva}
+\end{figure}
+
+\begin{defn}{Continuazione lungo una curva}{continuazioneCurva}\index{Continuazione diretta!lungo una curva}
+	Si dice che \((f_n,D_n)\) è una \emph{continuazione} di \((f_0,D_0)\) lungo la curva \(\g\colon [0,1] \to \C\) se
+	\begin{itemize}
+		\item \((D_0,\ldots,D_n)\) è una catena che copre \(\g\);
+		\item \((f_n,D_n)\) è il prolungamento di \((f_0,D_0)\) lungo la catena \((D_0,\ldots,D_n)\).
+	\end{itemize}
+\end{defn}
+
+\begin{teor}{Unicità del prolungamento analitico lungo una curva}{unicitàProlungamentoCurva}
+	Supponiamo che \(\{(f_0,A_0),\ldots,(f_n,A_n)\}\) e \(\{(g_0,B_0),\ldots,(g_m,B_m)\}\) siano due prolungamenti di \(f_0\) lungo la curva \(\g\colon [0,1] \to \C\). Allora
+	\[
+		f_n \equiv g_m \qquad\text{in }A_n \cap B_m.
+	\]
+\end{teor}
+
+\begin{proof}
+	Prendiamo \(0=s_0<s_1<\ldots<s_n=1\) la partizione per \(\{A_0,\ldots,A_n\}\) e \(0=t_0<t_1<\ldots<t_m=1\) la partizione per \(\{B_0,\ldots,B_m\}\).
+	La strategia è dimostrare che
+	\begin{equation*}
+		[s_i,s_{i+1}] \cap [t_j,t_{j+1}] \neq \emptyset \implies (f_i,A_i) \sim (g_j,B_j).\tag{\(\star\)}
+	\end{equation*}
+	Ciò implicherebbe la tesi, poiché chiaramente \([s_{n-1},1]\cap [t_{m-1},1]\neq \emptyset\), da cui
+	\[
+		(f_n,A_n) \sim (g_m,B_m).
+	\]
+	Supponiamo per assurdo che \((\star)\) sia falso. Dal momento che in \([0,s_1]\cap [0,t_1]\) è vero per ipotesi\graffito{sono infatti entrambe estensioni di \(f_0\)}, devono esistere \(i,j\) tali che \((\star)\) è falso e \(i+j\) è minimo:
+	\[
+		\tikz[baseline=-0.5ex, x=1.2cm, y=1.2cm]{
+			\coordinate (A) at (-4,0);
+			\coordinate (B) at (0,1);
+			\coordinate (C) at (0,-0.5);
+			\coordinate (D) at (4,0);
+			
+			\draw (A) .. controls (B) and (C) .. (D);
+			
+			\coordinate (C1) at (-1.47,0.35);
+			\coordinate (C2) at (-1.28,0.35);
+			\coordinate (C3) at (0.58,0.08);
+			
+			\draw (C1) circle (1.5);
+			\draw (C2) circle (0.8);
+			\draw (C3) circle (1.8);
+			
+			\coordinate[label={[font=\footnotesize]below:\(s_i\)}] (S1) at (-2.71,0.26);
+			\coordinate[label={[font=\footnotesize]above:\(t_{j-1}\)}] (T1) at (-1.62,0.35);
+			\coordinate[label={[font=\footnotesize]below:\(t_j\)}] (T2) at (-0.81,0.31);
+			\coordinate[label={[font=\footnotesize]above:\(s_{i+1}\)}] (S2) at (-0.23,0.23);
+			\coordinate[label={[font=\footnotesize]below:\(t_{j+1}\)}] (T3) at (1.17,-0.02);
+			
+			\fill (S1) circle (0.05);
+			\fill (T1) circle (0.05);
+			\fill (T2) circle (0.05);
+			\fill (S2) circle (0.05);
+			\fill (T3) circle (0.05);
+			
+			\node[font=\large, above left] at ($(C1)+(135:1.5)$) {\(A_i\)};
+			\node[font=\large, below left] at ($(C2)+(-90:0.8)$) {\(B_{j-1}\)};
+			\node[font=\large, above right] at ($(C3)+(45:1.8)$) {\(B_j\)};
+		}
+	\]
+	Per \(i,j-1\) l'asserto è vero poiché sono inferiori al minimo, quindi
+	\[
+		(f_i,A_i)  \sim (g_{j-1},B_{j-1}).
+	\]
+	Inoltre \((g_{j-1},B_{j-1}) \sim (g_j,B_j)\) per ipotesi.
+	Quindi per la transitività dimostrata nella \autoref{pr:transitivitàContinuazione}, avremo
+	\[
+		(f_i,A_i) \sim (g_j,B_j).
+	\]
+	Ma ciò è assurdo in quanto \(i,j\) sono i più piccoli indici per cui ciò non accade.
+\end{proof}
+
+\begin{oss}
+	Il teorema in particolare afferma che il prolungamento lungo una curva è un'estensione canonica.
+\end{oss}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%LEZIONE 13/12/2016 - DECIMA SETTIMANA (1)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{defn}{Curve omotope}{curveOmotope}
+	Sia \(\Omega\subseteq\C\) aperto. Due curve \(\g_0,\g_1\colon [0,1] \to \Omega\) che coincidono agli estremi si dicono \emph{omotope} se esiste una mappa continua \(\j\colon [0,1] \times [0,1] \to \Omega\) tale che
+	\begin{itemize}
+		\item \(\j(s,0)=\g_0(0)=\g_1(0)\) e \(\j(s,1)=\g_0(1)=\g_1(1)\) per ogni \(s\in[0,1]\).
+		\item \(\j(0,t)=\g_0(t)\) e \(\j(1,t)=\g_1(t)\) per ogni \(t\in[0,1]\).
+	\end{itemize}
+\end{defn}
+
+\begin{oss}
+	L'insieme delle curve omotope costituisce una classe di equivalenza.
+\end{oss}
+
+\begin{teor}{Indipendenza del prolungamento per classi di omotopia}{indipendenzaProlungamentoClassiOmotopia}
+	Sia \(\Omega\subseteq \C\) un aperto e sia \(\big(B(z_0;r),f\big)\) un elemento analitico in \(\Omega\) che si può prolungare lungo ogni curva di \(\Omega\). Se \(\g_0,\g_1\) sono due curve omotope con
+	\[
+		\g_0(0)=\g_1(0)=z_0\in\Omega \qquad\text{e}\qquad \g_0(1)=\g_1(1)=z\in\Omega,
+	\]
+	allora il prolungamento analitico lungo \(\g_0\) coincide con il prolungamento analitico lungo \(\g_1\).
+\end{teor}
+
+\begin{proof}
+	Per ipotesi \(\g_0,\g_1\) sono omotope, trovo quindi l'omotopia \(\j(s,t)\). In particolare
+	\[
+		\j(0,t) = \g_0(t) \qquad\text{e}\qquad \j(1,t) = \g_1(t).
+	\]
+	Fissato \(s\in[0,1]\) definisco \(\g_s(t)=\j(s,t)\).
+	Prolunghiamo \(\big(B(z_0;r),f\big)\) lungo \(\g_0\), per il teorema precedente, il prolungamento dipende solo da \(\g_0\).
+	Chiamiamo \((D_0,f_0),\ldots,(D_n,f_n)\) gli elementi analitici del prolungamento. Per continuità e compattezza\graffito{si veda la \autoref{fig:catenaCurva} per comprendere l'affermazione}
+	\[
+		\g_s\big([0,1]\big) \subseteq \bigcup_{i=0}^n D_i \qquad\text{se }s\in[0,\e]
+	\]
+	con \(\e\) sufficientemente piccolo.
+	Quindi \((D_0,f_0),\ldots,(D_n,f_n)\) è un prolungamento analitico anche per \(\g_s\) per \(s\in[0,\e]\).
+	D'altronde abbiamo già osservato come il prolungamento analitico sia unico e dipenda solo dalla curva, pertanto il prolungamento di \(f\) lungo \(\g_0\) o lungo \(\g_s,s\in[0,\e]\), è lo stesso.
+	Abbiamo quindi mostrato che il prolungamento analitico è localmente costante in \(s\). Dal momento che \([0,1]\) è connesso, il prolungamento analitico non dipende da \(s\). In particolare se prolungo \((D_0,f_0)\) lungo \(\g_0\) o lungo \(\g_1\), ottengo lo stesso risultato.
+\end{proof}
+
+\begin{oss}
+	Il prolungamento analitico dipende quindi solo dalla classe di omotopia.
+	In particolare, negli aperti semplicemente connessi dove vi è una sola classe di omotopia, il prolungamento analitico non dipende dalla particolare curva.
+\end{oss}
+
+\begin{cor}
+	Sia \(\Omega\subseteq\C\) semplicemente connesso. Sia \(D\subseteq\Omega\) un disco e sia \((D,f)\) un elemento analitico che si può prolungare lungo tutte le curve di \(\Omega\).
+	Allora esiste \(g\colon \Omega \to \C\) olomorfa tale che \(f(z)=g(z),\,\fa z \in D\).
+\end{cor}
+
+\begin{proof}
+	Definiamo \(g(z)\) nel seguente modo:
+	supponiamo che \(z_0\) sia il centro di \(D\), prendiamo una curva \(\g\) che connette \(z_0\) e \(z\).
+	In un intorno di \(z\) definisco \(g(w)\) come l'estensione di \((D,f)\) lungo \(\g\).
+	Poiché \(\Omega\) è semplicemente connesso, l'estensione non dipende dalla scelta della curva \(\g\).
+	Per cui se estendo lungo \(\tilde{\g}\), quest'ultima è omotopa a \(\g\) e per il teorema precedente ottengo la stessa estensione.
+\end{proof}
+
+\begin{prop}{Determinazione della radice}{determinazioneRadice}
+	Se \(\Omega\subseteq\C\setminus\{0\}\) è un aperto semplicemente connesso, in \(\Omega\) posso definire una determinazione della radice.
+\end{prop}
+
+\begin{proof}
+	Sia \(z_0\in\Omega\), voglio definire la radice in \(B(z_0;r)\) per \(r\) piccolo.
+	Sfruttiamo il teorema della funzione inversa: considero \(w_0\neq w_1\) tali che \(w_0^2=z_0=w_1^2\).
+	Posto \(f(z)=z^2\), so che
+	\[
+		f'(w_0) \neq 0 \neq f'(w_1).
+	\]
+	Posso quindi applicare la funzione inversa per trovare
+	\[
+		g_0\colon B(z_0;r) \to U_{w_0} \qquad\text{e}\qquad g_1\colon B(z_0;r) \to U_{w_1}
+	\]
+	olomorfe tali che
+	\[
+		g_0\circ f(w) = w,\,\fa w\in U_{w_0} \qquad\text{e}\qquad g_1\circ f(w) = w,\,\fa w\in U_{w_1}.
+	\]
+	Arbitrariamente, scegliamo \(g_0\) come determinazione per la radice su \(B(z_0;r)\). Ora, preso \(z\in \Omega\), devo poter dare la medesima determinazione.
+	Posso estendere \((D_0,g_0)\) lungo ogni curva \(\g\), dove \(D_0=B(z_0;r)\) con \(r=\abs{z_0}\).\graffito{il disco di convergenza è infatti il più grande possibile e in \(\C\setminus\{0\}\) coincide proprio con \(\abs{z_0}\)}
+	Dal momento che \(\g\) è compatto, il minimo raggio di \(B\big(\g(t),r\big)\) è strettamente positivo. Quindi giungo in \(z\) dopo un numero finito di passi.
+	Sono soddisfatte entrambe le ipotesi del corollario, il quale applicato, ci fornisce la tesi.
+\end{proof}
+
+\begin{notz}
+	Questo risultato prende anche il nome di \emph{teorema di monodromia}.
+\end{notz}
+
+\begin{oss}
+	Analogamente è possibile definire su \(\Omega\) una determinazione del logaritmo.
+\end{oss}
+
+\begin{oss}
+	Se \(\Omega\) non è semplicemente connesso, partiamo dall'elemento analitico \(\big(B(z_0,r),f\big)\). Sia \(\g\) una curva che connette \(z_0\) e \(z\).
+	In tal caso \(f(z)\) dipende da \(z\) e dalla classe di omotopia \([\g]\).
+	
+	Quindi se \(\Omega\) non è semplicemente connesso e \((D,f)\) è un elemento analitico in \(\Omega\) che si può estendere lungo ogni curva, posso non essere in grado di estendere \(f\) a tutto \(\Omega\) (come ad esempio il logaritmo su \(\C\setminus\{0\}\)).
+	D'altronde è sempre possibile estendere \(f\) a un rivestimento di \(\Omega\).
+\end{oss}
+
+\begin{figure}[tp]
+	\centering
+	\begin{tikzpicture}
+		\draw[thick] (-6,0) -- (-3,0);
+		\draw[thick] (-1.5,0) -- (0.7,0);
+		\draw[thick] (3,0) -- (6,0);
+		\draw[thick] (-4.5,-1.5) -- (-4.5,1.5);
+		\draw[thick] (0,-1.5) -- (0,1.5);
+		\draw[thick] (4.5,-1.5) -- (4.5,1.5);
+		
+		\draw[thick] (0.7,0) to [bend right] (1.5,0.4);
+		\draw[thick] (0.7,0) to [bend left] (1.5,-0.4);
+		
+	\end{tikzpicture}
+	\caption{Determinazione del logaritmo sul rivestimento universale di \(\C\setminus\{0\}\). DA FINIRE!!}
+	\label{fig:logaritmoRivestimentoUniversale}
+\end{figure}
+
+\begin{ese}[Logaritmo]
+	Sia \((S,\p)\) il rivestimento universale di \(\C\setminus\{0\}\). Se definiamo \(\ln\colon S \to \C\), il diagramma
+	\[
+		\begin{tikzcd}
+			& S \arrow[swap]{ld}{\ln} \arrow{d}{\p}\\
+			\C \arrow[swap]{r}{e^z} & \C\setminus\{0\}
+		\end{tikzcd}
+	\]
+	commuta.
+	Nella \autoref{fig:logaritmoRivestimentoUniversale} possiamo vederne una rappresentazione grafica.
+\end{ese}
